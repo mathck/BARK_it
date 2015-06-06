@@ -25,5 +25,8 @@
     the big cheese.</string>
   <string name="checkin">Checkin</string>
   <string name="menu_world">Places</string>
+  <string name="current_version">v1.0.0</string>
+  <string name="navigation_drawer_barks">BARKS</string>
+  <string name="navigation_drawer_places">PLACES</string>
 
 </resources>

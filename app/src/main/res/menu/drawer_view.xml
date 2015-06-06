@@ -19,22 +19,14 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_dashboard"
-            android:title="Home" />
+            android:icon="@drawable/ic_forum"
+            android:title="@string/navigation_drawer_barks" />
         <item
             android:id="@+id/nav_messages"
-            android:icon="@drawable/ic_event"
-            android:title="Messages" />
-        <item
-            android:id="@+id/nav_friends"
-            android:icon="@drawable/ic_headset"
-            android:title="Friends" />
-        <item
-            android:id="@+id/nav_discussion"
-            android:icon="@drawable/ic_forum"
-            android:title="Discussion" />
+            android:icon="@drawable/ic_earth_dark"
+            android:title="@string/navigation_drawer_places" />
     </group>
-
+<!--
     <item android:title="Sub items">
         <menu>
             <item
@@ -45,5 +37,5 @@
                 android:title="Sub item 2" />
         </menu>
     </item>
-
+-->
 </menu>
