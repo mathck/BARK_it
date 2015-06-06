@@ -25,6 +25,7 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <color name="barkit">#FF5045</color>
+    <color name="card_background">#DBDBDB</color>
 
     <color name="window_background">#FFF5F5F5</color>
 </resources>
