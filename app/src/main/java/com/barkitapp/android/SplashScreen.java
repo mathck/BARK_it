@@ -4,15 +4,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ImageView;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 public class SplashScreen extends Activity {
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 1000;
+    private ImageView mLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        mLogo = ((ImageView) findViewById(R.id.imgLogo));
 
         new Handler().postDelayed(new Runnable() {
 
@@ -32,6 +39,17 @@ public class SplashScreen extends Activity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(mLogo != null) {
+            YoYo.with(Techniques.Bounce)
+                    .duration(1000)
+                    .playOn(mLogo);
+        }
     }
 
     /*
