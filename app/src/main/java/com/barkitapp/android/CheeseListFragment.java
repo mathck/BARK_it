@@ -27,7 +27,11 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +69,7 @@ public class CheeseListFragment extends Fragment {
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
         private List<String> mValues;
+        private Context mContext;
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
             public String mBoundString;
@@ -91,6 +96,7 @@ public class CheeseListFragment extends Fragment {
         }
 
         public SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
+            mContext = context;
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
             mValues = items;
@@ -117,6 +123,48 @@ public class CheeseListFragment extends Fragment {
                     intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
 
                     context.startActivity(intent);
+                }
+            });
+
+            final ImageView upvote = (ImageView) holder.mView.findViewById(R.id.upvote);
+            final ImageView downvote = (ImageView) holder.mView.findViewById(R.id.downvote);
+            final TextView votes_count = (TextView) holder.mView.findViewById(R.id.votes_count);
+
+            upvote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int currentValue = Integer.parseInt(votes_count.getText().toString());
+                    if((currentValue+1) % 10 == 0)
+                    {
+                        YoYo.with(Techniques.Flash)
+                                .duration(400)
+                                .playOn(votes_count);
+                    }
+                    else {
+                        YoYo.with(Techniques.BounceInUp)
+                                .duration(400)
+                                .playOn(votes_count);
+                    }
+                    votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
+                    upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+                    downvote.setColorFilter(null);
+                    votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) + 1));
+                }
+            });
+
+            downvote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    YoYo.with(Techniques.BounceInDown)
+                            .duration(400)
+                            .playOn(votes_count);
+                    votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
+                    upvote.setColorFilter(null);
+                    downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+                    votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) - 1));
+
+                    // todo on -5 kill post
                 }
             });
 

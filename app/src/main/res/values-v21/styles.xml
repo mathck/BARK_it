@@ -17,9 +17,13 @@
 
 <resources>
 
+    <style name="Theme.SplashTheme" parent="Theme.DesignDemo">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
     <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
-
 </resources>
