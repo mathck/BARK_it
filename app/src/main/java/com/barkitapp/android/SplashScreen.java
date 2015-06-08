@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -13,6 +14,7 @@ public class SplashScreen extends Activity {
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 1000;
     private ImageView mLogo;
+    private TextView mSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,27 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.activity_splash);
 
         mLogo = ((ImageView) findViewById(R.id.imgLogo));
+        mSpeech = (TextView) findViewById(R.id.speech);
+
+        // todo extract me to res/strings
+        if(mSpeech != null) {
+            switch ((int)(Math.random() * 6)) //0 - 5
+            {
+                case 0:  mSpeech.setText("cool");
+                    break;
+                case 1:  mSpeech.setText("oh hai!");
+                    break;
+                case 2:  mSpeech.setText("\u2665");
+                    break;
+                case 3:  mSpeech.setText("wow");
+                    break;
+                case 4:  mSpeech.setText("BARK");
+                    break;
+                case 5:  mSpeech.setText("?");
+                    break;
+                default: mSpeech.setText("??");
+            }
+        }
 
         new Handler().postDelayed(new Runnable() {
 
@@ -49,6 +72,12 @@ public class SplashScreen extends Activity {
             YoYo.with(Techniques.Bounce)
                     .duration(1000)
                     .playOn(mLogo);
+        }
+
+        if(mSpeech != null) {
+            YoYo.with(Techniques.Tada)
+                    .duration(1000)
+                    .playOn(mSpeech);
         }
     }
 
