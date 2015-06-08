@@ -38,7 +38,7 @@
                     android:maxLines="1"
                     android:layout_gravity="center"
                     android:textSize="24sp"
-                    android:text="14" />
+                    android:text="0" />
                 <ImageView
                     android:id="@+id/downvote"
                     android:layout_width="wrap_content"
@@ -61,10 +61,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="3"
+                android:lines="3"
                 android:ellipsize="end"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
-                android:text="@string/sample_text" />
+                android:text="asdasd" />
 
             <LinearLayout
                 android:layout_below="@id/text1"
@@ -78,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="8dp"
                     android:maxLines="1"
-                    android:text="4" />
+                    android:text="0" />
                 <ImageView
                     android:layout_width="14dp"
                     android:layout_height="14dp"
@@ -91,16 +92,15 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="20dp"
                     android:maxLines="1"
-                    android:text="4 h" />
+                    android:text="0 m" />
                 <TextView
                     android:id="@+id/distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="20dp"
                     android:maxLines="1"
-                    android:text="4 km" />
+                    android:text="0 km" />
             </LinearLayout>
-
             </RelativeLayout>
         </RelativeLayout>
 

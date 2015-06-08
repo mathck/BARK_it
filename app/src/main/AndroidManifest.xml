@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.barkitapp.android.MainActivity">
+        <activity android:name="com.barkitapp.android.MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

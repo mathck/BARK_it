@@ -37,7 +37,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import jp.wasabeef.recyclerview.animators.OvershootInRightAnimator;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
+
 public class CheeseListFragment extends Fragment {
+
+    private ScaleInAnimationAdapter mAdpater;
+    private List<String> mValues;
+
+    public void addNewItem(String item) {
+        mValues.add(0, item);
+        mAdpater.notifyDataSetChanged();
+    }
 
     @Nullable
     @Override
@@ -49,9 +60,14 @@ public class CheeseListFragment extends Fragment {
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
+        mValues = getRandomSublist(Cheeses.sCheeseStrings, 30);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.setAdapter(new SimpleStringRecyclerViewAdapter(getActivity(),
-                getRandomSublist(Cheeses.sCheeseStrings, 30)));
+        SimpleStringRecyclerViewAdapter adapter = new SimpleStringRecyclerViewAdapter(getActivity(), mValues);
+
+        ScaleInAnimationAdapter alphaAdapter = new ScaleInAnimationAdapter(adapter);
+        alphaAdapter.setDuration(150);
+        recyclerView.setAdapter(mAdpater = alphaAdapter);
     }
 
     private List<String> getRandomSublist(String[] array, int amount) {
@@ -126,6 +142,9 @@ public class CheeseListFragment extends Fragment {
                 }
             });
 
+            final TextView bark_text = (TextView) holder.mView.findViewById(R.id.text1);
+            bark_text.setText(mValues.get(position));
+
             final ImageView upvote = (ImageView) holder.mView.findViewById(R.id.upvote);
             final ImageView downvote = (ImageView) holder.mView.findViewById(R.id.downvote);
             final TextView votes_count = (TextView) holder.mView.findViewById(R.id.votes_count);
@@ -167,6 +186,11 @@ public class CheeseListFragment extends Fragment {
                     // todo on -5 kill post
                 }
             });
+
+            if(position == (getItemCount()-1)) {
+                // if last item in list add margin bottom
+                //holder.mView.setPadding();
+            }
 
             //Glide.with(holder.mImageView.getContext())
             //        .load(Cheeses.getRandomCheeseDrawable())
