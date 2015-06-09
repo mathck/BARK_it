@@ -22,7 +22,7 @@
             android:icon="@drawable/ic_comment_multiple_outline"
             android:title="@string/navigation_drawer_barks" />
         <item
-            android:id="@+id/nav_messages"
+            android:id="@+id/nav_places"
             android:icon="@drawable/ic_earth_dark"
             android:title="@string/navigation_drawer_places" />
     </group>
