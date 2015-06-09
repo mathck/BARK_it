@@ -37,12 +37,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import jp.wasabeef.recyclerview.animators.OvershootInRightAnimator;
-import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 
 public class CheeseListFragment extends Fragment {
 
-    private ScaleInAnimationAdapter mAdpater;
+    private AlphaInAnimationAdapter mAdpater;
     private List<String> mValues;
 
     public void addNewItem(String item) {
@@ -65,7 +64,8 @@ public class CheeseListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         SimpleStringRecyclerViewAdapter adapter = new SimpleStringRecyclerViewAdapter(getActivity(), mValues);
 
-        ScaleInAnimationAdapter alphaAdapter = new ScaleInAnimationAdapter(adapter);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaAdapter.setStartPosition(4);
         alphaAdapter.setDuration(150);
         recyclerView.setAdapter(mAdpater = alphaAdapter);
     }
