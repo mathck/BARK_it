@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 assert viewPager != null;
                 viewPager.setCurrentItem(0);
 
-                CheeseListFragment fragment = (CheeseListFragment) getSupportFragmentManager().getFragments().get(0);
+                BarkListFragment fragment = (BarkListFragment) getSupportFragmentManager().getFragments().get(0);
                 fragment.addNewItem(str);
                 chattext.setText("");
                 InputMethodManager imm = (InputMethodManager)getSystemService(
@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new CheeseListFragment(), "NEW");
-        adapter.addFragment(new CheeseListFragment(), "HOT");
+        adapter.addFragment(new BarkListFragment(), "NEW");
+        adapter.addFragment(new BarkListFragment(), "HOT");
         viewPager.setAdapter(adapter);
     }
 

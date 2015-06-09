@@ -26,7 +26,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.barkitapp.android.CheeseDetailActivity" />
+        <activity android:name=".BarkDetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
     </application>
 

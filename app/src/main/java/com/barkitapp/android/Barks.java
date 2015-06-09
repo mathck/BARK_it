@@ -18,7 +18,7 @@ package com.barkitapp.android;
 
 import java.util.Random;
 
-public class Cheeses {
+public class Barks {
 
     private static final Random RANDOM = new Random();
 

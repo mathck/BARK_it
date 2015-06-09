@@ -101,6 +101,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -195,6 +197,53 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/chatbox"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/card_background">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginRight="72dp">
+
+                <EditText
+                    android:id="@+id/chattext"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_margin="0dp"
+                    android:paddingLeft="16dp"
+                    android:singleLine="true"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:background="@null"
+                    android:textCursorDrawable="@drawable/edit_text"
+                    android:hint="Answer anonymously ..." >
+                    <requestFocus />
+                </EditText>
+
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="13dp"
+            android:src="@drawable/ic_send_white_48dp" />
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/share"

@@ -19,7 +19,6 @@ package com.barkitapp.android;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,7 +29,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-public class CheeseDetailActivity extends AppCompatActivity {
+public class BarkDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_NAME = "cheese_name";
 
@@ -56,6 +55,15 @@ public class CheeseDetailActivity extends AppCompatActivity {
         });
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.accent)));
 
+        FloatingActionButton answer = (FloatingActionButton) findViewById(R.id.fab);
+        answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // send answer here
+            }
+        });
+        answer.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
+
         //CollapsingToolbarLayout collapsingToolbar =
         //        (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         //collapsingToolbar.setTitle("BARK");
@@ -75,7 +83,7 @@ public class CheeseDetailActivity extends AppCompatActivity {
 
     private void loadBackdrop() {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        Glide.with(this).load(Cheeses.getRandomCheeseDrawable()).centerCrop().into(imageView);
+        Glide.with(this).load(Barks.getRandomCheeseDrawable()).centerCrop().into(imageView);
     }
 
     @Override

@@ -39,7 +39,7 @@ import java.util.Random;
 
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 
-public class CheeseListFragment extends Fragment {
+public class BarkListFragment extends Fragment {
 
     private AlphaInAnimationAdapter mAdpater;
     private List<String> mValues;
@@ -53,13 +53,13 @@ public class CheeseListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_cheese_list, container, false);
+                R.layout.fragment_bark_list, container, false);
         setupRecyclerView(rv);
         return rv;
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
-        mValues = getRandomSublist(Cheeses.sCheeseStrings, 30);
+        mValues = getRandomSublist(Barks.sCheeseStrings, 30);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         SimpleStringRecyclerViewAdapter adapter = new SimpleStringRecyclerViewAdapter(getActivity(), mValues);
@@ -135,8 +135,8 @@ public class CheeseListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Context context = v.getContext();
-                    Intent intent = new Intent(context, CheeseDetailActivity.class);
-                    intent.putExtra(CheeseDetailActivity.EXTRA_NAME, holder.mBoundString);
+                    Intent intent = new Intent(context, BarkDetailActivity.class);
+                    intent.putExtra(BarkDetailActivity.EXTRA_NAME, holder.mBoundString);
 
                     context.startActivity(intent);
                 }
