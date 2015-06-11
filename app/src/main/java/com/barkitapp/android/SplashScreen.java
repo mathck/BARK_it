@@ -1,12 +1,19 @@
 package com.barkitapp.android;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.barkitapp.android.com.barkitapp.Listener.UserLocationListener;
+import com.barkitapp.android.com.barkitapp.services.LocationService;
+import com.barkitapp.android.com.barkitapp.utility.Constants;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
@@ -43,6 +50,14 @@ public class SplashScreen extends Activity {
                 default: mSpeech.setText("??");
             }
         }
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        LocationListener locationListener = new UserLocationListener(this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constants.GET_LOCATION_EVERY_MILLISECONDS, Constants.GET_LOCATION_EVERY_METERS, locationListener);
+
+        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        LocationService.storeLocation(this, lastKnownLocation);
 
         new Handler().postDelayed(new Runnable() {
 

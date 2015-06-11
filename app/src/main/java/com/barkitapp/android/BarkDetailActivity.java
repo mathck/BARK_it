@@ -25,9 +25,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
 
 public class BarkDetailActivity extends AppCompatActivity {
 
@@ -79,11 +76,6 @@ public class BarkDetailActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void loadBackdrop() {
-        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
-        Glide.with(this).load(Barks.getRandomCheeseDrawable()).centerCrop().into(imageView);
     }
 
     @Override

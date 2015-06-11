@@ -38,4 +38,7 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
     compile 'in.srain.cube:ultra-ptr:1.0.9'
     compile 'com.google.android.gms:play-services:7.5.0'
+
+    // App Intro
+    compile 'com.github.paolorotolo:appintro:1.2.1'
 }

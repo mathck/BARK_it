@@ -18,11 +18,13 @@ package com.barkitapp.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -126,10 +128,26 @@ public class BarkListFragment extends Fragment {
             return new ViewHolder(view);
         }
 
+        public static float convertPixelsToDp(float px) {
+            DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+            return px / (metrics.densityDpi / 160f);
+        }
+
+        public static float convertDpToPixel(float dp) {
+            DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+            float px = dp * (metrics.densityDpi / 160f);
+            return px;
+        }
+
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mBoundString = mValues.get(position);
             //holder.mTextView.setText(mValues.get(position));
+
+            //if(position == 0) {
+            //    View view = holder.mView;
+            //    view.setPadding(view.getPaddingLeft(), (int) convertDpToPixel(8), view.getPaddingRight(), view.getPaddingBottom());
+            //}
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -186,11 +204,6 @@ public class BarkListFragment extends Fragment {
                     // todo on -5 kill post
                 }
             });
-
-            if(position == (getItemCount()-1)) {
-                // if last item in list add margin bottom
-                //holder.mView.setPadding();
-            }
 
             //Glide.with(holder.mImageView.getContext())
             //        .load(Cheeses.getRandomCheeseDrawable())

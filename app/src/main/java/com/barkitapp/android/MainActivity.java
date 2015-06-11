@@ -40,6 +40,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.barkitapp.android.com.barkitapp.services.LocationService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        String title = LocationService.getLocationCity(this, LocationService.getLocation(this));
+        getSupportActionBar().setTitle(title);
 
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
