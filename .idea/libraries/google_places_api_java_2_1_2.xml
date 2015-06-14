@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="google-places-api-java-2.1.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/se.walkercrou/google-places-api-java/2.1.2/105bc7ab93c5c9660c1108bbad784857622f47f8/google-places-api-java-2.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/se.walkercrou/google-places-api-java/2.1.2/8d237330ac47a3104ab62c53389db4bea839a40d/google-places-api-java-2.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

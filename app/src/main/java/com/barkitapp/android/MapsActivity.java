@@ -1,7 +1,6 @@
 package com.barkitapp.android;
 
 import android.annotation.TargetApi;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -12,10 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -40,6 +36,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Marker mMarker;
     private Circle mCircle;
+    //private GooglePlaces mClient;
+    //private ArrayAdapterSearchView searchView;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setStatusBarColor() {
@@ -55,6 +53,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
 
         setStatusBarColor();
+
+        //mClient = new GooglePlaces("AIzaSyCY9uZjMyBhr8ABjsy6NIurVoCu1A-nqbM");
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,28 +86,81 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         Snackbar.make(findViewById(R.id.main_content), "Click on any place", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.maps_actions, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        //MenuItem searchItem = menu.findItem(R.id.action_search);
+        //ArrayAdapterSearchView searchView = (ArrayAdapterSearchView) searchItem.getActionView();
+        searchView = (ArrayAdapterSearchView) menu.findItem(R.id.action_search).getActionView();
 
-        SearchManager searchManager = (SearchManager) MapsActivity.this.getSystemService(Context.SEARCH_SERVICE);
+        searchView.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_list_item, new ArrayList<String>()));
 
-        SearchView searchView = null;
-        if (searchItem != null) {
-                searchView = (SearchView) searchItem.getActionView();
-        }
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                searchView.setText(searchView.getAdapter().getItem(position).toString());
+            }
+        });
 
-        if (searchView != null) {
-                searchView.setSearchableInfo(searchManager.getSearchableInfo(MapsActivity.this.getComponentName()));
-        }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                if(newText.length() < 2)
+                    return false;
+
+                new RetrieveFeedTask().execute(newText);
+
+                return true;
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
     }
 
+    class RetrieveFeedTask extends AsyncTask<String, Void, ArrayList<String>> {
+
+        private Exception exception;
+
+        protected ArrayList<String> doInBackground(String... newText) {
+            try {
+
+                ArrayList<String> result = new ArrayList<>();
+
+                List<se.walkercrou.places.Place> places = mClient.getPlacesByQuery(newText[0], 5);
+
+                for (se.walkercrou.places.Place location : places) {
+                    result.add(location.getAddress());
+                }
+
+                return result;
+            } catch (Exception e) {
+                this.exception = e;
+                return null;
+            }
+        }
+
+        protected void onPostExecute(ArrayList<String> places) {
+            searchView.getAdapter().clear();
+
+            if (places != null) {
+                for (String place : places) {
+                    searchView.getAdapter().insert(place, searchView.getAdapter().getCount());
+                }
+            }
+
+            searchView.getAdapter().notifyDataSetChanged();
+        }
+    }
+*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

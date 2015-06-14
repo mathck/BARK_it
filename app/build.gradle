@@ -17,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
 }
 
 repositories {
@@ -41,4 +45,8 @@ dependencies {
 
     // App Intro
     compile 'com.github.paolorotolo:appintro:1.2.1'
+
+    // Google Places API Autocomplete Searchview
+    compile 'se.walkercrou:google-places-api-java:2.1.2'
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
 }

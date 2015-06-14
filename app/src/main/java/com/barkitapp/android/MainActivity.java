@@ -68,7 +68,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         String title = LocationService.getLocationCity(this, LocationService.getLocation(this));
-        getSupportActionBar().setTitle(title);
+        if(title != null && !title.isEmpty())
+            getSupportActionBar().setTitle(title);
+        else
+            getSupportActionBar().setTitle(R.string.app_name);
 
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
