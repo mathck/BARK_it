@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_places:
-                Intent intent = new Intent(mContext, MapsActivity.class);
+                Intent intent = new Intent(mContext, PlacesActivity.class);
                 mContext.startActivity(intent);
                 return true;
         }
@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_places:
-                        Intent intent = new Intent(mContext, MapsActivity.class);
+                        Intent intent = new Intent(mContext, PlacesActivity.class);
                         mContext.startActivity(intent);
                         return true;
                 }

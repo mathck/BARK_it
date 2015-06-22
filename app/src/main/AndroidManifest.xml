@@ -46,13 +46,14 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" >
+            android:label="@string/title_activity_maps"
+            android:parentActivityName=".PlacesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.barkitapp.android.MainActivity" />
         </activity>
         <activity
-            android:name="com.barkitapp.com.Places"
+            android:name=".PlacesActivity"
             android:label="@string/title_activity_places"
             android:parentActivityName=".MainActivity" >
             <meta-data
