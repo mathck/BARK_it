@@ -1,12 +1,13 @@
 package com.barkitapp.android;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ import java.util.Random;
 
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 
-public class BarkListFragment extends Fragment {
+public class BarkReplyListFragment extends Fragment {
 
     private AlphaInAnimationAdapter mAdpater;
     private List<String> mValues;
@@ -37,7 +38,7 @@ public class BarkListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_bark_list, container, false);
+                R.layout.fragment_reply_list, container, false);
         setupRecyclerView(rv);
         return rv;
     }
@@ -103,25 +104,30 @@ public class BarkListFragment extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.bark_list_item, parent, false);
+                    .inflate(R.layout.bark_reply_list_item, parent, false);
             view.setBackgroundResource(mBackground);
             return new ViewHolder(view);
+        }
+
+        /**
+         * This method converts device specific pixels to density independent pixels.
+         *
+         * @param dp A value in dp unit. Which we need to convert into db
+         * @return A float value to represent dp equivalent to px value
+         */
+        public static int convertDpToPixel(float dp) {
+            DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+            return (int) (dp * (metrics.densityDpi / 160f));
         }
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mBoundString = mValues.get(position);
 
-            holder.mView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, BarkDetailActivity.class);
-                    intent.putExtra(BarkDetailActivity.EXTRA_NAME, holder.mBoundString);
+            holder.mView.findViewById(R.id.reply).setPadding(0, 0, 0, 0);
 
-                    context.startActivity(intent);
-                }
-            });
+            if(position == 0)
+                holder.mView.findViewById(R.id.reply).setPadding(0, convertDpToPixel(36), 0, 0);
 
             final TextView bark_text = (TextView) holder.mView.findViewById(R.id.text1);
             bark_text.setText(mValues.get(position));
