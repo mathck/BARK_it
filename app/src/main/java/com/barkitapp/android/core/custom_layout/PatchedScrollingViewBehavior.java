@@ -1,4 +1,4 @@
-package com.barkitapp.android.com.barkitapp.custom_layout;
+package com.barkitapp.android.core.custom_layout;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;

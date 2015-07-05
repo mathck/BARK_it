@@ -1,4 +1,4 @@
-package com.barkitapp.android;
+package com.barkitapp.android.places;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.barkitapp.android.R;
 
 public class PlacesActivity extends AppCompatActivity {
 
@@ -32,7 +34,7 @@ public class PlacesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_places);
+        setContentView(R.layout.places_activity);
 
         mContext = this;
 

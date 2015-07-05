@@ -1,4 +1,4 @@
-package com.barkitapp.android.com.barkitapp.objects;
+package com.barkitapp.android.core.objects;
 
 public class Coordinates {
 

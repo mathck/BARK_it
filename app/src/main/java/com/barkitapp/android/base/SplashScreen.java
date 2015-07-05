@@ -1,4 +1,4 @@
-package com.barkitapp.android;
+package com.barkitapp.android.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,9 +11,11 @@ import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.barkitapp.android.com.barkitapp.Listener.UserLocationListener;
-import com.barkitapp.android.com.barkitapp.services.LocationService;
-import com.barkitapp.android.com.barkitapp.utility.Constants;
+import com.barkitapp.android.R;
+import com.barkitapp.android.main.MainActivity;
+import com.barkitapp.android.core.Listener.UserLocationListener;
+import com.barkitapp.android.core.services.LocationService;
+import com.barkitapp.android.core.utility.Constants;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
@@ -26,7 +28,7 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.splash_activity);
 
         mLogo = ((ImageView) findViewById(R.id.imgLogo));
         mSpeech = (TextView) findViewById(R.id.speech);
@@ -102,7 +104,7 @@ public class SplashScreen extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.splash_activity);
 
 
     new PrefetchData().execute();

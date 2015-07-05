@@ -1,4 +1,4 @@
-package com.barkitapp.android;
+package com.barkitapp.android.places;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.barkitapp.android.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class PlacesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View fragmentView = inflater.inflate(R.layout.fragment_places, container, false);
+        View fragmentView = inflater.inflate(R.layout.places_fragment, container, false);
 
         RecyclerView featuredList = (RecyclerView) fragmentView.findViewById(R.id.featuredList);
 

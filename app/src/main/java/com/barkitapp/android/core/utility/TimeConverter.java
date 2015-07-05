@@ -1,4 +1,4 @@
-package com.barkitapp.android.com.barkitapp.utility;
+package com.barkitapp.android.core.utility;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

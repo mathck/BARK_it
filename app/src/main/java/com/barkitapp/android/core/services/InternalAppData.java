@@ -1,9 +1,9 @@
-package com.barkitapp.android.com.barkitapp.services;
+package com.barkitapp.android.core.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.barkitapp.android.com.barkitapp.utility.Constants;
+import com.barkitapp.android.core.utility.Constants;
 
 public class InternalAppData {
 

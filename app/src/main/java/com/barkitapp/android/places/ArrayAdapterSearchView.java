@@ -1,4 +1,4 @@
-package com.barkitapp.android;
+package com.barkitapp.android.places;
 
 import android.content.Context;
 import android.support.v4.widget.CursorAdapter;

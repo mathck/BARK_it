@@ -1,12 +1,12 @@
-package com.barkitapp.android.com.barkitapp.services;
+package com.barkitapp.android.core.services;
 
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 
-import com.barkitapp.android.com.barkitapp.objects.Coordinates;
-import com.barkitapp.android.com.barkitapp.utility.SharedPrefKeys;
+import com.barkitapp.android.core.objects.Coordinates;
+import com.barkitapp.android.core.utility.SharedPrefKeys;
 
 import java.io.IOException;
 import java.util.List;

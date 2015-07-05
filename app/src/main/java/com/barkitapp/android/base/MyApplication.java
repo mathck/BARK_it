@@ -1,4 +1,4 @@
-package com.barkitapp.android;
+package com.barkitapp.android.base;
 
 import android.app.Application;
 

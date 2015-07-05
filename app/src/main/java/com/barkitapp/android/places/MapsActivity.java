@@ -1,4 +1,4 @@
-package com.barkitapp.android;
+package com.barkitapp.android.places;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -17,9 +17,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.barkitapp.android.com.barkitapp.objects.Coordinates;
-import com.barkitapp.android.com.barkitapp.services.LocationService;
-import com.barkitapp.android.com.barkitapp.utility.Constants;
+import com.barkitapp.android.R;
+import com.barkitapp.android.core.objects.Coordinates;
+import com.barkitapp.android.core.services.LocationService;
+import com.barkitapp.android.core.utility.Constants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -50,7 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.places_change);
 
         setStatusBarColor();
 
@@ -96,7 +97,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //ArrayAdapterSearchView searchView = (ArrayAdapterSearchView) searchItem.getActionView();
         searchView = (ArrayAdapterSearchView) menu.findItem(R.id.action_search).getActionView();
 
-        searchView.setAdapter(new ArrayAdapter<String>(this, R.layout.auto_complete_list_item, new ArrayList<String>()));
+        searchView.setAdapter(new ArrayAdapter<String>(this, R.layout.places_auto_complete_list_item, new ArrayList<String>()));
 
         searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

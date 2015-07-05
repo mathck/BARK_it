@@ -1,4 +1,4 @@
-package com.barkitapp.android.com.barkitapp.utility;
+package com.barkitapp.android.core.utility;
 
 public final class Constants {
 
