@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //AppBarLayout appbar = (AppBarLayout) findViewById(R.id.appbar);
+        //appbar.ScrollingViewBehavior = new PatchedScrollingViewBehavior();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
