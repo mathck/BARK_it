@@ -28,7 +28,12 @@ public class LocationService {
         // todo update current position
     }
 
-    /*------- To get city name from coordinates -------- */
+    /**
+     * get city name from coordinates
+     * @param context
+     * @param loc
+     * @return
+     */
     public static String getLocationCity(Context context, Coordinates loc) {
         String cityName = null;
 
@@ -48,4 +53,28 @@ public class LocationService {
         return cityName;
     }
 
+    /**
+     * get state name from coordinates
+     * @param context
+     * @param loc
+     * @return
+     */
+    public static String getLocationCountry(Context context, Coordinates loc) {
+        String cityName = null;
+
+        Geocoder gcd = new Geocoder(context, Locale.getDefault());
+        List<Address> addresses;
+        try {
+            addresses = gcd.getFromLocation(loc.getLatitude(),
+                    loc.getLongitude(), 1);
+            if (addresses.size() > 0)
+                System.out.println(addresses.get(0).getLocality());
+            cityName = addresses.get(0).getCountryName();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return cityName;
+    }
 }

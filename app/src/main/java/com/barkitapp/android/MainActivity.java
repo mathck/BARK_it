@@ -70,9 +70,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String title = LocationService.getLocationCity(this, LocationService.getLocation(this));
-        if(title != null && !title.isEmpty())
-            getSupportActionBar().setTitle(title);
+        String city = LocationService.getLocationCity(this, LocationService.getLocation(this));
+        //String country = LocationService.getLocationCountry(this, LocationService.getLocation(this));
+        if(city != null && !city.isEmpty()) {
+            getSupportActionBar().setTitle(city);
+            //getSupportActionBar().setSubtitle(country);
+        }
         else
             getSupportActionBar().setTitle(R.string.app_name);
 
