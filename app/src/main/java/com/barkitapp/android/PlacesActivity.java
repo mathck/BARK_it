@@ -16,6 +16,9 @@ import android.view.WindowManager;
 
 public class PlacesActivity extends AppCompatActivity {
 
+    // List style
+    // http://www.google.com/design/spec/components/lists.html#lists-specs
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void setStatusBarColor() {
         Window window = getWindow();
