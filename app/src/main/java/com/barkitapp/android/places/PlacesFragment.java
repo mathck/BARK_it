@@ -17,8 +17,6 @@ import com.barkitapp.android.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
-
 public class PlacesFragment extends Fragment {
 
     public PlacesFragment() {
@@ -36,7 +34,7 @@ public class PlacesFragment extends Fragment {
         return fragmentView;
     }
 
-    private AlphaInAnimationAdapter mAdpater;
+    private SimpleStringRecyclerViewAdapter mAdpater;
     private List<String> mPlaces;
 
     public void addNewItem(String item) {
@@ -63,10 +61,7 @@ public class PlacesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         SimpleStringRecyclerViewAdapter adapter = new SimpleStringRecyclerViewAdapter(getActivity(), mPlaces);
 
-        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
-        alphaAdapter.setStartPosition(1);
-        alphaAdapter.setDuration(250);
-        recyclerView.setAdapter(mAdpater = alphaAdapter);
+        recyclerView.setAdapter(mAdpater = adapter);
     }
 
     public static class SimpleStringRecyclerViewAdapter

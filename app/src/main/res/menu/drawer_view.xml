@@ -1,41 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (C) 2015 The Android Open Source Project
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~      http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_comment_multiple_outline"
+            android:icon="@drawable/ic_comment_multiple_outline_black_48dp"
             android:title="@string/navigation_drawer_barks" />
         <item
             android:id="@+id/nav_places"
-            android:icon="@drawable/ic_earth_dark"
+            android:icon="@drawable/ic_earth_black_48dp"
             android:title="@string/navigation_drawer_places" />
     </group>
-<!--
-    <item android:title="Sub items">
+
+    <item android:title="@string/more">
         <menu>
             <item
-                android:icon="@drawable/ic_dashboard"
-                android:title="Sub item 1" />
+                android:id="@+id/nav_friends"
+                android:icon="@drawable/ic_favorite_black_48dp"
+                android:title="@string/invite_friends" />
             <item
-                android:icon="@drawable/ic_forum"
-                android:title="Sub item 2" />
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_feedback_black_48dp"
+                android:title="@string/your_opinion" />
         </menu>
     </item>
--->
+
 </menu>

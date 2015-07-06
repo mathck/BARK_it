@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +19,13 @@ import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.utility.Constants;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class SplashScreen extends Activity {
     // Splash screen timer
@@ -52,6 +60,8 @@ public class SplashScreen extends Activity {
                 default: mSpeech.setText("??");
             }
         }
+
+        ResetUserCache("kHoG2ihhvD");
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
@@ -96,6 +106,21 @@ public class SplashScreen extends Activity {
                     .duration(1000)
                     .playOn(mSpeech);
         }
+    }
+
+    private void ResetUserCache(String user_id) {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("user_id", user_id);
+
+        ParseCloud.callFunctionInBackground("ResetUserCache", params, new FunctionCallback<JSONObject>() {
+            public void done(JSONObject result, ParseException e) {
+                if (e == null) {
+                    // its ok
+                } else {
+                    Log.d("ERROR", Log.getStackTraceString(e));
+                }
+            }
+        });
     }
 
     /*
