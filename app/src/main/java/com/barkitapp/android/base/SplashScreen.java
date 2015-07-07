@@ -8,28 +8,34 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.barkitapp.android.R;
-import com.barkitapp.android.main.MainActivity;
 import com.barkitapp.android.core.Listener.UserLocationListener;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.main.MainActivity;
+import com.barkitapp.android.parse.enums.Order;
+import com.barkitapp.android.parse.functions.ResetUserCache;
+import com.barkitapp.android.parse.functions.UpdatePosts;
+import com.barkitapp.android.parse.objects.Post;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.parse.FunctionCallback;
-import com.parse.ParseCloud;
-import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 
-import org.json.JSONObject;
-
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class SplashScreen extends Activity {
-    // Splash screen timer
-    private static int SPLASH_TIME_OUT = 1000;
+public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsCompleted {
+
     private ImageView mLogo;
     private TextView mSpeech;
 
@@ -61,16 +67,30 @@ public class SplashScreen extends Activity {
             }
         }
 
-        ResetUserCache("kHoG2ihhvD");
+        // todo get user id
 
+        // reset seen posts for user, todo merge into updatePosts
+        ResetUserCache.Run("kHoG2ihhvD");
+
+        // get location updates
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
         LocationListener locationListener = new UserLocationListener(this);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constants.GET_LOCATION_EVERY_MILLISECONDS, Constants.GET_LOCATION_EVERY_METERS, locationListener);
 
+        // get current location
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         LocationService.storeLocation(this, lastKnownLocation);
 
+        // get Posts from Parse
+        UpdatePosts.Run(this,
+                "kHoG2ihhvD",
+                new ParseGeoPoint(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude()),
+                new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
+                Constants.DEFAULT_RADIUS,
+                Constants.POSTS_MAX_COUNT,
+                Order.TIME);
+
+        // close spalsh screen after some time
         new Handler().postDelayed(new Runnable() {
 
             /*
@@ -80,15 +100,11 @@ public class SplashScreen extends Activity {
 
             @Override
             public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity
                 Intent i = new Intent(SplashScreen.this, MainActivity.class);
                 startActivity(i);
-
-                // close this activity
                 finish();
             }
-        }, SPLASH_TIME_OUT);
+        }, Constants.SPLASH_TIME_OUT);
     }
 
     @Override
@@ -108,19 +124,50 @@ public class SplashScreen extends Activity {
         }
     }
 
-    private void ResetUserCache(String user_id) {
-        HashMap<String, Object> params = new HashMap<String, Object>();
-        params.put("user_id", user_id);
+    @Override
+    public void onUpdatePostsCompleted(HashMap<String, Object> result) {
 
-        ParseCloud.callFunctionInBackground("ResetUserCache", params, new FunctionCallback<JSONObject>() {
-            public void done(JSONObject result, ParseException e) {
-                if (e == null) {
-                    // its ok
-                } else {
-                    Log.d("ERROR", Log.getStackTraceString(e));
-                }
-            }
-        });
+        List<Post> postsList = new ArrayList<>();
+
+        ArrayList<ParseObject> posts = (ArrayList<ParseObject>) result.get("posts");
+
+        postsList.clear();
+
+        for (ParseObject post : posts) {
+            postsList.add(new Post(post.getString("objectId"),
+                    post.getString("userId"),
+                    post.getDate("time_created"),
+                    post.getParseGeoPoint("location"),
+                    post.getString("text"),
+                    post.getParseFile("image_small"),
+                    post.getString("media_content"),
+                    post.getInt("media_type"),
+                    post.getInt("vote_counter"),
+                    post.getInt("reply_counter"),
+                    post.getInt("badge")));
+        }
+
+        File file = new File(getDir("data", MODE_PRIVATE), "Posts");
+        boolean deleted = file.delete();
+
+        ObjectOutputStream outputStream = null;
+
+        try {
+
+            outputStream = new ObjectOutputStream(new FileOutputStream(file));
+            outputStream.writeObject(postsList);
+            outputStream.flush();
+            outputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onUpdatePostsFailed(String error) {
+        Toast.makeText(this, "Failed to retrieve BARKS", Toast.LENGTH_LONG).show();
     }
 
     /*

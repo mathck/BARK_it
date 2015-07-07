@@ -22,7 +22,7 @@
 
     <application
         android:allowBackup="true"
-        android:name=".base.MyApplication"
+        android:name=".base.Setup"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.DesignDemo" >
