@@ -12,38 +12,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.Listener.UserLocationListener;
 import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
+import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.RandomBarkGenerator;
 import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.main.MainActivity;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.UpdatePosts;
-import com.barkitapp.android.parse.objects.Post;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsCompleted {
 
     private ImageView mLogo;
     private TextView mSpeech;
-    private long startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +68,6 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
                 Constants.GET_POSTS_COUNT,
                 Order.TIME,
                 true);
-
-        startTime = System.currentTimeMillis();
 
         // close spalsh screen after some time
         new Handler().postDelayed(new Runnable() {
@@ -118,51 +105,11 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
     @Override
     public void onUpdatePostsCompleted(HashMap<String, Object> result) {
-        long difference = System.currentTimeMillis() - startTime;
-        Toast.makeText(this, difference + "ms", Toast.LENGTH_LONG).show();
-
-        List<Post> postsList = new ArrayList<>();
-        ArrayList<ParseObject> posts = (ArrayList<ParseObject>) result.get("posts");
-
-        postsList.clear();
-
-        for (ParseObject post : posts) {
-            postsList.add(new Post(post.getString("objectId"),
-                    post.getString("userId"),
-                    post.getDate("time_created"),
-                    post.getParseGeoPoint("location"),
-                    post.getString("text"),
-                    post.getParseFile("image_small"),
-                    post.getString("media_content"),
-                    post.getInt("media_type"),
-                    post.getInt("vote_counter"),
-                    post.getInt("reply_counter"),
-                    post.getInt("badge")));
-        }
-
-        File file = new File(getDir("data", MODE_PRIVATE), Constants.LOCAL_MASTER_LIST);
-        boolean deleted = file.delete();
-
-        ObjectOutputStream outputStream = null;
-
-        try {
-
-            outputStream = new ObjectOutputStream(new FileOutputStream(file));
-            outputStream.writeObject(postsList);
-            outputStream.flush();
-            outputStream.close();
-
-            EventBus.getDefault().post(new InitialPostsReceivedEvent());
-            InternalAppData.Store(this, SharedPrefKeys.MASTER_LIST_UPDATED, true);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        MasterList.StoreMasterList(this, result);
     }
 
     @Override
     public void onUpdatePostsFailed(String error) {
-        Toast.makeText(this, "Failed to retrieve BARKS", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 }
