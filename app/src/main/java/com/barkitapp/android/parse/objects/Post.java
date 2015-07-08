@@ -1,5 +1,6 @@
 package com.barkitapp.android.parse.objects;
 
+import com.barkitapp.android.core.objects.Coordinates;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 
@@ -15,7 +16,7 @@ public class Post implements Serializable {
     String userId;
 
     Date time_created;
-    transient ParseGeoPoint location;
+    Coordinates location;
 
     String text;
     transient ParseFile image_small;
@@ -30,7 +31,7 @@ public class Post implements Serializable {
         this.objectId = objectId;
         this.userId = userId;
         this.time_created = time_created;
-        this.location = location;
+        this.location = new Coordinates(location.getLatitude(), location.getLongitude());
         this.text = text;
         this.image_small = image_small;
         this.media_content = media_content;
@@ -64,11 +65,11 @@ public class Post implements Serializable {
         this.time_created = time_created;
     }
 
-    public ParseGeoPoint getLocation() {
+    public Coordinates getLocation() {
         return location;
     }
 
-    public void setLocation(ParseGeoPoint location) {
+    public void setLocation(Coordinates location) {
         this.location = location;
     }
 

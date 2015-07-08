@@ -17,7 +17,7 @@ public class UpdatePosts {
 
     private static OnUpdatePostsCompleted listener;
 
-    public static void Run(OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int radius, int max_count, Order order) {
+    public static void Run(OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int radius, int max_count, Order order, boolean resetUserCache) {
 
         UpdatePosts.listener = listener;
 
@@ -28,6 +28,7 @@ public class UpdatePosts {
         params.put("radius", radius);
         params.put("max_count", max_count);
         params.put("order", order.ordinal());
+        params.put("resetUserCache", resetUserCache);
 
         ParseCloud.callFunctionInBackground("UpdatePosts", params, new FunctionCallback<HashMap<String, Object>>() {
             public void done(HashMap<String, Object> result, ParseException e) {

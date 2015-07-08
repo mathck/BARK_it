@@ -16,4 +16,14 @@ public class InternalAppData {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PACKAGE_NAME, Context.MODE_PRIVATE);
         prefs.edit().putString(key, value).apply();
     }
+
+    public static Boolean getBoolean(Context context, String key) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PACKAGE_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean(key, false);
+    }
+
+    public static void Store(Context context, String key, boolean value) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PACKAGE_NAME, Context.MODE_PRIVATE);
+        prefs.edit().putBoolean(key, value).apply();
+    }
 }

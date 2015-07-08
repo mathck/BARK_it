@@ -1,6 +1,8 @@
 package com.barkitapp.android.core.objects;
 
-public class Coordinates {
+import java.io.Serializable;
+
+public class Coordinates implements Serializable {
 
     private double mLatitude;
     private double mLongitude;

@@ -21,5 +21,12 @@
   <string name="your_opinion">Your Opinion</string>
   <string name="invite_friends">Invite Friends</string>
   <string name="more">More</string>
+  <string name="random_bark_0">cool</string>
+  <string name="random_bark_1">oh hai!</string>
+  <string name="random_bark_2">♥</string>
+  <string name="random_bark_3">wow</string>
+  <string name="random_bark_4">BARK</string>
+  <string name="random_bark_5">\?</string>
+  <string name="random_bark_undefined">\??</string>
 
 </resources>

@@ -12,13 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.Listener.UserLocationListener;
+import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.utility.RandomBarkGenerator;
+import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.main.MainActivity;
 import com.barkitapp.android.parse.enums.Order;
-import com.barkitapp.android.parse.functions.ResetUserCache;
 import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.barkitapp.android.parse.objects.Post;
 import com.daimajia.androidanimations.library.Techniques;
@@ -34,10 +37,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsCompleted {
 
     private ImageView mLogo;
     private TextView mSpeech;
+    private long startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,30 +53,13 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         mLogo = ((ImageView) findViewById(R.id.imgLogo));
         mSpeech = (TextView) findViewById(R.id.speech);
 
-        // todo extract me to res/strings
         if(mSpeech != null) {
-            switch ((int)(Math.random() * 6)) //0 - 5
-            {
-                case 0:  mSpeech.setText("cool");
-                    break;
-                case 1:  mSpeech.setText("oh hai!");
-                    break;
-                case 2:  mSpeech.setText("\u2665");
-                    break;
-                case 3:  mSpeech.setText("wow");
-                    break;
-                case 4:  mSpeech.setText("BARK");
-                    break;
-                case 5:  mSpeech.setText("?");
-                    break;
-                default: mSpeech.setText("??");
-            }
+            mSpeech.setText(RandomBarkGenerator.Run(this));
         }
 
-        // todo get user id
+        InternalAppData.Store(this, SharedPrefKeys.MASTER_LIST_UPDATED, false);
 
-        // reset seen posts for user, todo merge into updatePosts
-        ResetUserCache.Run("kHoG2ihhvD");
+        // todo get user id
 
         // get location updates
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -87,8 +76,11 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
                 new ParseGeoPoint(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude()),
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
                 Constants.DEFAULT_RADIUS,
-                Constants.POSTS_MAX_COUNT,
-                Order.TIME);
+                Constants.GET_POSTS_COUNT,
+                Order.TIME,
+                true);
+
+        startTime = System.currentTimeMillis();
 
         // close spalsh screen after some time
         new Handler().postDelayed(new Runnable() {
@@ -126,9 +118,10 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
     @Override
     public void onUpdatePostsCompleted(HashMap<String, Object> result) {
+        long difference = System.currentTimeMillis() - startTime;
+        Toast.makeText(this, difference + "ms", Toast.LENGTH_LONG).show();
 
         List<Post> postsList = new ArrayList<>();
-
         ArrayList<ParseObject> posts = (ArrayList<ParseObject>) result.get("posts");
 
         postsList.clear();
@@ -147,7 +140,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
                     post.getInt("badge")));
         }
 
-        File file = new File(getDir("data", MODE_PRIVATE), "Posts");
+        File file = new File(getDir("data", MODE_PRIVATE), Constants.LOCAL_MASTER_LIST);
         boolean deleted = file.delete();
 
         ObjectOutputStream outputStream = null;
@@ -159,6 +152,9 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
             outputStream.flush();
             outputStream.close();
 
+            EventBus.getDefault().post(new InitialPostsReceivedEvent());
+            InternalAppData.Store(this, SharedPrefKeys.MASTER_LIST_UPDATED, true);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -169,71 +165,4 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
     public void onUpdatePostsFailed(String error) {
         Toast.makeText(this, "Failed to retrieve BARKS", Toast.LENGTH_LONG).show();
     }
-
-    /*
-    String now_playing, earned;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_activity);
-
-
-    new PrefetchData().execute();
-
-}
-
-
-private class PrefetchData extends AsyncTask<Void, Void, Void> {
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        // before making http calls
-
-    }
-
-    @Override
-    protected Void doInBackground(Void... arg0) {
-        JsonParser jsonParser = new JsonParser();
-        String json = jsonParser
-                .getJSONFromUrl("http://api.androidhive.info/game/game_stats.json");
-
-        Log.e("Response: ", "> " + json);
-
-        if (json != null) {
-            try {
-                JSONObject jObj = new JSONObject(json)
-                        .getJSONObject("game_stat");
-                now_playing = jObj.getString("now_playing");
-                earned = jObj.getString("earned");
-
-                Log.e("JSON", "> " + now_playing + earned);
-
-            } catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-        }
-
-        return null;
-    }
-
-    @Override
-    protected void onPostExecute(Void result) {
-        super.onPostExecute(result);
-        // After completing http call
-        // will close this activity and lauch main activity
-        Intent i = new Intent(SplashScreen.this, MainActivity.class);
-        i.putExtra("now_playing", now_playing);
-        i.putExtra("earned", earned);
-        startActivity(i);
-
-        // close this activity
-        finish();
-    }
-
-}
-     */
 }

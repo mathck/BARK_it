@@ -16,7 +16,9 @@ public final class Constants {
 
     public static final int DEFAULT_RADIUS = 5000;
 
-    public static final int POSTS_MAX_COUNT = 10;
+    public static final int GET_POSTS_COUNT = 20;
 
-    public static final int SPLASH_TIME_OUT = 1500;
+    public static final int SPLASH_TIME_OUT = 250;
+
+    public static final String LOCAL_MASTER_LIST = "master_list";
 }
