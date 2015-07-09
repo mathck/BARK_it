@@ -107,12 +107,14 @@
                     android:paddingRight="20dp"
                     android:maxLines="1"
                     android:text="0 km" />
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                <ImageButton
+                    android:id="@+id/flagReply"
+                    style="?android:borderlessButtonStyle"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_gravity="bottom"
                     android:layout_marginRight="20dp"
-                    android:tint="@color/secondary_text"
+                    android:tint="@color/card_background"
                     android:src="@drawable/ic_flag_white_48dp"/>
             </LinearLayout>
             </RelativeLayout>

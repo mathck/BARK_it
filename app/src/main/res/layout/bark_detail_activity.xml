@@ -137,6 +137,7 @@
                     android:layout_margin="0dp"
                     android:paddingLeft="16dp"
                     android:singleLine="true"
+                    android:maxLength="46"
                     android:lines="1"
                     android:maxLines="1"
                     android:background="@null"

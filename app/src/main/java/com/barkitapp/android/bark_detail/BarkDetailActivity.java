@@ -16,13 +16,19 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
+import com.barkitapp.android.core.services.MasterList;
+import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.utility.DistanceConverter;
+import com.barkitapp.android.core.utility.TimeConverter;
 import com.barkitapp.android.parse.enums.ContentType;
 import com.barkitapp.android.parse.functions.Flag;
 import com.barkitapp.android.parse.functions.PostReply;
+import com.barkitapp.android.parse.objects.Post;
 import com.barkitapp.android.parse.objects.Reply;
 import com.parse.ParseGeoPoint;
 
@@ -30,19 +36,32 @@ import java.util.Date;
 
 public class BarkDetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_NAME = "cheese_name";
+    public static final String EXTRA_POST = "Post";
+
+    private Post mPost;
+    public String ObjectId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bark_detail_activity);
 
         Intent intent = getIntent();
-        final String bark_text = intent.getStringExtra(EXTRA_NAME);
+        ObjectId = intent.getStringExtra(EXTRA_POST);
 
-        if(bark_text != null && !bark_text.equals("")) {
-            ((TextView) findViewById(R.id.bark_text)).setText(bark_text);
+        setContentView(R.layout.bark_detail_activity);
+
+
+        mPost = MasterList.GetPost(ObjectId);
+
+        if(ObjectId == null || ObjectId.equals("") || mPost == null) {
+            Toast.makeText(this, "Failed to load BARK", Toast.LENGTH_LONG).show();
+            finish();
         }
+
+        ((TextView) findViewById(R.id.bark_text)).setText(mPost.getText());
+        ((TextView) findViewById(R.id.comments_count)).setText(mPost.getReply_counter() + "");
+        ((TextView) findViewById(R.id.hours)).setText(TimeConverter.getPostAge(mPost.getTime_created()));
+        ((TextView) findViewById(R.id.distance)).setText(DistanceConverter.GetDistanceInKm(this, mPost.getLatitude(), mPost.getLongitude()));
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +70,7 @@ public class BarkDetailActivity extends AppCompatActivity {
 
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("BARK");
+            //actionBar.setTitle("BARK");
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.share);
@@ -61,7 +80,7 @@ public class BarkDetailActivity extends AppCompatActivity {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this BARK"); // todo replace link
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, bark_text + "\n\n" + "Start barking https://play.google.com/store/apps/details?id=com.gmail.mathck.SpaceTrip");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mPost.getText() + "\n\n" + "Start barking http://barkitapp.com/");
                 startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
             }
         });
@@ -81,16 +100,16 @@ public class BarkDetailActivity extends AppCompatActivity {
 
                 Coordinates location = LocationService.getLocation(getApplicationContext());
 
-                PostReply.run("kHoG2ihhvD",
-                        "AAbvD5hbPF",
+                PostReply.run(Constants.TEMP_USER_ID,
+                        mPost.getObjectId(),
                         new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                         new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                         textToPost,
                         0);
 
                 listFragment.addNewItem(new Reply("unknown",
-                        "kHoG2ihhvD",
-                        "AAbvD5hbPF",
+                        Constants.TEMP_USER_ID,
+                        mPost.getObjectId(),
                         new Date(),
                         textToPost,
                         0,
@@ -125,8 +144,8 @@ public class BarkDetailActivity extends AppCompatActivity {
                         .setMessage("Are you sure you want to flag this BARK?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Flag.run("kHoG2ihhvD",
-                                        "AAbvD5hbPF", // todo objectId for Flag
+                                Flag.run(Constants.TEMP_USER_ID,
+                                        mPost.getObjectId(),
                                         ContentType.POST,
                                         new ParseGeoPoint(location.getLatitude(), location.getLongitude()));
                             }
@@ -136,7 +155,7 @@ public class BarkDetailActivity extends AppCompatActivity {
                                 // do nothing
                             }
                         })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setIcon(R.mipmap.ic_launcher)
                         .show();
                 return true;
 

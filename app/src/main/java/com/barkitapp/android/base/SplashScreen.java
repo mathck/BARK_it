@@ -60,7 +60,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
         // get Posts from Parse
         UpdatePosts.run(this,
-                "kHoG2ihhvD",
+                Constants.TEMP_USER_ID,
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
                 Constants.DEFAULT_RADIUS,

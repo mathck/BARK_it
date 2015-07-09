@@ -130,7 +130,7 @@ public class PlacesFragment extends Fragment {
                 public void onClick(View v) {
                     //Context context = v.getContext();
                     //Intent intent = new Intent(context, BarkDetailActivity.class);
-                    //intent.putExtra(BarkDetailActivity.EXTRA_NAME, holder.mBoundReply);
+                    //intent.putExtra(BarkDetailActivity.EXTRA_POST, holder.mBoundReply);
 
                     //context.startActivity(intent);
 

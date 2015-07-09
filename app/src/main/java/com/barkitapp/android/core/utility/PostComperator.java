@@ -21,7 +21,7 @@ public class PostComperator {
 
             if (vote_counter_1 == vote_counter_2)
                 return 0;
-            else if (vote_counter_1 > vote_counter_2)
+            else if (vote_counter_1 < vote_counter_2)
                 return 1;
             else
                 return -1;
