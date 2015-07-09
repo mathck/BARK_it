@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 public class PostVote {
 
-    public static void Run(String user_id, String content_id, ContentType content_type, ParseGeoPoint current_location, VoteType vote_type) {
+    public static void run(String user_id, String content_id, ContentType content_type, ParseGeoPoint current_location, VoteType vote_type) {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("user_id", user_id);
         params.put("content_id", content_id);

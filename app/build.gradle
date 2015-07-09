@@ -42,6 +42,9 @@ dependencies {
     compile 'in.srain.cube:ultra-ptr:1.0.9'
     compile 'com.google.android.gms:play-services:7.5.0'
 
+    // SQL ORM
+    compile 'com.github.satyan:sugar:1.3.1'
+
     // Eventbus
     compile 'de.greenrobot:eventbus:2.4.0'
 

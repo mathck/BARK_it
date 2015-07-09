@@ -14,13 +14,12 @@ import android.widget.Toast;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.Listener.UserLocationListener;
-import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.RandomBarkGenerator;
-import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.main.MainActivity;
+import com.barkitapp.android.parse.Connection;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.daimajia.androidanimations.library.Techniques;
@@ -46,7 +45,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
             mSpeech.setText(RandomBarkGenerator.Run(this));
         }
 
-        InternalAppData.Store(this, SharedPrefKeys.MASTER_LIST_UPDATED, false);
+        Connection.Connect(getApplication());
 
         // todo get user id
 
@@ -60,9 +59,9 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         LocationService.storeLocation(this, lastKnownLocation);
 
         // get Posts from Parse
-        UpdatePosts.Run(this,
+        UpdatePosts.run(this,
                 "kHoG2ihhvD",
-                new ParseGeoPoint(lastKnownLocation.getLatitude(),lastKnownLocation.getLongitude()),
+                new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
                 Constants.DEFAULT_RADIUS,
                 Constants.GET_POSTS_COUNT,

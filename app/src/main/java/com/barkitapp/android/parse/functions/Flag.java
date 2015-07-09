@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class Flag {
 
-    public static void Run(String user_id, String content_id, ContentType content_type, ParseGeoPoint current_location) {
+    public static void run(String user_id, String content_id, ContentType content_type, ParseGeoPoint current_location) {
 
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("user_id", user_id);

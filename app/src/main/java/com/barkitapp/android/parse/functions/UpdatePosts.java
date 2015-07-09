@@ -17,7 +17,7 @@ public class UpdatePosts {
 
     private static OnUpdatePostsCompleted listener;
 
-    public static void Run(OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int radius, int max_count, Order order, boolean resetUserCache) {
+    public static void run(OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int radius, int max_count, Order order, boolean resetUserCache) {
 
         UpdatePosts.listener = listener;
 

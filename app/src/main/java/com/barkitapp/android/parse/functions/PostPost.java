@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class PostPost {
 
-    public static void Run(String user_id, ParseGeoPoint chosen_location, String text, int badge) {
+    public static void run(String user_id, ParseGeoPoint chosen_location, String text, int badge) {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("user_id", user_id);
         params.put("chosen_location", chosen_location);

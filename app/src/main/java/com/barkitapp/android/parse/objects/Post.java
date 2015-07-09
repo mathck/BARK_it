@@ -1,25 +1,24 @@
 package com.barkitapp.android.parse.objects;
 
-import com.barkitapp.android.core.objects.Coordinates;
-import com.parse.ParseFile;
+import com.orm.SugarRecord;
 import com.parse.ParseGeoPoint;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Post Class from Parse
  */
-public class Post implements Serializable {
+public class Post extends SugarRecord<Post> {
 
     String objectId;
     String userId;
 
     Date time_created;
-    Coordinates location;
+    double latitude;
+    double longitude;
 
     String text;
-    transient ParseFile image_small;
+    //transient ParseFile image_small;
     String media_content;
     int media_type;
 
@@ -27,18 +26,38 @@ public class Post implements Serializable {
     int reply_counter;
     int badge;
 
-    public Post(String objectId, String userId, Date time_created, ParseGeoPoint location, String text, ParseFile image_small, String media_content, int media_type, int vote_counter, int reply_counter, int badge) {
+    public Post() {
+    }
+
+    public Post(String objectId, String userId, Date time_created, ParseGeoPoint location, String text, String media_content, int media_type, int vote_counter, int reply_counter, int badge) {
         this.objectId = objectId;
         this.userId = userId;
         this.time_created = time_created;
-        this.location = new Coordinates(location.getLatitude(), location.getLongitude());
+        this.latitude = location.getLatitude();
+        this.longitude = location.getLongitude();
         this.text = text;
-        this.image_small = image_small;
+        //this.image_small = image_small;
         this.media_content = media_content;
         this.media_type = media_type;
         this.vote_counter = vote_counter;
         this.reply_counter = reply_counter;
         this.badge = badge;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
     public String getObjectId() {
@@ -65,28 +84,12 @@ public class Post implements Serializable {
         this.time_created = time_created;
     }
 
-    public Coordinates getLocation() {
-        return location;
-    }
-
-    public void setLocation(Coordinates location) {
-        this.location = location;
-    }
-
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public ParseFile getImage_small() {
-        return image_small;
-    }
-
-    public void setImage_small(ParseFile image_small) {
-        this.image_small = image_small;
     }
 
     public String getMedia_content() {

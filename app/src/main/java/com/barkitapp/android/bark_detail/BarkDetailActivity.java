@@ -1,5 +1,6 @@
 package com.barkitapp.android.bark_detail;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -12,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.barkitapp.android.R;
@@ -19,7 +22,11 @@ import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.parse.enums.ContentType;
 import com.barkitapp.android.parse.functions.Flag;
+import com.barkitapp.android.parse.functions.PostReply;
+import com.barkitapp.android.parse.objects.Reply;
 import com.parse.ParseGeoPoint;
+
+import java.util.Date;
 
 public class BarkDetailActivity extends AppCompatActivity {
 
@@ -53,18 +60,47 @@ public class BarkDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "BARKit");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, bark_text + "\n" + "https://play.google.com/store/apps/details?id=com.gmail.mathck.SpaceTrip");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this BARK"); // todo replace link
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, bark_text + "\n\n" + "Start barking https://play.google.com/store/apps/details?id=com.gmail.mathck.SpaceTrip");
                 startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
             }
         });
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.accent)));
 
+        final BarkReplyListFragment listFragment = (BarkReplyListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+
+        final EditText chattext = (EditText) findViewById(R.id.chattext);
         FloatingActionButton answer = (FloatingActionButton) findViewById(R.id.fab);
         answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // send answer here
+                String textToPost = chattext.getText().toString();
+                if(textToPost.isEmpty()) {
+                    return;
+                }
+
+                Coordinates location = LocationService.getLocation(getApplicationContext());
+
+                PostReply.run("kHoG2ihhvD",
+                        "AAbvD5hbPF",
+                        new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                        new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                        textToPost,
+                        0);
+
+                listFragment.addNewItem(new Reply("unknown",
+                        "kHoG2ihhvD",
+                        "AAbvD5hbPF",
+                        new Date(),
+                        textToPost,
+                        0,
+                        0,
+                        new ParseGeoPoint(location.getLatitude(), location.getLongitude())));
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(chattext.getWindowToken(), 0);
+
+                chattext.setText("");
             }
         });
         answer.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
@@ -89,8 +125,8 @@ public class BarkDetailActivity extends AppCompatActivity {
                         .setMessage("Are you sure you want to flag this BARK?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Flag.Run("kHoG2ihhvD",
-                                        "objectId", // todo objectId for Flag
+                                Flag.run("kHoG2ihhvD",
+                                        "AAbvD5hbPF", // todo objectId for Flag
                                         ContentType.POST,
                                         new ParseGeoPoint(location.getLatitude(), location.getLongitude()));
                             }
