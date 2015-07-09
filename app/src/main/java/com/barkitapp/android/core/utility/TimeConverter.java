@@ -19,7 +19,7 @@ public class TimeConverter {
      * @return minutes when < 60min, hours when < 24h, afterwards days
      */
     public static String getPostAge(Date postCreated) {
-        long diff = GetUTCdatetimeAsDate().getTime() - postCreated.getTime();
+        long diff = new Date().getTime() - postCreated.getTime();
 
         int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(diff);
         int hours = (int) TimeUnit.MILLISECONDS.toHours(diff);

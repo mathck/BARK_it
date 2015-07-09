@@ -18,7 +18,7 @@ public final class Constants {
 
     public static final int GET_POSTS_COUNT = 20;
 
-    public static final int SPLASH_TIME_OUT = 250;
+    public static final int SPLASH_TIME_OUT = 1000;
 
     public static final String LOCAL_MASTER_LIST = "master_list";
 }

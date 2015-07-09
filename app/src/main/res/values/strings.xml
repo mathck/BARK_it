@@ -28,5 +28,6 @@
   <string name="random_bark_4">BARK</string>
   <string name="random_bark_5">\?</string>
   <string name="random_bark_undefined">\??</string>
+  <string name="share_using">share using ...</string>
 
 </resources>
