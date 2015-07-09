@@ -47,6 +47,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:textAlignment="center"
+                        android:textColor="@color/secondary_text"
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:textSize="18sp"

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
+import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.objects.Post;
 import com.orm.query.Condition;
 import com.orm.query.Select;
@@ -21,6 +23,9 @@ public class MasterList {
         try {
 
             ArrayList<ParseObject> posts = (ArrayList<ParseObject>) result.get("posts");
+            ArrayList<ParseObject> votes = (ArrayList<ParseObject>) result.get("votes");
+
+            String myUserId = Constants.TEMP_USER_ID;
 
             for (ParseObject post : posts) {
 
@@ -37,7 +42,8 @@ public class MasterList {
                             post.getInt("media_type"),
                             post.getInt("vote_counter"),
                             post.getInt("reply_counter"),
-                            post.getInt("badge")).save();
+                            post.getInt("badge"),
+                            VoteType.NEUTRAL.ordinal()).save();
                 }
                 else {
                     // UPDATE IN DB
@@ -55,6 +61,16 @@ public class MasterList {
                     //postInDb.setBadge(post.getInt("badge"));
 
                     postInDb.save();
+                }
+            }
+
+            for(ParseObject vote : votes) {
+                String userId = vote.getString("user_Id");
+
+                if(myUserId.equals(userId)) {
+                    Post post = GetPost(vote.getString("content_id"));
+                    post.setMy_Vote(vote.getInt("vote_type"));
+                    post.save();
                 }
             }
 

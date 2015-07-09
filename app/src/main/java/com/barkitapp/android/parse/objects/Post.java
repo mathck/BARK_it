@@ -26,10 +26,12 @@ public class Post extends SugarRecord<Post> {
     int reply_counter;
     int badge;
 
+    int my_Vote;
+
     public Post() {
     }
 
-    public Post(String objectId, String userId, Date time_created, ParseGeoPoint location, String text, String media_content, int media_type, int vote_counter, int reply_counter, int badge) {
+    public Post(String objectId, String userId, Date time_created, ParseGeoPoint location, String text, String media_content, int media_type, int vote_counter, int reply_counter, int badge, int my_Vote) {
         this.objectId = objectId;
         this.userId = userId;
         this.time_created = time_created;
@@ -42,6 +44,12 @@ public class Post extends SugarRecord<Post> {
         this.vote_counter = vote_counter;
         this.reply_counter = reply_counter;
         this.badge = badge;
+        this.my_Vote = my_Vote;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.getObjectId().equals(((Post) obj).getObjectId());
     }
 
     public double getLongitude() {
@@ -130,5 +138,13 @@ public class Post extends SugarRecord<Post> {
 
     public void setBadge(int badge) {
         this.badge = badge;
+    }
+
+    public int getMy_Vote() {
+        return my_Vote;
+    }
+
+    public void setMy_Vote(int my_Vote) {
+        this.my_Vote = my_Vote;
     }
 }

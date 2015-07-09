@@ -45,8 +45,6 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
             mSpeech.setText(RandomBarkGenerator.Run(this));
         }
 
-        Connection.Connect(getApplication());
-
         // todo get user id
 
         // get location updates

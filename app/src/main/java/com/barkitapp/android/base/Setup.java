@@ -1,10 +1,9 @@
 package com.barkitapp.android.base;
 
-import android.app.Application;
-
 import com.barkitapp.android.parse.Connection;
+import com.orm.SugarApp;
 
-public class Setup extends Application {
+public class Setup extends SugarApp {
     @Override
     public void onCreate() {
         super.onCreate();
