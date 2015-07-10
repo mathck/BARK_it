@@ -22,5 +22,5 @@ public final class Constants {
 
     public static final String TEMP_USER_ID = "kHoG2ihhvD";
 
-    public static final String UNKNOWN = "unknown";
+    //public static final String UNKNOWN = "unknown";
 }

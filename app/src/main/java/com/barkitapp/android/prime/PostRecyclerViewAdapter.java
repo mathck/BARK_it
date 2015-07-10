@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.barkitapp.android.Messages.UpdateListItemEvent;
 import com.barkitapp.android.R;
@@ -97,11 +96,11 @@ public class PostRecyclerViewAdapter
 
                 Context context = v.getContext();
 
-                // Bark is only local?
-                if(Constants.UNKNOWN.equals(holder.mBoundPost.getObjectId())) {
-                    Toast.makeText(context, "BARK is not online, please try again later", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                // Bark local only?
+                //if(Constants.UNKNOWN.equals(holder.mBoundPost.getObjectId())) {
+                //    Toast.makeText(context, "BARK is not online, please try again later", Toast.LENGTH_LONG).show();
+                //    return;
+                //}
 
                 // Open Detail View
                 Intent intent = new Intent(context, BarkDetailActivity.class);
@@ -132,6 +131,7 @@ public class PostRecyclerViewAdapter
         final TextView distance = (TextView) holder.mView.findViewById(R.id.distance);
         distance.setText(DistanceConverter.GetDistanceInKm(mContext, holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()));
 
+        /*
         if(holder.mBoundPost.getObjectId().equals(Constants.UNKNOWN))
         {
             upvote.setVisibility(View.GONE);
@@ -140,6 +140,7 @@ public class PostRecyclerViewAdapter
 
             return;
         }
+        */
 
         // set the colors for already voted posts
         if(holder.mBoundPost.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {

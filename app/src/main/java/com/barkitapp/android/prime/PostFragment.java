@@ -76,13 +76,18 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
         super.onStop();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     public void UpdateList() {
         mAdapter.getValues().clear();
         mAdapter.setValues(getList());
 
         NotifyAdapter();
 
-        mSwipeLayout.setRefreshing(false);
+        setRefreshing(false);
     }
 
     public void onEvent(UpdateListItemEvent event) {
@@ -133,16 +138,25 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 Constants.DEFAULT_RADIUS,
                 Constants.GET_POSTS_COUNT,
                 getOrder(),
-                true);
+                false);
+
+        setRefreshing(true);
+    }
+
+    @UiThread
+    public void setRefreshing(boolean status) {
+        if(mSwipeLayout != null)
+            mSwipeLayout.setRefreshing(status);
     }
 
     public abstract Order getOrder();
 
     public void onUpdatePostsCompleted(HashMap<String, Object> result) {
-
+        MasterList.StoreMasterList(getActivity(), result);
+        UpdateList();
     }
 
     public void onUpdatePostsFailed(String error) {
-
+        setRefreshing(false);
     }
 }

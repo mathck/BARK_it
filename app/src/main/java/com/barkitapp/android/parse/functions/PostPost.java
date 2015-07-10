@@ -1,7 +1,6 @@
 package com.barkitapp.android.parse.functions;
 
-import android.util.Log;
-
+import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
@@ -10,6 +9,8 @@ import com.parse.ParseGeoPoint;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import de.greenrobot.event.EventBus;
 
 public class PostPost {
 
@@ -22,8 +23,8 @@ public class PostPost {
 
         ParseCloud.callFunctionInBackground("PostPost", params, new FunctionCallback<JSONObject>() {
             public void done(JSONObject result, ParseException e) {
-                if (e != null) {
-                    Log.d("ERROR", Log.getStackTraceString(e));
+                if (e == null) {
+                    EventBus.getDefault().post(new RequestUpdatePostsEvent());
                 }
             }
         });

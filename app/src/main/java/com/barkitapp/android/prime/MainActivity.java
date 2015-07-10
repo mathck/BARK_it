@@ -31,21 +31,17 @@ import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.utility.Constants;
-import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.functions.PostPost;
-import com.barkitapp.android.parse.objects.Post;
 import com.barkitapp.android.places.PlacesActivity;
 import com.parse.ParseGeoPoint;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private Context mContext;
-    private PostFragment newFragment;
 
     @Override
     public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
@@ -131,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
                 textToPost,
                 0);
 
-        newFragment.addItem(new Post(Constants.UNKNOWN, Constants.TEMP_USER_ID, new Date(), new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                textToPost, "", 0, 0, 0, 0, VoteType.NEUTRAL.ordinal()));
+        //newFragment.addItem(new Post(Constants.UNKNOWN, Constants.TEMP_USER_ID, new Date(), new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+        //        textToPost, "", 0, 0, 0, 0, VoteType.NEUTRAL.ordinal()));
 
         if(viewPager != null)
             viewPager.setCurrentItem(0);
@@ -165,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(newFragment = new NewFragment(), "NEW");
+        adapter.addFragment(new NewFragment(), "NEW");
         adapter.addFragment(new HotFragment(), "HOT");
         viewPager.setAdapter(adapter);
     }

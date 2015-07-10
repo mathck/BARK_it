@@ -28,14 +28,10 @@ import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
 import com.barkitapp.android.parse.enums.ContentType;
-import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.functions.Flag;
 import com.barkitapp.android.parse.functions.PostReply;
 import com.barkitapp.android.parse.objects.Post;
-import com.barkitapp.android.parse.objects.Reply;
 import com.parse.ParseGeoPoint;
-
-import java.util.Date;
 
 public class BarkDetailActivity extends AppCompatActivity {
 
@@ -132,15 +128,7 @@ public class BarkDetailActivity extends AppCompatActivity {
                 textToPost,
                 0);
 
-        listFragment.addNewItem(new Reply(Constants.UNKNOWN,
-                Constants.TEMP_USER_ID,
-                mPost.getObjectId(),
-                new Date(),
-                textToPost,
-                0,
-                0,
-                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                VoteType.NEUTRAL.ordinal()));
+        //listFragment.getRepliesFromParse();
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(chattext.getWindowToken(), 0);

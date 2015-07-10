@@ -1,5 +1,6 @@
 package com.barkitapp.android.prime;
 
+import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.core.utility.PostComperator;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.objects.Post;
@@ -17,5 +18,9 @@ public class NewFragment extends PostFragment {
     @Override
     public Order getOrder() {
         return Order.TIME;
+    }
+
+    public void onEvent(RequestUpdatePostsEvent event) {
+        onRefresh();
     }
 }

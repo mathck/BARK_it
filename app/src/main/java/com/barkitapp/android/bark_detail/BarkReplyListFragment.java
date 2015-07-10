@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
@@ -25,6 +26,8 @@ import com.parse.ParseGeoPoint;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnUpdateRepliesCompleted {
 
@@ -47,20 +50,46 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
 
         loadingBar = (ProgressBar) fragmentView.findViewById(R.id.progressBar1);
 
+        getRepliesFromParse();
+
+        return fragmentView;
+    }
+
+    public void onEvent(RequestUpdateRepliesEvent event) {
+        getRepliesFromParse();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    public void getRepliesFromParse() {
+
+        mAdapter.getValues().clear();
+        NotifyAdapter();
+
+        startLoadingBar();
+
         Coordinates loc = LocationService.getLocation(getActivity());
 
         BarkDetailActivity activity = (BarkDetailActivity) getActivity();
 
         if(activity == null || activity.ObjectId == null) {
-            return fragmentView;
+            return;
         }
 
         UpdateReplies.run(this,
                 Constants.TEMP_USER_ID,
                 activity.ObjectId,
                 new ParseGeoPoint(loc.getLatitude(), loc.getLongitude()));
-
-        return fragmentView;
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
@@ -96,5 +125,10 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
     @UiThread
     private void stopLoadingBar() {
         loadingBar.setVisibility(View.GONE);
+    }
+
+    @UiThread
+    private void startLoadingBar() {
+        loadingBar.setVisibility(View.VISIBLE);
     }
 }

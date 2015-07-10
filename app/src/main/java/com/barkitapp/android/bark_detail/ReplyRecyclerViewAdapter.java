@@ -121,6 +121,7 @@ public class ReplyRecyclerViewAdapter
 
         final ImageButton flagReply = (ImageButton) holder.mView.findViewById(R.id.flagReply);
 
+        /*
         if(holder.mBoundReply.getObjectId().equals(Constants.UNKNOWN))
         {
             upvote.setVisibility(View.GONE);
@@ -130,6 +131,7 @@ public class ReplyRecyclerViewAdapter
 
             return;
         }
+        */
 
         // set the colors for already voted posts
         if(holder.mBoundReply.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
