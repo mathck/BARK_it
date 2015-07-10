@@ -51,10 +51,35 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
         return mSwipeLayout;
     }
 
+    private boolean loading = false;
+    int pastVisiblesItems, visibleItemCount, totalItemCount;
+    LinearLayoutManager mLayoutManager;
+
+
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         PostRecyclerViewAdapter adapter = new PostRecyclerViewAdapter(getActivity(), getList(), getOrder());
         recyclerView.setAdapter(mAdapter = adapter);
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(mLayoutManager);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                visibleItemCount = mLayoutManager.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+
+                if (!loading) {
+                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        loading = true;
+                        onRefresh();
+                    }
+                }
+            }
+        });
     }
 
     public void addItem(Post item) {
@@ -88,6 +113,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
         NotifyAdapter();
 
         setRefreshing(false);
+        loading = false;
     }
 
     public void onEvent(UpdateListItemEvent event) {

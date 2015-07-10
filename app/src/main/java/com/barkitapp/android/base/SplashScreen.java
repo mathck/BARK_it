@@ -55,6 +55,8 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         LocationService.storeLocation(this, lastKnownLocation);
 
+        MasterList.clearMasterList();
+
         // get Posts from Parse
         UpdatePosts.run(this,
                 Constants.TEMP_USER_ID,

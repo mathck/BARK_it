@@ -81,6 +81,10 @@ public class MasterList {
         }
     }
 
+    public static void clearMasterList() {
+        Post.deleteAll(Post.class);
+    }
+
     public static List<Post> GetMasterList() {
         return Post.listAll(Post.class);
     }
