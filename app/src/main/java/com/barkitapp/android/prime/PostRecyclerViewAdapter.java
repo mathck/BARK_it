@@ -97,34 +97,42 @@ public class PostRecyclerViewAdapter
 
                 Context context = v.getContext();
 
+                // Bark is only local?
                 if(Constants.UNKNOWN.equals(holder.mBoundPost.getObjectId())) {
                     Toast.makeText(context, "BARK is not online, please try again later", Toast.LENGTH_LONG).show();
                     return;
                 }
 
+                // Open Detail View
                 Intent intent = new Intent(context, BarkDetailActivity.class);
                 intent.putExtra(BarkDetailActivity.EXTRA_POST, holder.mBoundPost.getObjectId());
                 context.startActivity(intent);
             }
         });
 
+        // set post text
         final TextView bark_text = (TextView) holder.mView.findViewById(R.id.text1);
         bark_text.setText(holder.mBoundPost.getText());
 
+        // set voting stuff
         final ImageView upvote = (ImageView) holder.mView.findViewById(R.id.upvote);
         final ImageView downvote = (ImageView) holder.mView.findViewById(R.id.downvote);
         final TextView votes_count = (TextView) holder.mView.findViewById(R.id.votes_count);
         votes_count.setText(holder.mBoundPost.getVote_counter() + "");
 
+        // set comment count
         final TextView comments_count = (TextView) holder.mView.findViewById(R.id.comments_count);
         comments_count.setText(holder.mBoundPost.getReply_counter() + "");
 
+        // set age
         final TextView hours = (TextView) holder.mView.findViewById(R.id.hours);
         hours.setText(TimeConverter.getPostAge(holder.mBoundPost.getTime_created()));
 
+        // set distance
         final TextView distance = (TextView) holder.mView.findViewById(R.id.distance);
         distance.setText(DistanceConverter.GetDistanceInKm(mContext, holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()));
 
+        // set the colors for already voted posts
         if(holder.mBoundPost.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
             votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
             upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
@@ -144,96 +152,17 @@ public class PostRecyclerViewAdapter
         upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // UPVOTE -> NEUTRAL
                 if(holder.mBoundPost.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
-
-                    PostVote.run(Constants.TEMP_USER_ID,
-                            holder.mBoundPost.getObjectId(),
-                            ContentType.POST,
-                            new ParseGeoPoint(holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()),
-                            VoteType.NEUTRAL);
-
-                    Post cur = MasterList.GetPost(holder.mBoundPost.getObjectId());
-                    cur.setMy_Vote(VoteType.NEUTRAL.ordinal());
-                    cur.save();
-
-                    holder.mBoundPost.setMy_Vote(VoteType.NEUTRAL.ordinal());
-
-                    YoYo.with(Techniques.BounceInDown)
-                            .duration(400)
-                            .playOn(votes_count);
-
-                    votes_count.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
-                    upvote.setColorFilter(null);
-                    downvote.setColorFilter(null);
-                    votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) - 1));
-                    holder.mBoundPost.setVote_counter(holder.mBoundPost.getVote_counter() -1);
+                    // UPVOTE -> NEUTRAL
+                    performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.NEUTRAL, -1);
                 }
-                // NEUTRAL -> UPVOTE
                 else if(holder.mBoundPost.getMy_Vote() == VoteType.NEUTRAL.ordinal()) {
-
-                    PostVote.run(Constants.TEMP_USER_ID,
-                            holder.mBoundPost.getObjectId(),
-                            ContentType.POST,
-                            new ParseGeoPoint(holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()),
-                            VoteType.UP_VOTE);
-
-                    Post cur = MasterList.GetPost(holder.mBoundPost.getObjectId());
-                    cur.setMy_Vote(VoteType.UP_VOTE.ordinal());
-                    cur.save();
-
-                    holder.mBoundPost.setMy_Vote(VoteType.UP_VOTE.ordinal());
-
-                    int currentValue = Integer.parseInt(votes_count.getText().toString());
-                    if((currentValue+1) % 10 == 0)
-                    {
-                        YoYo.with(Techniques.Flash)
-                                .duration(400)
-                                .playOn(votes_count);
-                    }
-                    else {
-                        YoYo.with(Techniques.BounceInUp)
-                                .duration(400)
-                                .playOn(votes_count);
-                    }
-                    votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-                    upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
-                    downvote.setColorFilter(null);
-                    votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) + 1));
-                    holder.mBoundPost.setVote_counter(holder.mBoundPost.getVote_counter() + 1);
+                    // NEUTRAL -> UPVOTE
+                    performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.UP_VOTE, +1);
                 }
-                // DOWNVOTE -> UPVOTE
                 else if(holder.mBoundPost.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
-
-                    PostVote.run(Constants.TEMP_USER_ID,
-                            holder.mBoundPost.getObjectId(),
-                            ContentType.POST,
-                            new ParseGeoPoint(holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()),
-                            VoteType.UP_VOTE);
-
-                    Post cur = MasterList.GetPost(holder.mBoundPost.getObjectId());
-                    cur.setMy_Vote(VoteType.UP_VOTE.ordinal());
-                    cur.save();
-
-                    holder.mBoundPost.setMy_Vote(VoteType.UP_VOTE.ordinal());
-
-                    int currentValue = Integer.parseInt(votes_count.getText().toString());
-                    if((currentValue+2) % 10 == 0)
-                    {
-                        YoYo.with(Techniques.Flash)
-                                .duration(400)
-                                .playOn(votes_count);
-                    }
-                    else {
-                        YoYo.with(Techniques.BounceInUp)
-                                .duration(400)
-                                .playOn(votes_count);
-                    }
-                    votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-                    upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
-                    downvote.setColorFilter(null);
-                    votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) + 2));
-                    holder.mBoundPost.setVote_counter(holder.mBoundPost.getVote_counter() + 2);
+                    // DOWNVOTE -> UPVOTE
+                    performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.UP_VOTE, +2);
                 }
 
                 EventBus.getDefault().post(new UpdateListItemEvent(holder.mBoundPost, mOrder));
@@ -243,102 +172,76 @@ public class PostRecyclerViewAdapter
         downvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // DOWNVOTE -> NEUTRAL
                 if(holder.mBoundPost.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
-
-                    PostVote.run(Constants.TEMP_USER_ID,
-                            holder.mBoundPost.getObjectId(),
-                            ContentType.POST,
-                            new ParseGeoPoint(holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()),
-                            VoteType.NEUTRAL);
-
-                    Post cur = MasterList.GetPost(holder.mBoundPost.getObjectId());
-                    cur.setMy_Vote(VoteType.NEUTRAL.ordinal());
-                    cur.save();
-
-                    holder.mBoundPost.setMy_Vote(VoteType.NEUTRAL.ordinal());
-
-                    YoYo.with(Techniques.BounceInUp)
-                            .duration(400)
-                            .playOn(votes_count);
-
-                    votes_count.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
-                    upvote.setColorFilter(null);
-                    downvote.setColorFilter(null);
-                    votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) + 1));
-                    holder.mBoundPost.setVote_counter(holder.mBoundPost.getVote_counter() + 1);
+                    // DOWNVOTE -> NEUTRAL
+                    performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.NEUTRAL, +1);
                 }
-                // NEUTRAL -> DOWNVOTE
                 else if(holder.mBoundPost.getMy_Vote() == VoteType.NEUTRAL.ordinal()) {
-
-                    PostVote.run(Constants.TEMP_USER_ID,
-                            holder.mBoundPost.getObjectId(),
-                            ContentType.POST,
-                            new ParseGeoPoint(holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()),
-                            VoteType.DOWN_VOTE);
-
-                    Post cur = MasterList.GetPost(holder.mBoundPost.getObjectId());
-                    cur.setMy_Vote(VoteType.DOWN_VOTE.ordinal());
-                    cur.save();
-
-                    holder.mBoundPost.setMy_Vote(VoteType.DOWN_VOTE.ordinal());
-
-                    int currentValue = Integer.parseInt(votes_count.getText().toString());
-                    if((currentValue-1) % 10 == 0)
-                    {
-                        YoYo.with(Techniques.Flash)
-                                .duration(400)
-                                .playOn(votes_count);
-                    }
-                    else {
-                        YoYo.with(Techniques.BounceInDown)
-                                .duration(400)
-                                .playOn(votes_count);
-                    }
-                    votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-                    downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
-                    upvote.setColorFilter(null);
-                    votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) - 1));
-                    holder.mBoundPost.setVote_counter(holder.mBoundPost.getVote_counter() - 1);
+                    // NEUTRAL -> DOWNVOTE
+                    performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.DOWN_VOTE, -1);
                 }
-                // UPVOTE -> DOWNVOTE
                 else if(holder.mBoundPost.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
-
-                    PostVote.run(Constants.TEMP_USER_ID,
-                            holder.mBoundPost.getObjectId(),
-                            ContentType.POST,
-                            new ParseGeoPoint(holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()),
-                            VoteType.DOWN_VOTE);
-
-                    Post cur = MasterList.GetPost(holder.mBoundPost.getObjectId());
-                    cur.setMy_Vote(VoteType.DOWN_VOTE.ordinal());
-                    cur.save();
-
-                    holder.mBoundPost.setMy_Vote(VoteType.DOWN_VOTE.ordinal());
-
-                    int currentValue = Integer.parseInt(votes_count.getText().toString());
-                    if((currentValue-2) % 10 == 0)
-                    {
-                        YoYo.with(Techniques.Flash)
-                                .duration(400)
-                                .playOn(votes_count);
-                    }
-                    else {
-                        YoYo.with(Techniques.BounceInDown)
-                                .duration(400)
-                                .playOn(votes_count);
-                    }
-                    votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-                    downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
-                    upvote.setColorFilter(null);
-                    votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) - 2));
-                    holder.mBoundPost.setVote_counter(holder.mBoundPost.getVote_counter() - 2);
+                    // UPVOTE -> DOWNVOTE
+                    performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.DOWN_VOTE, -2);
                 }
 
                 EventBus.getDefault().post(new UpdateListItemEvent(holder.mBoundPost, mOrder));
             }
         });
+    }
+
+    private void performVoting(Post boundPost, TextView votes_count, ImageView upvote, ImageView downvote, VoteType voteType, int valueChange) {
+        // post to parse
+        PostVote.run(Constants.TEMP_USER_ID,
+                boundPost.getObjectId(),
+                ContentType.POST,
+                new ParseGeoPoint(boundPost.getLatitude(), boundPost.getLongitude()),
+                voteType);
+
+        // store in master list
+        Post cur = MasterList.GetPost(boundPost.getObjectId());
+        cur.setMy_Vote(voteType.ordinal());
+        cur.save();
+
+        // set this item ui
+        boundPost.setMy_Vote(voteType.ordinal());
+
+        // vote counter animation
+        int currentValue = Integer.parseInt(votes_count.getText().toString());
+        if((currentValue + valueChange) % 10 == 0)
+        {
+            YoYo.with(Techniques.Flash)
+                    .duration(400)
+                    .playOn(votes_count);
+        }
+        else {
+            YoYo.with(Techniques.BounceInUp)
+                    .duration(400)
+                    .playOn(votes_count);
+        }
+
+        if(voteType.equals(VoteType.NEUTRAL)) {
+            // vote counter -> grey
+            votes_count.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
+            upvote.setColorFilter(null);
+            downvote.setColorFilter(null);
+        }
+        else {
+            // vote counter -> red
+            votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
+
+            if(voteType.equals(VoteType.UP_VOTE)) {
+                upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+                downvote.setColorFilter(null);
+            }
+            else if(voteType.equals(VoteType.DOWN_VOTE)) {
+                upvote.setColorFilter(null);
+                downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+            }
+        }
+
+        votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) + valueChange));
+        boundPost.setVote_counter(boundPost.getVote_counter() + valueChange);
     }
 
     @Override
