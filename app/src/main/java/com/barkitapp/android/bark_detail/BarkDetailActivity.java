@@ -28,6 +28,7 @@ import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
 import com.barkitapp.android.parse.enums.ContentType;
+import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.functions.Flag;
 import com.barkitapp.android.parse.functions.PostReply;
 import com.barkitapp.android.parse.objects.Post;
@@ -138,7 +139,8 @@ public class BarkDetailActivity extends AppCompatActivity {
                 textToPost,
                 0,
                 0,
-                new ParseGeoPoint(location.getLatitude(), location.getLongitude())));
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                VoteType.NEUTRAL.ordinal()));
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(chattext.getWindowToken(), 0);

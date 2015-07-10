@@ -19,9 +19,11 @@ public class Reply {
     int vote_counter;
     int badge;
 
+    int my_Vote;
+
     Coordinates location;
 
-    public Reply(String objectId, String userId, String postId, Date time_created, String text, int vote_counter, int badge, ParseGeoPoint location) {
+    public Reply(String objectId, String userId, String postId, Date time_created, String text, int vote_counter, int badge, ParseGeoPoint location, int my_Vote) {
         this.objectId = objectId;
         this.userId = userId;
         this.postId = postId;
@@ -32,6 +34,8 @@ public class Reply {
         this.badge = badge;
 
         this.location = new Coordinates(location.getLatitude(), location.getLongitude());
+
+        this.my_Vote = my_Vote;
     }
 
     public String getObjectId() {
@@ -80,5 +84,29 @@ public class Reply {
 
     public void setVote_counter(int vote_counter) {
         this.vote_counter = vote_counter;
+    }
+
+    public int getMy_Vote() {
+        return my_Vote;
+    }
+
+    public void setMy_Vote(int my_Vote) {
+        this.my_Vote = my_Vote;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
+    public int getBadge() {
+        return badge;
+    }
+
+    public void setBadge(int badge) {
+        this.badge = badge;
     }
 }

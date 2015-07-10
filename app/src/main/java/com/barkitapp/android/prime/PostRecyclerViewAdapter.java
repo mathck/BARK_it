@@ -132,6 +132,15 @@ public class PostRecyclerViewAdapter
         final TextView distance = (TextView) holder.mView.findViewById(R.id.distance);
         distance.setText(DistanceConverter.GetDistanceInKm(mContext, holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()));
 
+        if(holder.mBoundPost.getObjectId().equals(Constants.UNKNOWN))
+        {
+            upvote.setVisibility(View.GONE);
+            downvote.setVisibility(View.GONE);
+            votes_count.setVisibility(View.GONE);
+
+            return;
+        }
+
         // set the colors for already voted posts
         if(holder.mBoundPost.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
             votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));

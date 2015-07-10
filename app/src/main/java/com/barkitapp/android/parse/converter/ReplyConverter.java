@@ -3,11 +3,14 @@ package com.barkitapp.android.parse.converter;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.objects.Reply;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class ReplyConverter {
@@ -16,22 +19,48 @@ public class ReplyConverter {
         try {
 
             List<Reply> replyList = new ArrayList<>();
-            ArrayList<ParseObject> posts = (ArrayList<ParseObject>) result.get("replies");
+            ArrayList<ParseObject> replies = (ArrayList<ParseObject>) result.get("replies");
+            ArrayList<ParseObject> votes = (ArrayList<ParseObject>) result.get("votes");
 
-            replyList.clear();
+            String myUserId = Constants.TEMP_USER_ID;
 
-            for (ParseObject post : posts) {
+            // todo measure and improve
+
+            // remove irrelevant votes
+            if(votes != null && votes.size() != 0) {
+                Iterator<ParseObject> i = votes.iterator();
+                while (i.hasNext()) {
+                    ParseObject vote = i.next();
+
+                    if (!myUserId.equals(vote.getString("user_id")))
+                        i.remove();
+                }
+            }
+
+            for (ParseObject reply : replies) {
+
+                int my_vote = VoteType.NEUTRAL.ordinal();
+
+                if(votes != null && votes.size() != 0) {
+                    for(ParseObject vote : votes) {
+                        if(reply.getObjectId().equals(vote.getString("content_id"))) {
+                            my_vote = vote.getInt("vote_type");
+                        }
+                    }
+                }
+
                 replyList.add(new Reply(
-                        post.getString("objectId"),
-                        post.getString("userId"),
-                        post.getString("postId"),
+                    reply.getObjectId(),
+                    reply.getString("userId"),
+                    reply.getString("postId"),
 
-                        post.getDate("time_created"),
-                        post.getString("text"),
-                        post.getInt("vote_counter"),
-                        post.getInt("badge"),
+                    reply.getDate("time_created"),
+                    reply.getString("text"),
+                    reply.getInt("vote_counter"),
+                    reply.getInt("badge"),
 
-                        post.getParseGeoPoint("location")));
+                    reply.getParseGeoPoint("location"),
+                    my_vote));
             }
 
             return replyList;

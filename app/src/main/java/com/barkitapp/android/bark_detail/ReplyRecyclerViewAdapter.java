@@ -21,7 +21,9 @@ import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
 import com.barkitapp.android.parse.enums.ContentType;
+import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.functions.Flag;
+import com.barkitapp.android.parse.functions.PostVote;
 import com.barkitapp.android.parse.objects.Reply;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -111,7 +113,41 @@ public class ReplyRecyclerViewAdapter
         final TextView votes_count = (TextView) holder.mView.findViewById(R.id.votes_count);
         votes_count.setText(holder.mBoundReply.getVote_counter() + "");
 
+        final TextView hours = (TextView) holder.mView.findViewById(R.id.hours);
+        hours.setText(TimeConverter.getPostAge(holder.mBoundReply.getTime_created()));
+
+        final TextView distance = (TextView) holder.mView.findViewById(R.id.distance);
+        distance.setText(DistanceConverter.GetDistanceInKm(mContext, holder.mBoundReply.getLocation().getLatitude(), holder.mBoundReply.getLocation().getLongitude()));
+
         final ImageButton flagReply = (ImageButton) holder.mView.findViewById(R.id.flagReply);
+
+        if(holder.mBoundReply.getObjectId().equals(Constants.UNKNOWN))
+        {
+            upvote.setVisibility(View.GONE);
+            downvote.setVisibility(View.GONE);
+            votes_count.setVisibility(View.GONE);
+            flagReply.setVisibility(View.GONE);
+
+            return;
+        }
+
+        // set the colors for already voted posts
+        if(holder.mBoundReply.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
+            votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
+            upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+            downvote.setColorFilter(null);
+        }
+        else if(holder.mBoundReply.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
+            votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
+            upvote.setColorFilter(null);
+            downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+        }
+        else if(holder.mBoundReply.getMy_Vote() == VoteType.NEUTRAL.ordinal()) {
+            votes_count.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
+            upvote.setColorFilter(null);
+            downvote.setColorFilter(null);
+        }
+
         flagReply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,47 +173,90 @@ public class ReplyRecyclerViewAdapter
             }
         });
 
-        final TextView hours = (TextView) holder.mView.findViewById(R.id.hours);
-        hours.setText(TimeConverter.getPostAge(holder.mBoundReply.getTime_created()));
-
-        final TextView distance = (TextView) holder.mView.findViewById(R.id.distance);
-        distance.setText(DistanceConverter.GetDistanceInKm(mContext, holder.mBoundReply.getLocation().getLatitude(), holder.mBoundReply.getLocation().getLongitude()));
-
         upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                int currentValue = Integer.parseInt(votes_count.getText().toString());
-                if((currentValue+1) % 10 == 0)
-                {
-                    YoYo.with(Techniques.Flash)
-                            .duration(400)
-                            .playOn(votes_count);
+                if(holder.mBoundReply.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
+                    // UPVOTE -> NEUTRAL
+                    performVoting(holder.mBoundReply, votes_count, upvote, downvote, VoteType.NEUTRAL, -1);
                 }
-                else {
-                    YoYo.with(Techniques.BounceInUp)
-                            .duration(400)
-                            .playOn(votes_count);
+                else if(holder.mBoundReply.getMy_Vote() == VoteType.NEUTRAL.ordinal()) {
+                    // NEUTRAL -> UPVOTE
+                    performVoting(holder.mBoundReply, votes_count, upvote, downvote, VoteType.UP_VOTE, +1);
                 }
-                votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-                upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
-                downvote.setColorFilter(null);
-                votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) + 1));
+                else if(holder.mBoundReply.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
+                    // DOWNVOTE -> UPVOTE
+                    performVoting(holder.mBoundReply, votes_count, upvote, downvote, VoteType.UP_VOTE, +2);
+                }
             }
         });
 
         downvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.BounceInDown)
-                        .duration(400)
-                        .playOn(votes_count);
-                votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-                upvote.setColorFilter(null);
-                downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
-                votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) - 1));
+                if(holder.mBoundReply.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
+                    // DOWNVOTE -> NEUTRAL
+                    performVoting(holder.mBoundReply, votes_count, upvote, downvote, VoteType.NEUTRAL, +1);
+                }
+                else if(holder.mBoundReply.getMy_Vote() == VoteType.NEUTRAL.ordinal()) {
+                    // NEUTRAL -> DOWNVOTE
+                    performVoting(holder.mBoundReply, votes_count, upvote, downvote, VoteType.DOWN_VOTE, -1);
+                }
+                else if(holder.mBoundReply.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
+                    // UPVOTE -> DOWNVOTE
+                    performVoting(holder.mBoundReply, votes_count, upvote, downvote, VoteType.DOWN_VOTE, -2);
+                }
             }
         });
+    }
+
+    private void performVoting(Reply boundReply, TextView votes_count, ImageView upvote, ImageView downvote, VoteType voteType, int valueChange) {
+        // post to parse
+        PostVote.run(Constants.TEMP_USER_ID,
+                boundReply.getObjectId(),
+                ContentType.REPLY,
+                new ParseGeoPoint(boundReply.getLocation().getLatitude(), boundReply.getLocation().getLongitude()),
+                voteType);
+
+        // set this item ui
+        boundReply.setMy_Vote(voteType.ordinal());
+
+        // vote counter animation
+        int currentValue = Integer.parseInt(votes_count.getText().toString());
+        if((currentValue + valueChange) % 10 == 0)
+        {
+            YoYo.with(Techniques.Flash)
+                    .duration(400)
+                    .playOn(votes_count);
+        }
+        else {
+            YoYo.with(Techniques.BounceInUp)
+                    .duration(400)
+                    .playOn(votes_count);
+        }
+
+        if(voteType.equals(VoteType.NEUTRAL)) {
+            // vote counter -> grey
+            votes_count.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
+            upvote.setColorFilter(null);
+            downvote.setColorFilter(null);
+        }
+        else {
+            // vote counter -> red
+            votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
+
+            if(voteType.equals(VoteType.UP_VOTE)) {
+                upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+                downvote.setColorFilter(null);
+            }
+            else if(voteType.equals(VoteType.DOWN_VOTE)) {
+                upvote.setColorFilter(null);
+                downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+            }
+        }
+
+        votes_count.setText(String.valueOf(Integer.parseInt(votes_count.getText().toString()) + valueChange));
+        boundReply.setVote_counter(boundReply.getVote_counter() + valueChange);
     }
 
     @Override
