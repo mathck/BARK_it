@@ -33,7 +33,7 @@ public class MasterList {
                 if(Select.from(Post.class).where(Condition.prop("object_Id").eq(objectId)).count() == 0) {
                     // INSERT NEW IF NOT EXIST
                     new Post(objectId,
-                            post.getString("user_Id"),
+                            post.getString("user_id"),
                             post.getDate("time_created"),
                             post.getParseGeoPoint("location"),
                             post.getString("text"),
@@ -64,7 +64,7 @@ public class MasterList {
             }
 
             for(ParseObject vote : votes) {
-                String userId = vote.getString("user_Id");
+                String userId = vote.getString("user_id");
 
                 if(myUserId.equals(userId)) {
                     Post post = GetPost(vote.getString("content_id"));

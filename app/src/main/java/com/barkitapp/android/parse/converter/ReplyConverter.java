@@ -51,8 +51,8 @@ public class ReplyConverter {
 
                 replyList.add(new Reply(
                     reply.getObjectId(),
-                    reply.getString("userId"),
-                    reply.getString("postId"),
+                    reply.getString("user_id"),
+                    reply.getString("post_id"),
 
                     reply.getDate("time_created"),
                     reply.getString("text"),
