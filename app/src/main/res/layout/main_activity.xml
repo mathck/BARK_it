@@ -35,6 +35,8 @@
                     android:maxLength="70"
                     android:lines="1"
                     android:maxLines="1"
+                    android:imeOptions="actionSend"
+                    android:inputType="text"
                     android:background="@null"
                     android:textCursorDrawable="@drawable/edit_text"
                     android:hint="Bark now ..." >

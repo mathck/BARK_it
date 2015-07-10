@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.barkitapp.android.Messages.UpdateListItemEvent;
 import com.barkitapp.android.R;
@@ -93,7 +94,14 @@ public class PostRecyclerViewAdapter
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Context context = v.getContext();
+
+                if(Constants.UNKNOWN.equals(holder.mBoundPost.getObjectId())) {
+                    Toast.makeText(context, "BARK is not online, please try again later", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 Intent intent = new Intent(context, BarkDetailActivity.class);
                 intent.putExtra(BarkDetailActivity.EXTRA_POST, holder.mBoundPost.getObjectId());
                 context.startActivity(intent);

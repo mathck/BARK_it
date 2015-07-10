@@ -10,9 +10,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,7 +51,6 @@ public class BarkDetailActivity extends AppCompatActivity {
         ObjectId = intent.getStringExtra(EXTRA_POST);
 
         setContentView(R.layout.bark_detail_activity);
-
 
         mPost = MasterList.GetPost(ObjectId);
 
@@ -89,37 +90,21 @@ public class BarkDetailActivity extends AppCompatActivity {
         final BarkReplyListFragment listFragment = (BarkReplyListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
 
         final EditText chattext = (EditText) findViewById(R.id.chattext);
+        chattext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    performSend(chattext, listFragment);
+                    return true;
+                }
+                return false;
+            }
+        });
         FloatingActionButton answer = (FloatingActionButton) findViewById(R.id.fab);
         answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String textToPost = chattext.getText().toString();
-                if(textToPost.isEmpty()) {
-                    return;
-                }
-
-                Coordinates location = LocationService.getLocation(getApplicationContext());
-
-                PostReply.run(Constants.TEMP_USER_ID,
-                        mPost.getObjectId(),
-                        new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                        new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                        textToPost,
-                        0);
-
-                listFragment.addNewItem(new Reply("unknown",
-                        Constants.TEMP_USER_ID,
-                        mPost.getObjectId(),
-                        new Date(),
-                        textToPost,
-                        0,
-                        0,
-                        new ParseGeoPoint(location.getLatitude(), location.getLongitude())));
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(chattext.getWindowToken(), 0);
-
-                chattext.setText("");
+                performSend(chattext, listFragment);
             }
         });
         answer.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
@@ -129,6 +114,36 @@ public class BarkDetailActivity extends AppCompatActivity {
         //collapsingToolbar.setTitle("BARK");
 
         //loadBackdrop();
+    }
+
+    private void performSend(EditText chattext, BarkReplyListFragment listFragment) {
+        String textToPost = chattext.getText().toString();
+        if(textToPost.isEmpty()) {
+            return;
+        }
+
+        Coordinates location = LocationService.getLocation(getApplicationContext());
+
+        PostReply.run(Constants.TEMP_USER_ID,
+                mPost.getObjectId(),
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                textToPost,
+                0);
+
+        listFragment.addNewItem(new Reply(Constants.UNKNOWN,
+                Constants.TEMP_USER_ID,
+                mPost.getObjectId(),
+                new Date(),
+                textToPost,
+                0,
+                0,
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude())));
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(chattext.getWindowToken(), 0);
+
+        chattext.setText("");
     }
 
     @Override

@@ -18,11 +18,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
@@ -89,33 +92,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final EditText chattext = (EditText) findViewById(R.id.chattext);
+        chattext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    performSend(chattext, viewPager);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String textToPost = chattext.getText().toString();
-                if(textToPost.isEmpty()) {
-                    return;
-                }
-
-                Coordinates location = LocationService.getLocation(getApplicationContext());
-
-                PostPost.run(Constants.TEMP_USER_ID,
-                        new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                        textToPost,
-                        0);
-
-                newFragment.addItem(new Post("unknown", Constants.TEMP_USER_ID, new Date(), new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                        textToPost, "", 0, 0, 0, 0, VoteType.NEUTRAL.ordinal()));
-
-                if(viewPager != null)
-                    viewPager.setCurrentItem(0);
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(chattext.getWindowToken(), 0);
-
-                chattext.setText("");
+                performSend(chattext, viewPager);
             }
         });
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
@@ -124,6 +116,31 @@ public class MainActivity extends AppCompatActivity {
 
         if(viewPager != null)
             tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void performSend(EditText chattext, ViewPager viewPager) {
+        String textToPost = chattext.getText().toString();
+        if(textToPost.isEmpty()) {
+            return;
+        }
+
+        Coordinates location = LocationService.getLocation(getApplicationContext());
+
+        PostPost.run(Constants.TEMP_USER_ID,
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                textToPost,
+                0);
+
+        newFragment.addItem(new Post(Constants.UNKNOWN, Constants.TEMP_USER_ID, new Date(), new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                textToPost, "", 0, 0, 0, 0, VoteType.NEUTRAL.ordinal()));
+
+        if(viewPager != null)
+            viewPager.setCurrentItem(0);
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(chattext.getWindowToken(), 0);
+
+        chattext.setText("");
     }
 
     @Override

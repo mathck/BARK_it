@@ -141,6 +141,8 @@
                     android:lines="1"
                     android:maxLines="1"
                     android:background="@null"
+                    android:imeOptions="actionSend"
+                    android:inputType="text"
                     android:textCursorDrawable="@drawable/edit_text"
                     android:hint="Reply anonymously ..." >
                     <requestFocus />
