@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
-import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
 import com.barkitapp.android.parse.enums.ContentType;
@@ -159,7 +159,7 @@ public class ReplyRecyclerViewAdapter
                         .setMessage("Are you sure you want to flag this reply?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Flag.run(Constants.TEMP_USER_ID,
+                                Flag.run(UserId.get(mContext),
                                         holder.mBoundReply.getObjectId(),
                                         ContentType.REPLY,
                                         new ParseGeoPoint(location.getLatitude(), location.getLongitude()));
@@ -214,7 +214,7 @@ public class ReplyRecyclerViewAdapter
 
     private void performVoting(Reply boundReply, TextView votes_count, ImageView upvote, ImageView downvote, VoteType voteType, int valueChange) {
         // post to parse
-        PostVote.run(Constants.TEMP_USER_ID,
+        PostVote.run(UserId.get(mContext),
                 boundReply.getObjectId(),
                 ContentType.REPLY,
                 new ParseGeoPoint(boundReply.getLocation().getLatitude(), boundReply.getLocation().getLongitude()),

@@ -12,20 +12,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barkitapp.android.Messages.UserIdRecievedEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.Listener.UserLocationListener;
+import com.barkitapp.android.core.services.DeviceId;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
+import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.RandomBarkGenerator;
-import com.barkitapp.android.prime.MainActivity;
 import com.barkitapp.android.parse.enums.Order;
+import com.barkitapp.android.parse.functions.CreateUser;
 import com.barkitapp.android.parse.functions.UpdatePosts;
+import com.barkitapp.android.prime.MainActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.parse.ParseGeoPoint;
 
 import java.util.HashMap;
+
+import de.greenrobot.event.EventBus;
 
 public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsCompleted {
 
@@ -40,12 +46,22 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         mLogo = ((ImageView) findViewById(R.id.imgLogo));
         mSpeech = (TextView) findViewById(R.id.speech);
 
+        // random speech bubble for the dog
         if(mSpeech != null) {
             mSpeech.setText(RandomBarkGenerator.Run(this));
         }
 
-        // todo get user id
+        String userId = UserId.get(this);
+        if(userId != null && !userId.isEmpty())
+        {
+            AppStart();
+        }
+        else {
+            CreateUser.run(this, DeviceId.get(this));
+        }
+    }
 
+    private void AppStart() {
         // get location updates
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new UserLocationListener(this);
@@ -59,7 +75,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
         // get Posts from Parse
         UpdatePosts.run(this,
-                Constants.TEMP_USER_ID,
+                UserId.get(this),
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
                 Constants.DEFAULT_RADIUS,
@@ -71,12 +87,6 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
         // close spalsh screen after some time
         new Handler().postDelayed(new Runnable() {
-
-            /*
-             * Showing splash screen with a timer. This will be useful when you
-             * want to show case your app logo / company
-             */
-
             @Override
             public void run() {
                 Intent i = new Intent(SplashScreen.this, MainActivity.class);
@@ -84,6 +94,22 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
                 finish();
             }
         }, Constants.SPLASH_TIME_OUT);
+    }
+
+    public void onEvent(UserIdRecievedEvent event) {
+        AppStart();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override

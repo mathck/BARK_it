@@ -17,7 +17,7 @@ import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
-import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.parse.converter.ReplyConverter;
 import com.barkitapp.android.parse.functions.UpdateReplies;
 import com.barkitapp.android.parse.objects.Reply;
@@ -87,7 +87,7 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
         }
 
         UpdateReplies.run(this,
-                Constants.TEMP_USER_ID,
+                UserId.get(getActivity()),
                 activity.ObjectId,
                 new ParseGeoPoint(loc.getLatitude(), loc.getLongitude()));
     }

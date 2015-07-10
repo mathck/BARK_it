@@ -4,7 +4,6 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
-import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.objects.Post;
 import com.orm.query.Condition;
@@ -25,7 +24,7 @@ public class MasterList {
             ArrayList<ParseObject> posts = (ArrayList<ParseObject>) result.get("posts");
             ArrayList<ParseObject> votes = (ArrayList<ParseObject>) result.get("votes");
 
-            String myUserId = Constants.TEMP_USER_ID;
+            String myUserId = UserId.get(context);
 
             for (ParseObject post : posts) {
 

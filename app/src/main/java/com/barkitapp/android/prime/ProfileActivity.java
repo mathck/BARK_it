@@ -6,14 +6,22 @@ import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.barkitapp.android.R;
+import com.barkitapp.android.core.services.UserId;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -30,14 +38,40 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
 
-        final String friend_invite_code = "ad24c3d";
+        final String friend_invite_code = UserId.get(this);
 
         setStatusBarColor();
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("");
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("");
+        }
+
+        final EditText code = (EditText) findViewById(R.id.code);
+        code.setText(friend_invite_code);
+
+        final TextView friend_counter = (TextView) findViewById(R.id.friend_count);
+        final TextView invitedFriendstext = (TextView) findViewById(R.id.invitedFriendstext);
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("BarkItUser");
+        query.getInBackground(friend_invite_code, new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+                    invitedFriendstext.setText("Invited Friends");
+                    friend_counter.setText(object.getInt("referred_friend_counter"));
+                } else {
+                    invitedFriendstext.setText("Try again later");
+                    friend_counter.setText(":(");
+                }
+            }
+        });
+
+        friend_counter.setText(0 + "");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {

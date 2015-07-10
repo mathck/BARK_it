@@ -30,7 +30,7 @@ import android.widget.TextView;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
-import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.parse.functions.PostPost;
 import com.barkitapp.android.places.PlacesActivity;
 import com.parse.ParseGeoPoint;
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         Coordinates location = LocationService.getLocation(getApplicationContext());
 
-        PostPost.run(Constants.TEMP_USER_ID,
+        PostPost.run(UserId.get(this),
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 textToPost,
                 0);

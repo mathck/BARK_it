@@ -3,7 +3,7 @@ package com.barkitapp.android.parse.converter;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.objects.Reply;
 import com.parse.ParseObject;
@@ -22,7 +22,7 @@ public class ReplyConverter {
             ArrayList<ParseObject> replies = (ArrayList<ParseObject>) result.get("replies");
             ArrayList<ParseObject> votes = (ArrayList<ParseObject>) result.get("votes");
 
-            String myUserId = Constants.TEMP_USER_ID;
+            String myUserId = UserId.get(context);
 
             // todo measure and improve
 

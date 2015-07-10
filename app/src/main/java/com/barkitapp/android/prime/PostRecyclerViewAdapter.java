@@ -14,7 +14,7 @@ import com.barkitapp.android.Messages.UpdateListItemEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.bark_detail.BarkDetailActivity;
 import com.barkitapp.android.core.services.MasterList;
-import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
 import com.barkitapp.android.parse.enums.ContentType;
@@ -202,7 +202,7 @@ public class PostRecyclerViewAdapter
 
     private void performVoting(Post boundPost, TextView votes_count, ImageView upvote, ImageView downvote, VoteType voteType, int valueChange) {
         // post to parse
-        PostVote.run(Constants.TEMP_USER_ID,
+        PostVote.run(UserId.get(mContext),
                 boundPost.getObjectId(),
                 ContentType.POST,
                 new ParseGeoPoint(boundPost.getLatitude(), boundPost.getLongitude()),
