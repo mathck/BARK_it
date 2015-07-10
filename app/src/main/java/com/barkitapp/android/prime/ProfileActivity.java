@@ -63,15 +63,13 @@ public class ProfileActivity extends AppCompatActivity {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
                     invitedFriendstext.setText("Invited Friends");
-                    friend_counter.setText(object.getInt("referred_friend_counter"));
+                    friend_counter.setText(object.getInt("referred_friend_counter") + "");
                 } else {
                     invitedFriendstext.setText("Try again later");
                     friend_counter.setText(":(");
                 }
             }
         });
-
-        friend_counter.setText(0 + "");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {

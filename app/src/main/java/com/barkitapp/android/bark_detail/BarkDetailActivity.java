@@ -85,7 +85,7 @@ public class BarkDetailActivity extends AppCompatActivity {
             //actionBar.setTitle("BARK");
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.share);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +111,7 @@ public class BarkDetailActivity extends AppCompatActivity {
                 return false;
             }
         });
+
         FloatingActionButton answer = (FloatingActionButton) findViewById(R.id.fab);
         answer.setOnClickListener(new View.OnClickListener() {
             @Override

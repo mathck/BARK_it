@@ -104,6 +104,8 @@ public class ReplyRecyclerViewAdapter
 
         if(position == 0)
             holder.mView.findViewById(R.id.reply).setPadding(0, convertDpToPixel(36), 0, 0);
+        else if(position == (getItemCount() - 1))
+            holder.mView.findViewById(R.id.reply).setPadding(0, 0, 0, convertDpToPixel(140));
 
         final TextView bark_text = (TextView) holder.mView.findViewById(R.id.text1);
         bark_text.setText(holder.mBoundReply.getText());
