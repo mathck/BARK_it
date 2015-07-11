@@ -161,7 +161,8 @@ public class ReplyRecyclerViewAdapter
                         .setMessage("Are you sure you want to flag this reply?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Flag.run(UserId.get(mContext),
+                                Flag.run(mContext,
+                                        UserId.get(mContext),
                                         holder.mBoundReply.getObjectId(),
                                         ContentType.REPLY,
                                         new ParseGeoPoint(location.getLatitude(), location.getLongitude()));

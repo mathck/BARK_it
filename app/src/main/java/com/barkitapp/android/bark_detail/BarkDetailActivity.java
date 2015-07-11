@@ -164,7 +164,8 @@ public class BarkDetailActivity extends AppCompatActivity {
                         .setMessage("Are you sure you want to flag this BARK?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Flag.run(UserId.get(getApplication()),
+                                Flag.run(getApplication(),
+                                        UserId.get(getApplication()),
                                         mPost.getObjectId(),
                                         ContentType.POST,
                                         new ParseGeoPoint(location.getLatitude(), location.getLongitude()));
