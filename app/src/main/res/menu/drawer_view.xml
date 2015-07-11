@@ -22,6 +22,10 @@
                 android:id="@+id/nav_feedback"
                 android:icon="@drawable/ic_feedback_black_48dp"
                 android:title="@string/your_opinion" />
+            <item
+                android:id="@+id/nav_bug"
+                android:icon="@drawable/ic_bug_report_black_48dp"
+                android:title="@string/report_error" />
         </menu>
     </item>
 

@@ -32,5 +32,6 @@
   <string name="your_opinion_counts">Your Opinion Counts</string>
   <string name="profile">Profile</string>
   <string name="loading">Loading ...</string>
+  <string name="report_error">Report an Error</string>
 
 </resources>

@@ -10,8 +10,6 @@ import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 
 public class Flag {
@@ -24,14 +22,17 @@ public class Flag {
         params.put("content_type", content_type.ordinal());
         params.put("current_location", current_location);
 
-        ParseCloud.callFunctionInBackground("Flag", params, new FunctionCallback<JSONObject>() {
-            public void done(JSONObject result, ParseException e) {
+        ParseCloud.callFunctionInBackground("Flag", params, new FunctionCallback<Boolean>() {
+            public void done(Boolean result, ParseException e) {
                 if (e != null) {
-                    Toast.makeText(context, "Already flagged", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     Log.d("ERROR", Log.getStackTraceString(e));
                 }
                 else {
-                    Toast.makeText(context, "Content flagged", Toast.LENGTH_LONG).show();
+                    if(result)
+                        Toast.makeText(context, "Content flagged", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(context, "Already flagged", Toast.LENGTH_LONG).show();
                 }
             }
         });

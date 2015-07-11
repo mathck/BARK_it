@@ -185,6 +185,10 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(mContext, FeedbackActivity.class);
                         mContext.startActivity(i);
                         return true;
+                    case R.id.nav_bug:
+                        Intent intent2 = new Intent(mContext, ReportBugActivity.class);
+                        mContext.startActivity(intent2);
+                        return true;
                     case R.id.nav_friends:
                         Intent in = new Intent(mContext, ProfileActivity.class);
                         mContext.startActivity(in);
