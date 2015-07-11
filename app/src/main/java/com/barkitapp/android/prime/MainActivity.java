@@ -26,13 +26,13 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.parse.functions.PostPost;
-import com.barkitapp.android.places.PlacesActivity;
 import com.parse.ParseGeoPoint;
 
 import java.util.ArrayList;
@@ -151,10 +151,10 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.action_places:
-                Intent intent = new Intent(mContext, PlacesActivity.class);
-                mContext.startActivity(intent);
-                return true;
+            //case R.id.action_places:
+                //Intent intent = new Intent(mContext, PlacesActivity.class);
+                //mContext.startActivity(intent);
+                //return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -178,8 +178,9 @@ public class MainActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                         return true;
                     case R.id.nav_places:
-                        Intent intent = new Intent(mContext, PlacesActivity.class);
-                        mContext.startActivity(intent);
+                        Toast.makeText(mContext, "Change location and featured places will be available on 27.07", Toast.LENGTH_LONG).show();
+                        //Intent intent = new Intent(mContext, PlacesActivity.class);
+                        //mContext.startActivity(intent);
                         return true;
                     case R.id.nav_feedback:
                         Intent i = new Intent(mContext, FeedbackActivity.class);
@@ -190,8 +191,13 @@ public class MainActivity extends AppCompatActivity {
                         mContext.startActivity(intent2);
                         return true;
                     case R.id.nav_friends:
-                        Intent in = new Intent(mContext, ProfileActivity.class);
-                        mContext.startActivity(in);
+                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "I am testing Bark it, check it out"); // todo replace link
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://barkitapp.com/ea");
+                        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+                        //Intent in = new Intent(mContext, ProfileActivity.class);
+                        //mContext.startActivity(in);
                         return true;
                 }
 

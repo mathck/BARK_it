@@ -78,6 +78,14 @@
                 android:value=".prime.MainActivity" />
         </activity>
         <activity
+            android:name=".prime.ReportBugActivity"
+            android:label="@string/report_error"
+            android:parentActivityName=".prime.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".prime.MainActivity" />
+        </activity>
+        <activity
             android:name=".prime.FeedbackActivity"
             android:label="@string/your_opinion_counts"
             android:parentActivityName=".prime.MainActivity" >

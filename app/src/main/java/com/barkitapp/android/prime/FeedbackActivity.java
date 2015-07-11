@@ -41,7 +41,6 @@ public class FeedbackActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.loading);
         }
 
-
         WebView myWebView = (WebView) findViewById(R.id.webview);
         myWebView.loadUrl("https://docs.google.com/forms/d/1hMVbF4-XxVeuWKFZFy9ZVRfBW-xTFmCfUCV0klQTudI/viewform");
 
