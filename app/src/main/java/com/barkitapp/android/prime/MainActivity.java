@@ -2,7 +2,6 @@ package com.barkitapp.android.prime;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -106,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 performSend(chattext, viewPager);
             }
         });
-        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
+        //fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 

@@ -33,5 +33,6 @@
   <string name="profile">Profile</string>
   <string name="loading">Loading ...</string>
   <string name="report_error">Report an Error</string>
+  <string name="first_to_reply">Be the first to reply!</string>
 
 </resources>

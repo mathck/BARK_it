@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
@@ -33,6 +34,7 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
 
     private ReplyRecyclerViewAdapter mAdapter;
     private ProgressBar loadingBar;
+    private TextView noRepliesText;
 
     public void addNewItem(Reply item) {
         mAdapter.getValues().add(0, item);
@@ -49,6 +51,7 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
         setupRecyclerView((RecyclerView) fragmentView.findViewById(R.id.recyclerview));
 
         loadingBar = (ProgressBar) fragmentView.findViewById(R.id.progressBar1);
+        noRepliesText = (TextView) fragmentView.findViewById(R.id.no_replies_text);
 
         getRepliesFromParse();
 
@@ -76,6 +79,7 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
         mAdapter.getValues().clear();
         NotifyAdapter();
 
+        noRepliesText.setVisibility(View.GONE);
         startLoadingBar();
 
         Coordinates loc = LocationService.getLocation(getActivity());
@@ -107,6 +111,11 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
         mAdapter.setValues(ReplyConverter.run(getActivity(), result));
 
         stopLoadingBar();
+
+        if(mAdapter.getItemCount() == 0)
+            noRepliesText.setVisibility(View.VISIBLE);
+        else
+            noRepliesText.setVisibility(View.GONE);
 
         NotifyAdapter();
     }

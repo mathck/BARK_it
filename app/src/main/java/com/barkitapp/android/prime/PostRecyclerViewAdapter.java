@@ -144,8 +144,8 @@ public class PostRecyclerViewAdapter
 
         // set the colors for already voted posts
         if(holder.mBoundPost.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
-            votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-            upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+            votes_count.setTextColor(mContext.getResources().getColor(R.color.accent));
+            upvote.setColorFilter(mContext.getResources().getColor(R.color.accent));
             downvote.setColorFilter(null);
         }
         else if(holder.mBoundPost.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
