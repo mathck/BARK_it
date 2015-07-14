@@ -1,11 +1,9 @@
 package com.barkitapp.android.bark_detail;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -16,8 +14,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -44,14 +40,6 @@ public class BarkDetailActivity extends AppCompatActivity {
     private Post mPost;
     public String ObjectId;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setStatusBarColor() {
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +48,6 @@ public class BarkDetailActivity extends AppCompatActivity {
         ObjectId = intent.getStringExtra(EXTRA_POST);
 
         setContentView(R.layout.bark_detail_activity);
-
-        setStatusBarColor();
 
         mPost = MasterList.GetPost(ObjectId);
 
@@ -176,7 +162,7 @@ public class BarkDetailActivity extends AppCompatActivity {
                                 // do nothing
                             }
                         })
-                        .setIcon(R.mipmap.ic_launcher)
+                        .setIcon(R.drawable.ic_flag)
                         .show();
                 return true;
 

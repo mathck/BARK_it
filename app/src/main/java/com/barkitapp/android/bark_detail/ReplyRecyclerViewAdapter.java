@@ -10,7 +10,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -121,7 +120,7 @@ public class ReplyRecyclerViewAdapter
         final TextView distance = (TextView) holder.mView.findViewById(R.id.distance);
         distance.setText(DistanceConverter.GetDistanceInKm(mContext, holder.mBoundReply.getLocation().getLatitude(), holder.mBoundReply.getLocation().getLongitude()));
 
-        final ImageButton flagReply = (ImageButton) holder.mView.findViewById(R.id.flagReply);
+        final ImageView flagReply = (ImageView) holder.mView.findViewById(R.id.flagReply);
 
         /*
         if(holder.mBoundReply.getObjectId().equals(Constants.UNKNOWN))
@@ -137,8 +136,8 @@ public class ReplyRecyclerViewAdapter
 
         // set the colors for already voted posts
         if(holder.mBoundReply.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
-            votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-            upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+            votes_count.setTextColor(mContext.getResources().getColor(R.color.accent));
+            upvote.setColorFilter(mContext.getResources().getColor(R.color.accent));
             downvote.setColorFilter(null);
         }
         else if(holder.mBoundReply.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
@@ -173,7 +172,7 @@ public class ReplyRecyclerViewAdapter
                                 // do nothing
                             }
                         })
-                        .setIcon(R.mipmap.ic_launcher)
+                        .setIcon(R.drawable.ic_flag)
                         .show();
             }
         });
@@ -248,13 +247,13 @@ public class ReplyRecyclerViewAdapter
         }
         else {
             // vote counter -> red
-            votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-
             if(voteType.equals(VoteType.UP_VOTE)) {
-                upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+                votes_count.setTextColor(mContext.getResources().getColor(R.color.accent));
+                upvote.setColorFilter(mContext.getResources().getColor(R.color.accent));
                 downvote.setColorFilter(null);
             }
             else if(voteType.equals(VoteType.DOWN_VOTE)) {
+                votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
                 upvote.setColorFilter(null);
                 downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
             }

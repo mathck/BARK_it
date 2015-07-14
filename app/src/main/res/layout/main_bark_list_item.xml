@@ -80,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="3"
                 android:lines="3"
+                android:textColor="@color/primary_text"
                 android:ellipsize="end"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"

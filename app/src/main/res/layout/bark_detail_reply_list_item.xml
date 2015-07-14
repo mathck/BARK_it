@@ -83,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="2"
                 android:lines="2"
+                android:textColor="@color/primary_text"
                 android:ellipsize="end"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
@@ -108,11 +109,10 @@
                     android:paddingRight="20dp"
                     android:maxLines="1"
                     android:text="0 km" />
-                <ImageButton
+                <ImageView
                     android:id="@+id/flagReply"
-                    style="?android:borderlessButtonStyle"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:layout_gravity="bottom"
                     android:layout_marginRight="20dp"
                     android:tint="@color/card_background"

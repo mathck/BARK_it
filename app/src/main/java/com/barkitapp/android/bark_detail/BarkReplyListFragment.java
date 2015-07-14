@@ -9,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +35,7 @@ import de.greenrobot.event.EventBus;
 public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnUpdateRepliesCompleted {
 
     private ReplyRecyclerViewAdapter mAdapter;
-    private ProgressBar loadingBar;
+    private ImageView loadingBar;
     private TextView noRepliesText;
 
     public void addNewItem(Reply item) {
@@ -50,7 +52,8 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
 
         setupRecyclerView((RecyclerView) fragmentView.findViewById(R.id.recyclerview));
 
-        loadingBar = (ProgressBar) fragmentView.findViewById(R.id.progressBar1);
+        loadingBar = (ImageView) fragmentView.findViewById(R.id.progressBar1);
+
         noRepliesText = (TextView) fragmentView.findViewById(R.id.no_replies_text);
 
         getRepliesFromParse();
@@ -133,11 +136,14 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
 
     @UiThread
     private void stopLoadingBar() {
+        loadingBar.clearAnimation();
         loadingBar.setVisibility(View.GONE);
     }
 
     @UiThread
     private void startLoadingBar() {
+        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+        loadingBar.startAnimation(animation);
         loadingBar.setVisibility(View.VISIBLE);
     }
 }

@@ -238,13 +238,13 @@ public class PostRecyclerViewAdapter
         }
         else {
             // vote counter -> red
-            votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
-
             if(voteType.equals(VoteType.UP_VOTE)) {
-                upvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
+                votes_count.setTextColor(mContext.getResources().getColor(R.color.accent));
+                upvote.setColorFilter(mContext.getResources().getColor(R.color.accent));
                 downvote.setColorFilter(null);
             }
             else if(voteType.equals(VoteType.DOWN_VOTE)) {
+                votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
                 upvote.setColorFilter(null);
                 downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
             }

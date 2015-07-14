@@ -1,12 +1,10 @@
 package com.barkitapp.android.places;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,8 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
@@ -40,20 +36,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //private GooglePlaces mClient;
     //private ArrayAdapterSearchView searchView;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setStatusBarColor() {
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.setStatusBarColor(getResources().getColor(R.color.primary_dark));
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.places_change);
-
-        setStatusBarColor();
 
         //mClient = new GooglePlaces("AIzaSyCY9uZjMyBhr8ABjsy6NIurVoCu1A-nqbM");
 

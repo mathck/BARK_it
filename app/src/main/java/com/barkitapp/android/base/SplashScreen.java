@@ -83,7 +83,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
                 Order.TIME,
                 true);
 
-        startTime = System.currentTimeMillis();
+        //startTime = System.currentTimeMillis();
 
         // close spalsh screen after some time
         new Handler().postDelayed(new Runnable() {
@@ -129,12 +129,12 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         }
     }
 
-    long startTime;
+    //long startTime;
 
     @Override
     public void onUpdatePostsCompleted(HashMap<String, Object> result) {
-        long difference = System.currentTimeMillis() - startTime;
-        Toast.makeText(this, difference + "ms", Toast.LENGTH_LONG).show();
+        //long difference = System.currentTimeMillis() - startTime;
+        //Toast.makeText(this, difference + "ms", Toast.LENGTH_LONG).show();
         MasterList.StoreMasterList(this, result);
     }
 
