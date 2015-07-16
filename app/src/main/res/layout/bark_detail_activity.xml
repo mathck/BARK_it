@@ -169,8 +169,18 @@
                 </EditText>
 
             </android.support.v7.widget.CardView>
-        </RelativeLayout>
 
+            <ImageView
+                android:id="@+id/fab"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_bark"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/fab"/>
+
+        </RelativeLayout>
+<!--
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="46dp"
@@ -185,6 +195,7 @@
             app:rippleColor="@color/accent_dark"
             app:backgroundTint="@color/primary"
             android:src="@drawable/ic_send_white_48dp" />
+            -->
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

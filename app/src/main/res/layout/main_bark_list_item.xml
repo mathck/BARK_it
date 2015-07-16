@@ -71,7 +71,7 @@
                 android:layout_marginBottom="14dp"
                 android:layout_marginLeft="18dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginRight="90dp">
 
             <TextView
@@ -86,11 +86,11 @@
                 android:lineSpacingExtra="3dp"
                 android:text="asdasd" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_below="@id/text1"
                 android:layout_width="match_parent"
-                android:layout_marginTop="6dp"
                 android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/comments_count"
@@ -98,28 +98,39 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="8dp"
                     android:maxLines="1"
+                    android:textSize="14sp"
+                    android:layout_alignParentBottom="true"
                     android:text="0" />
                 <ImageView
+                    android:id="@+id/comment_icon"
+                    android:layout_toRightOf="@id/comments_count"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:layout_gravity="bottom"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_comment_multiple_outline"/>
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/ic_comment_multiple_outline"/>
                 <TextView
                     android:id="@+id/hours"
+                    android:layout_toRightOf="@id/comment_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="20dp"
                     android:maxLines="1"
+                    android:textSize="14sp"
+                    android:layout_alignParentBottom="true"
                     android:text="0 m" />
                 <TextView
                     android:id="@+id/distance"
+                    android:layout_toRightOf="@id/hours"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="20dp"
+                    android:textSize="14sp"
                     android:maxLines="1"
+                    android:layout_alignParentBottom="true"
                     android:text="0 km" />
-            </LinearLayout>
+            </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>
 

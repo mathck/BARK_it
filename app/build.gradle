@@ -47,8 +47,6 @@ dependencies {
     compile 'in.srain.cube:ultra-ptr:1.0.9'
     compile 'com.google.android.gms:play-services:7.5.0'
 
-
-
     // Fly refresh
     //compile 'com.race604.flyrefresh:library:1.0.1'
 

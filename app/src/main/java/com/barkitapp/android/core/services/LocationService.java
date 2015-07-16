@@ -50,8 +50,8 @@ public class LocationService {
                 System.out.println(addresses.get(0).getLocality());
             cityName = addresses.get(0).getLocality();
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        catch (Exception e) {
+            return "BARK it";
         }
 
         return cityName;

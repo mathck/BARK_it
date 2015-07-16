@@ -47,6 +47,9 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
             mSpeech.setText(RandomBarkGenerator.Run(this));
         }
 
+        // if emulator TODO remove me
+        // UserId.store(this, "qsct9gQBzc");
+
         String userId = UserId.get(this);
         if(userId != null && !userId.isEmpty())
         {

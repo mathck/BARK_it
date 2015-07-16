@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,14 +116,13 @@ public class BarkDetailActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton answer = (FloatingActionButton) findViewById(R.id.fab);
+        ImageView answer = (ImageView) findViewById(R.id.fab);
         answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 performSend(chattext, listFragment);
             }
         });
-        answer.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
 
         //CollapsingToolbarLayout collapsingToolbar =
         //        (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);

@@ -7,7 +7,7 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="92dp"
+        android:layout_height="96dp"
         android:layout_marginBottom="@dimen/card_margin"
         android:layout_marginLeft="@dimen/card_margin"
         android:layout_marginRight="@dimen/card_margin">
@@ -89,11 +89,11 @@
                 android:lineSpacingExtra="3dp"
                 android:text="asdasd" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_below="@id/text1"
                 android:layout_width="match_parent"
-                android:layout_marginTop="6dp"
                 android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/hours"
@@ -101,23 +101,46 @@
                     android:layout_height="wrap_content"
                     android:paddingRight="20dp"
                     android:maxLines="1"
+                    android:textSize="12sp"
+                    android:layout_alignParentBottom="true"
                     android:text="0 m" />
                 <TextView
+                    android:layout_toRightOf="@id/hours"
                     android:id="@+id/distance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="20dp"
                     android:maxLines="1"
+                    android:textSize="12sp"
+                    android:layout_alignParentBottom="true"
                     android:text="0 km" />
                 <ImageView
+                    android:layout_toRightOf="@id/distance"
                     android:id="@+id/flagReply"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_gravity="bottom"
                     android:layout_marginRight="20dp"
+                    android:layout_alignParentBottom="true"
                     android:tint="@color/card_background"
                     android:src="@drawable/ic_flag_white_48dp"/>
-            </LinearLayout>
+                <TextView
+                    android:layout_toRightOf="@id/flagReply"
+                    android:id="@+id/op"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:textSize="10sp"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/badge"
+                    android:layout_alignParentBottom="true"
+                    android:text="Bark Creator" />
+            </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>
 

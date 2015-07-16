@@ -122,6 +122,12 @@ public class ReplyRecyclerViewAdapter
 
         final ImageView flagReply = (ImageView) holder.mView.findViewById(R.id.flagReply);
 
+        // set OP
+        if(holder.mBoundReply.getUserId().equals(UserId.get(mContext))) {
+            final TextView op = (TextView) holder.mView.findViewById(R.id.op);
+            op.setVisibility(View.VISIBLE);
+        }
+
         /*
         if(holder.mBoundReply.getObjectId().equals(Constants.UNKNOWN))
         {
