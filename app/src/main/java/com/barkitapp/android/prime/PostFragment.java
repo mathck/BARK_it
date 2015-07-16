@@ -76,7 +76,8 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 if (!loading) {
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = true;
-                        onRefresh();
+                        // todo show loading bark icon and start loading
+                        //onRefresh();
                     }
                 }
             }

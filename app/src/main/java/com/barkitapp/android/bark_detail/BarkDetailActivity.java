@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -62,12 +64,27 @@ public class BarkDetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.distance)).setText(DistanceConverter.GetDistanceInKm(this, mPost.getLatitude(), mPost.getLongitude()));
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
+        // todo CAUTION this is a WORKAROUND
+        // remove me when google fixes issue
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+            int marginResult = 0;
+            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                marginResult = getResources().getDimensionPixelSize(resourceId)*2;
+            }
+            CollapsingToolbarLayout.LayoutParams params = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
+            params.topMargin -= marginResult;
+            toolbar.setLayoutParams(params);
+        }
+        // end of workaround
+
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
             //actionBar.setTitle("BARK");
         }
 
@@ -110,13 +127,11 @@ public class BarkDetailActivity extends AppCompatActivity {
         //CollapsingToolbarLayout collapsingToolbar =
         //        (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         //collapsingToolbar.setTitle("BARK");
-
-        //loadBackdrop();
     }
 
     private void performSend(EditText chattext, BarkReplyListFragment listFragment) {
         String textToPost = chattext.getText().toString();
-        if(textToPost.isEmpty()) {
+        if(textToPost.trim().isEmpty()) {
             return;
         }
 

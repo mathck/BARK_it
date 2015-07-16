@@ -2,6 +2,8 @@ package com.barkitapp.android.prime;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -41,10 +43,31 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private Context mContext;
+    private ActionBar actionBar;
 
     @Override
     public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
         return super.onCreateView(name, mContext = context, attrs);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        LocationService.storeLocation(this, lastKnownLocation);
+
+        String city = LocationService.getLocationCity(this, LocationService.getLocation(this));
+        actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            if(city != null && !city.isEmpty()) {
+                actionBar.setTitle(city);
+            }
+            else {
+                actionBar.setTitle(R.string.app_name);
+            }
+        }
     }
 
     @Override
@@ -58,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
 
         if(actionBar != null) {
 
@@ -115,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void performSend(EditText chattext, ViewPager viewPager) {
         String textToPost = chattext.getText().toString();
-        if(textToPost.isEmpty()) {
+        if(textToPost.trim().isEmpty()) {
             return;
         }
 
@@ -151,9 +174,9 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             //case R.id.action_places:
-                //Intent intent = new Intent(mContext, PlacesActivity.class);
-                //mContext.startActivity(intent);
-                //return true;
+            //Intent intent = new Intent(mContext, PlacesActivity.class);
+            //mContext.startActivity(intent);
+            //return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -168,41 +191,41 @@ public class MainActivity extends AppCompatActivity {
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                mDrawerLayout.closeDrawers();
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        mDrawerLayout.closeDrawers();
 
-                switch (menuItem.getItemId()) {
-                    case R.id.nav_home:
-                        menuItem.setChecked(true);
-                        return true;
-                    case R.id.nav_places:
-                        Toast.makeText(mContext, "Change location and featured places will be available on 27.07", Toast.LENGTH_LONG).show();
-                        //Intent intent = new Intent(mContext, PlacesActivity.class);
-                        //mContext.startActivity(intent);
-                        return true;
-                    case R.id.nav_feedback:
-                        Intent i = new Intent(mContext, FeedbackActivity.class);
-                        mContext.startActivity(i);
-                        return true;
-                    case R.id.nav_bug:
-                        Intent intent2 = new Intent(mContext, ReportBugActivity.class);
-                        mContext.startActivity(intent2);
-                        return true;
-                    case R.id.nav_friends:
-                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                        sharingIntent.setType("text/plain");
-                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "I am testing Bark it, check it out"); // todo replace link
-                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://barkitapp.com/ea");
-                        startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
-                        //Intent in = new Intent(mContext, ProfileActivity.class);
-                        //mContext.startActivity(in);
-                        return true;
-                }
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_home:
+                                menuItem.setChecked(true);
+                                return true;
+                            case R.id.nav_places:
+                                Toast.makeText(mContext, "Change location and featured places will be available on 27.07", Toast.LENGTH_LONG).show();
+                                //Intent intent = new Intent(mContext, PlacesActivity.class);
+                                //mContext.startActivity(intent);
+                                return true;
+                            case R.id.nav_feedback:
+                                Intent i = new Intent(mContext, FeedbackActivity.class);
+                                mContext.startActivity(i);
+                                return true;
+                            case R.id.nav_bug:
+                                Intent intent2 = new Intent(mContext, ReportBugActivity.class);
+                                mContext.startActivity(intent2);
+                                return true;
+                            case R.id.nav_friends:
+                                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                                sharingIntent.setType("text/plain");
+                                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "I am testing Bark it, check it out"); // todo replace link
+                                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://barkitapp.com/ea");
+                                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+                                //Intent in = new Intent(mContext, ProfileActivity.class);
+                                //mContext.startActivity(in);
+                                return true;
+                        }
 
-                return true;
-            }
-        });
+                        return true;
+                    }
+                });
     }
 
     static class Adapter extends FragmentPagerAdapter {
