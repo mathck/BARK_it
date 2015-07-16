@@ -89,13 +89,13 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
 
         BarkDetailActivity activity = (BarkDetailActivity) getActivity();
 
-        if(activity == null || activity.ObjectId == null) {
+        if(activity == null || activity.mPostObjectId == null) {
             return;
         }
 
         UpdateReplies.run(this,
                 UserId.get(getActivity()),
-                activity.ObjectId,
+                activity.mPostObjectId,
                 new ParseGeoPoint(loc.getLatitude(), loc.getLongitude()));
     }
 
@@ -103,7 +103,7 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
         List<Reply> mValues = new ArrayList<>();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        ReplyRecyclerViewAdapter adapter = new ReplyRecyclerViewAdapter(getActivity(), mValues);
+        ReplyRecyclerViewAdapter adapter = new ReplyRecyclerViewAdapter((BarkDetailActivity) getActivity(), mValues);
 
         recyclerView.setAdapter(mAdapter = adapter);
     }

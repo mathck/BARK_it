@@ -41,23 +41,26 @@ public class BarkDetailActivity extends AppCompatActivity {
     public static final String EXTRA_POST = "Post";
 
     private Post mPost;
-    public String ObjectId;
+    public String mPostObjectId;
+    public String mPostUserId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        ObjectId = intent.getStringExtra(EXTRA_POST);
+        mPostObjectId = intent.getStringExtra(EXTRA_POST);
 
         setContentView(R.layout.bark_detail_activity);
 
-        mPost = MasterList.GetPost(ObjectId);
+        mPost = MasterList.GetPost(mPostObjectId);
 
-        if(ObjectId == null || ObjectId.equals("") || mPost == null) {
+        if(mPostObjectId == null || mPostObjectId.equals("") || mPost == null) {
             Toast.makeText(this, "Failed to load BARK", Toast.LENGTH_LONG).show();
             finish();
         }
+
+        mPostUserId = mPost.getUserId();
 
         ((TextView) findViewById(R.id.bark_text)).setText(mPost.getText());
         ((TextView) findViewById(R.id.comments_count)).setText(mPost.getReply_counter() + "");

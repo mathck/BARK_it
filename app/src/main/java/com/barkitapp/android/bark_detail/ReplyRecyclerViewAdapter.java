@@ -1,6 +1,5 @@
 package com.barkitapp.android.bark_detail;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
+import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
@@ -23,6 +23,7 @@ import com.barkitapp.android.parse.enums.ContentType;
 import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.functions.Flag;
 import com.barkitapp.android.parse.functions.PostVote;
+import com.barkitapp.android.parse.objects.Post;
 import com.barkitapp.android.parse.objects.Reply;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -44,7 +45,8 @@ public class ReplyRecyclerViewAdapter
     }
 
     private List<Reply> mValues;
-    private Context mContext;
+    private BarkDetailActivity mContext;
+    private Post mPost;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public Reply mBoundReply;
@@ -68,12 +70,14 @@ public class ReplyRecyclerViewAdapter
         return mValues.get(position);
     }
 
-    public ReplyRecyclerViewAdapter(Context context, List<Reply> items) {
+    public ReplyRecyclerViewAdapter(BarkDetailActivity context, List<Reply> items) {
         mContext = context;
         TypedValue mTypedValue = new TypedValue();
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         mBackground = mTypedValue.resourceId;
         mValues = items;
+
+        mPost = MasterList.GetPost(context.mPostObjectId);
     }
 
     @Override
@@ -123,7 +127,7 @@ public class ReplyRecyclerViewAdapter
         final ImageView flagReply = (ImageView) holder.mView.findViewById(R.id.flagReply);
 
         // set OP
-        if(holder.mBoundReply.getUserId().equals(UserId.get(mContext))) {
+        if(holder.mBoundReply.getUserId().equals(mPost.getUserId())) {
             final TextView op = (TextView) holder.mView.findViewById(R.id.op);
             op.setVisibility(View.VISIBLE);
         }
