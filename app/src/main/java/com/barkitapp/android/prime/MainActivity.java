@@ -2,8 +2,6 @@ package com.barkitapp.android.prime;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -53,10 +51,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        LocationService.storeLocation(this, lastKnownLocation);
 
         String city = LocationService.getLocationCity(this, LocationService.getLocation(this));
         actionBar = getSupportActionBar();

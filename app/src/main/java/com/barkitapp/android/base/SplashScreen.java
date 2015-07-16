@@ -1,11 +1,7 @@
 package com.barkitapp.android.base;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -14,7 +10,7 @@ import android.widget.Toast;
 
 import com.barkitapp.android.Messages.UserIdRecievedEvent;
 import com.barkitapp.android.R;
-import com.barkitapp.android.core.Listener.UserLocationListener;
+import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.DeviceId;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
@@ -62,14 +58,8 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
     }
 
     private void AppStart() {
-        // get location updates
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locationListener = new UserLocationListener(this);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constants.GET_LOCATION_EVERY_MILLISECONDS, Constants.GET_LOCATION_EVERY_METERS, locationListener);
-
-        // get current location
-        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        LocationService.storeLocation(this, lastKnownLocation);
+        // get last known location
+        Coordinates lastKnownLocation = LocationService.getLocation(this);
 
         MasterList.clearMasterList();
 

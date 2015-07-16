@@ -1,10 +1,7 @@
 package com.barkitapp.android.places;
 
-import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -47,10 +44,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Change Place");
-
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        LocationService.storeLocation(this, lastKnownLocation);
 
         if(mMarker != null)
             mMarker.remove();

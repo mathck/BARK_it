@@ -33,7 +33,7 @@ public class Reply {
         this.vote_counter = vote_counter;
         this.badge = badge;
 
-        this.location = new Coordinates(location.getLatitude(), location.getLongitude());
+        this.location = new Coordinates(location.getLatitude(), location.getLongitude(), new Date());
 
         this.my_Vote = my_Vote;
     }

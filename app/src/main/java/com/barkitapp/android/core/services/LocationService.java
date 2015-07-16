@@ -9,6 +9,7 @@ import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.utility.SharedPrefKeys;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -18,14 +19,17 @@ public class LocationService {
         String latitude = InternalAppData.getString(context, SharedPrefKeys.LOCATION_LATITUDE);
         String longitude = InternalAppData.getString(context, SharedPrefKeys.LOCATION_LONGITUDE);
 
-        return new Coordinates(Double.parseDouble(latitude), Double.parseDouble(longitude));
+        Date date = new Date(InternalAppData.getLongTime(context, SharedPrefKeys.LOCATION_DATE));
+
+        return new Coordinates(Double.parseDouble(latitude), Double.parseDouble(longitude), date);
     }
 
     public static void storeLocation(Context context, Location location) {
         InternalAppData.Store(context, SharedPrefKeys.LOCATION_LATITUDE, Double.valueOf(location.getLatitude()).toString());
         InternalAppData.Store(context, SharedPrefKeys.LOCATION_LONGITUDE, Double.valueOf(location.getLongitude()).toString());
 
-        // todo update current position
+        // Store Date with location
+        InternalAppData.Store(context, SharedPrefKeys.LOCATION_DATE, new Date().getTime());
     }
 
     /**
