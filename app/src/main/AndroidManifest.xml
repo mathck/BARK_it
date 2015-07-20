@@ -33,9 +33,11 @@
         android:hardwareAccelerated="true"
         android:theme="@style/Theme.DesignDemo" >
 
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.barkitapp.android" />
-        <meta-data android:name="QUERY_LOG" android:value="false" />
         <meta-data android:name="DATABASE" android:value="barkit.db" />
+        <meta-data android:name="VERSION" android:value="2" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.barkitapp.android" />
+
 
         <activity
             android:name=".base.SplashScreen"

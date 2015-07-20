@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,14 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
         mSwipeLayout.setOnRefreshListener(this);
 
+        // todo remove me when fix is here
+        mSwipeLayout.setProgressViewOffset(false, 0,
+                (int) TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP,
+                        24,
+                        getResources().getDisplayMetrics()));
+        mSwipeLayout.setRefreshing(true);
+
         setupRecyclerView((RecyclerView) mSwipeLayout.findViewById(R.id.recyclerview));
         return mSwipeLayout;
     }
@@ -74,10 +83,11 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
 
                 if (!loading) {
+                    // Half of the list reached
                     if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = true;
                         // todo show loading bark icon and start loading
-                        //onRefresh();
+                        onRefresh();
                     }
                 }
             }
@@ -106,6 +116,11 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onResume() {
         super.onResume();
+
+        if(mSwipeLayout != null)
+            mSwipeLayout.setRefreshing(true);
+
+        onRefresh();
     }
 
     public void UpdateList() {
@@ -126,6 +141,8 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 int index = mAdapter.getValues().indexOf(event.post);
                 mAdapter.getValues().set(index, event.post);
             }
+
+            setRefreshing(false);
 
             NotifyAdapter();
         }
@@ -157,6 +174,8 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
 
+        setRefreshing(true);
+
         Coordinates location = LocationService.getLocation(getActivity());
 
         UpdatePosts.run(this,
@@ -167,8 +186,6 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 Constants.GET_POSTS_COUNT,
                 getOrder(),
                 false);
-
-        setRefreshing(true);
     }
 
     @UiThread

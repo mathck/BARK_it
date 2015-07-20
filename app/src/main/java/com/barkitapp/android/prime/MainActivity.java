@@ -209,8 +209,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_friends:
                         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                         sharingIntent.setType("text/plain");
-                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "I am testing Bark it, check it out"); // todo replace link
-                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://barkitapp.com/ea");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "I am testing Bark it, check it out");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://barkitapp.com/");
                         startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
                         //Intent in = new Intent(mContext, ProfileActivity.class);
                         //mContext.startActivity(in);
