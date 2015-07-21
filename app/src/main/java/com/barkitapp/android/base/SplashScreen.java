@@ -56,6 +56,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
             AppStart();
         }
         else {
+            Toast.makeText(this, "Initializing first app start", Toast.LENGTH_LONG).show();
             CreateUser.run(this, DeviceId.get(this));
         }
     }
