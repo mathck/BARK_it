@@ -1,6 +1,7 @@
 package com.barkitapp.android.prime;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
@@ -56,7 +57,8 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                         TypedValue.COMPLEX_UNIT_DIP,
                         24,
                         getResources().getDisplayMetrics()));
-        mSwipeLayout.setRefreshing(true);
+
+        setRefreshing(true);
 
         setupRecyclerView((RecyclerView) mSwipeLayout.findViewById(R.id.recyclerview));
         return mSwipeLayout;
@@ -193,9 +195,21 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     }
 
     @UiThread
-    public void setRefreshing(boolean status) {
+    public void setRefreshingUi(boolean status) {
         if(mSwipeLayout != null)
             mSwipeLayout.setRefreshing(status);
+    }
+
+    public void setRefreshing(boolean status) {
+        setRefreshingUi(status);
+
+        if(status)
+            new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setRefreshingUi(false);
+            }
+        }, 5000);
     }
 
     public abstract Order getOrder();
