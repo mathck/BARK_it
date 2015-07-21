@@ -21,6 +21,7 @@ import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.utility.LastRefresh;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.barkitapp.android.parse.objects.Post;
@@ -65,7 +66,6 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     LinearLayoutManager mLayoutManager;
 
-
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         PostRecyclerViewAdapter adapter = new PostRecyclerViewAdapter(getActivity(), getList(), getOrder());
@@ -84,7 +84,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
                 if (!loading) {
                     // Half of the list reached
-                    if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                    if (totalItemCount >= 20 && (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = true;
                         // todo show loading bark icon and start loading
                         onRefresh();
@@ -117,10 +117,13 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     public void onResume() {
         super.onResume();
 
-        if(mSwipeLayout != null)
-            mSwipeLayout.setRefreshing(true);
+        if(LastRefresh.isAvailable(getActivity()))
+        {
+            if(mSwipeLayout != null)
+                mSwipeLayout.setRefreshing(true);
 
-        onRefresh();
+            onRefresh();
+        }
     }
 
     public void UpdateList() {
@@ -178,7 +181,8 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
         Coordinates location = LocationService.getLocation(getActivity());
 
-        UpdatePosts.run(this,
+        UpdatePosts.run(getActivity(),
+                this,
                 UserId.get(getActivity()),
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),

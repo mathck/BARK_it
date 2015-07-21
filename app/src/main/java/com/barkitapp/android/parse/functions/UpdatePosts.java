@@ -1,5 +1,8 @@
 package com.barkitapp.android.parse.functions;
 
+import android.content.Context;
+
+import com.barkitapp.android.core.utility.LastRefresh;
 import com.barkitapp.android.parse.enums.Order;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
@@ -17,7 +20,9 @@ public class UpdatePosts {
 
     private static OnUpdatePostsCompleted listener;
 
-    public static void run(OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int radius, int max_count, Order order, boolean resetUserCache) {
+    public static void run(Context context, OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int radius, int max_count, Order order, boolean resetUserCache) {
+
+        LastRefresh.now(context);
 
         UpdatePosts.listener = listener;
 

@@ -29,6 +29,11 @@ public class InternalAppData {
         return prefs.getLong(key, new Date().getTime());
     }
 
+    public static Long getLong(Context context, String key) {
+        SharedPreferences prefs = context.getSharedPreferences(Constants.PACKAGE_NAME, Context.MODE_PRIVATE);
+        return prefs.getLong(key, 0);
+    }
+
     public static Boolean getBoolean(Context context, String key) {
         SharedPreferences prefs = context.getSharedPreferences(Constants.PACKAGE_NAME, Context.MODE_PRIVATE);
         return prefs.getBoolean(key, false);

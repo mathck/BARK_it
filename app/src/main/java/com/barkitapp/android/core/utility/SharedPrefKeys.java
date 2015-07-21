@@ -12,4 +12,6 @@ public final class SharedPrefKeys {
     public static final String MASTER_LIST_POSTS = "com.barkitapp.android.masterlistposts";
 
     public static final String MASTER_LIST_UPDATED = "com.barkitapp.android.masterlist.updated";
+
+    public static final String LAST_REFRESH = "com.barkitapp.android.lastrefresh";
 }

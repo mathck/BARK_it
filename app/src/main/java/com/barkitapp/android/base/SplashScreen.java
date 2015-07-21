@@ -68,7 +68,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         MasterList.clearMasterList();
 
         // get Posts from Parse
-        UpdatePosts.run(this,
+        UpdatePosts.run(this ,this,
                 UserId.get(this),
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
