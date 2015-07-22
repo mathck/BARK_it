@@ -87,7 +87,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
                 if (!loading) {
                     // Half of the list reached
-                    if (totalItemCount >= 20 && (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                    if (dy > 0 && totalItemCount >= 20 && (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = true;
                         // todo show loading bark icon and start loading
                         onRefresh();
@@ -119,6 +119,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onResume() {
         super.onResume();
+        loading = false;
 
         if(LastRefresh.isAvailable(getActivity()))
         {
@@ -130,13 +131,25 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     }
 
     public void UpdateList() {
+        int initial_barks = mAdapter.getItemCount();
         mAdapter.getValues().clear();
         mAdapter.setValues(getList());
+        int after_barks = mAdapter.getItemCount();
+
+        // if no new posts allow reloading after some time
+        if(initial_barks != after_barks)
+            loading = false;
 
         NotifyAdapter();
 
         setRefreshing(false);
-        loading = false;
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loading = false;
+            }
+        }, 15000);
     }
 
     public void onEvent(UpdateListItemEvent event) {

@@ -29,6 +29,7 @@ import com.parse.ParseGeoPoint;
 import java.util.HashMap;
 
 import de.greenrobot.event.EventBus;
+import io.nlopez.smartlocation.SmartLocation;
 
 public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsCompleted {
 
@@ -58,11 +59,23 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         }
         else {
             Toast.makeText(this, "Initializing first app start", Toast.LENGTH_LONG).show();
-            CreateUser.run(this, DeviceId.get(this));
+
+            String deviceId = DeviceId.get(this);
+            if(deviceId != null && !deviceId.isEmpty()) {
+                CreateUser.run(this, deviceId);
+            }
         }
     }
 
     private void AppStart() {
+
+        // Notify about location info
+        if(!SmartLocation.with(this).location().state().locationServicesEnabled())
+            Toast.makeText(this, "Please enable Location Services on your device.", Toast.LENGTH_LONG).show();
+
+        if(!SmartLocation.with(this).location().state().isGpsAvailable())
+            Toast.makeText(this, "Please enable GPS on your device to improve your BARK it experience.", Toast.LENGTH_LONG).show();
+
         // get last known location
         Coordinates lastKnownLocation = LocationService.getLocation(this);
 

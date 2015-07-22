@@ -21,13 +21,6 @@ public class Setup extends SugarApp implements OnLocationUpdatedListener {
         // establish parse connection
         Connection.Connect(this);
 
-        // Notify about location info
-        if(!SmartLocation.with(this).location().state().locationServicesEnabled())
-            Toast.makeText(this, "Please enable Location Services on your device.", Toast.LENGTH_LONG).show();
-
-        if(!SmartLocation.with(this).location().state().isGpsAvailable())
-            Toast.makeText(this, "Please enable GPS on your device to improve your BARK it experience.", Toast.LENGTH_LONG).show();
-
         SmartLocation.with(this).location()
                 .start(this);
     }
