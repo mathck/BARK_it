@@ -20,6 +20,7 @@ import com.barkitapp.android.core.utility.RandomBarkGenerator;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.CreateUser;
 import com.barkitapp.android.parse.functions.UpdatePosts;
+import com.barkitapp.android.parse.functions.UpdatePostsLat;
 import com.barkitapp.android.prime.MainActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -68,11 +69,10 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         MasterList.clearMasterList();
 
         // get Posts from Parse
-        UpdatePosts.run(this ,this,
+        UpdatePostsLat.run(this, this,
                 UserId.get(this),
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
                 new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
-                Constants.DEFAULT_RADIUS,
                 Constants.GET_POSTS_COUNT,
                 Order.TIME,
                 true);

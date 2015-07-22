@@ -25,6 +25,7 @@ import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.LastRefresh;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.UpdatePosts;
+import com.barkitapp.android.parse.functions.UpdatePostsLat;
 import com.barkitapp.android.parse.objects.Post;
 import com.parse.ParseGeoPoint;
 
@@ -183,12 +184,11 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
         Coordinates location = LocationService.getLocation(getActivity());
 
-        UpdatePosts.run(getActivity(),
+        UpdatePostsLat.run(getActivity(),
                 this,
                 UserId.get(getActivity()),
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                Constants.DEFAULT_RADIUS,
                 Constants.GET_POSTS_COUNT,
                 getOrder(),
                 false);
