@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(R.string.app_name);
             }
 
+            getSupportActionBar().setTitle(R.string.app_name);
+
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -137,6 +139,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Coordinates location = LocationService.getLocation(getApplicationContext());
+        if(location == null) {
+            Toast.makeText(this, "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         PostPost.run(UserId.get(this),
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),

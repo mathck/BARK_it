@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
 import com.barkitapp.android.Messages.MasterListUpdatedEvent;
@@ -21,6 +22,7 @@ import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
+import com.barkitapp.android.core.utility.Connectivity;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.LastRefresh;
 import com.barkitapp.android.parse.enums.Order;
@@ -121,6 +123,10 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
         super.onResume();
         loading = false;
 
+        if(!Connectivity.isOnline(getActivity())) {
+            Toast.makeText(getActivity(), "No Internet connection", Toast.LENGTH_LONG).show();
+        }
+
         if(LastRefresh.isAvailable(getActivity()))
         {
             if(mSwipeLayout != null)
@@ -192,10 +198,15 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
+        Coordinates location = LocationService.getLocation(getActivity());
+
+        if(location == null) {
+            setRefreshing(false);
+            Toast.makeText(getActivity(), "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         setRefreshing(true);
-
-        Coordinates location = LocationService.getLocation(getActivity());
 
         UpdatePostsLat.run(getActivity(),
                 this,

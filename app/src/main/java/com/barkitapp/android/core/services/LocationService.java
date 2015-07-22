@@ -19,6 +19,9 @@ public class LocationService {
         String latitude = InternalAppData.getString(context, SharedPrefKeys.LOCATION_LATITUDE);
         String longitude = InternalAppData.getString(context, SharedPrefKeys.LOCATION_LONGITUDE);
 
+        if(latitude == null || longitude == null || latitude.isEmpty() || longitude.isEmpty())
+            return null;
+
         Date date = new Date(InternalAppData.getLongTime(context, SharedPrefKeys.LOCATION_DATE));
 
         return new Coordinates(Double.parseDouble(latitude), Double.parseDouble(longitude), date);
@@ -40,6 +43,9 @@ public class LocationService {
      */
     public static String getLocationCity(Context context, Coordinates loc) {
         String cityName = null;
+
+        if(loc == null)
+            return "";
 
         Geocoder gcd = new Geocoder(context, Locale.getDefault());
         List<Address> addresses;

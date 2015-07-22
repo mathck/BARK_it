@@ -15,6 +15,7 @@ import com.barkitapp.android.core.services.DeviceId;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
+import com.barkitapp.android.core.utility.Connectivity;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.RandomBarkGenerator;
 import com.barkitapp.android.parse.enums.Order;
@@ -69,6 +70,8 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
     private void AppStart() {
 
+        MasterList.clearMasterList();
+
         // Notify about location info
         if(!SmartLocation.with(this).location().state().locationServicesEnabled())
             Toast.makeText(this, "Please enable Location Services on your device.", Toast.LENGTH_LONG).show();
@@ -76,19 +79,30 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         if(!SmartLocation.with(this).location().state().isGpsAvailable())
             Toast.makeText(this, "Please enable GPS on your device to improve your BARK it experience.", Toast.LENGTH_LONG).show();
 
+        if(!Connectivity.isOnline(this)) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+        }
+
         // get last known location
         Coordinates lastKnownLocation = LocationService.getLocation(this);
 
         MasterList.clearMasterList();
 
-        // get Posts from Parse
-        UpdatePostsLat.run(this, this,
-                UserId.get(this),
-                new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
-                new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
-                Constants.GET_POSTS_COUNT,
-                Order.TIME,
-                true);
+
+        if(lastKnownLocation != null)
+        {
+            // get Posts from Parse
+            UpdatePostsLat.run(this, this,
+                    UserId.get(this),
+                    new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
+                    new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
+                    Constants.GET_POSTS_COUNT,
+                    Order.TIME,
+                    true);
+        }
+        else {
+            Toast.makeText(this, "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+        }
 
         //startTime = System.currentTimeMillis();
 
