@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.barkitapp.android">
+    package="com.barkitapp.android" >
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,6 +10,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- Parse Recv Notifications -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -18,26 +19,36 @@
 
     <!-- TODO REMOVE ME IF POSSIBLE -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
-    <permission android:protectionLevel="signature"
-        android:name="com.barkitapp.android.permission.C2D_MESSAGE" />
+    <permission
+        android:name="com.barkitapp.android.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="com.barkitapp.android.permission.C2D_MESSAGE" />
 
     <application
-        android:allowBackup="true"
         android:name=".base.Setup"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:hardwareAccelerated="true"
         android:theme="@style/Theme.DesignDemo" >
-
-        <meta-data android:name="DATABASE" android:value="barkit.db" />
-        <meta-data android:name="VERSION" android:value="2" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.barkitapp.android" />
-
+        <meta-data
+            android:name="DATABASE"
+            android:value="barkit.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="2" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.barkitapp.android" />
+        <meta-data
+            android:name="com.parse.push.notification_icon"
+            android:resource="@drawable/ic_bark" />
 
         <activity
             android:name=".base.SplashScreen"
@@ -69,8 +80,11 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-            -->
-        <meta-data tools:replace="android:value" android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"
+            tools:replace="android:value" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
@@ -78,7 +92,7 @@
         <activity
             android:name=".places.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:parentActivityName=".places.PlacesActivity">
+            android:parentActivityName=".places.PlacesActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".prime.MainActivity" />
@@ -117,29 +131,30 @@
         </activity>
 
         <service android:name="com.parse.PushService" />
-        <receiver android:name="com.parse.ParseBroadcastReceiver">
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
-            android:exported="false">
+        <receiver
+            android:name=".notification.MyPushBroadcastReciever"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
                 <action android:name="com.parse.push.intent.DELETE" />
                 <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <!--
-                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
-                -->
+<!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
                 <category android:name="com.barkitapp.android" />
             </intent-filter>
         </receiver>

@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
-import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
@@ -77,7 +76,7 @@ public class ReplyRecyclerViewAdapter
         mBackground = mTypedValue.resourceId;
         mValues = items;
 
-        mPost = MasterList.GetPost(context.mPostObjectId);
+        //mPost = MasterList.GetPost(context.mPostObjectId);
     }
 
     @Override

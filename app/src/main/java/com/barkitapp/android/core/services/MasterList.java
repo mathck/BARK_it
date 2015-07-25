@@ -89,6 +89,11 @@ public class MasterList {
     }
 
     public static Post GetPost(String objectId) {
-        return Select.from(Post.class).where(Condition.prop("object_Id").eq(objectId)).first();
+        try {
+            return Select.from(Post.class).where(Condition.prop("object_Id").eq(objectId)).first();
+        }
+        catch (Exception e) {
+            return null;
+        }
     }
 }

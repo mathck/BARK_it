@@ -208,6 +208,10 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(mContext, FeedbackActivity.class);
                         mContext.startActivity(i);
                         return true;
+                    //case R.id.nav_settings:
+                    //    Intent intent3 = new Intent(mContext, SettingsActivity.class);
+                    //    mContext.startActivity(intent3);
+                    //    return true;
                     case R.id.nav_bug:
                         Intent intent2 = new Intent(mContext, ReportBugActivity.class);
                         mContext.startActivity(intent2);

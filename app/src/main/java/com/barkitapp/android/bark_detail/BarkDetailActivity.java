@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barkitapp.android.Messages.RecievedPostForNotification;
+import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
@@ -32,33 +34,29 @@ import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
 import com.barkitapp.android.parse.enums.ContentType;
 import com.barkitapp.android.parse.functions.Flag;
+import com.barkitapp.android.parse.functions.GetPostById;
 import com.barkitapp.android.parse.functions.PostReply;
 import com.barkitapp.android.parse.objects.Post;
+import com.barkitapp.android.prime.MainActivity;
 import com.parse.ParseGeoPoint;
+
+import de.greenrobot.event.EventBus;
 
 public class BarkDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POST = "Post";
+    public static final String EXTRA_POST_ID = "Origin.Reply.Notification";
 
     private Post mPost;
     public String mPostObjectId;
     public String mPostUserId;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private boolean mCameFromNotification = false;
 
-        Intent intent = getIntent();
-        mPostObjectId = intent.getStringExtra(EXTRA_POST);
+    private void initView(Post post) {
 
-        setContentView(R.layout.bark_detail_activity);
-
-        mPost = MasterList.GetPost(mPostObjectId);
-
-        if(mPostObjectId == null || mPostObjectId.equals("") || mPost == null) {
-            Toast.makeText(this, "Failed to load BARK", Toast.LENGTH_LONG).show();
-            finish();
-        }
+        if(post != null)
+            mPost = post;
 
         mPostUserId = mPost.getUserId();
 
@@ -66,31 +64,6 @@ public class BarkDetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.comments_count)).setText(mPost.getReply_counter() + "");
         ((TextView) findViewById(R.id.hours)).setText(TimeConverter.getPostAge(mPost.getTime_created()));
         ((TextView) findViewById(R.id.distance)).setText(DistanceConverter.GetDistanceInKm(this, mPost.getLatitude(), mPost.getLongitude()));
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        // todo CAUTION this is a WORKAROUND
-        // remove me when google fixes issue
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-            int marginResult = 0;
-            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-            if (resourceId > 0) {
-                marginResult = getResources().getDimensionPixelSize(resourceId)*2;
-            }
-            CollapsingToolbarLayout.LayoutParams params = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
-            params.topMargin -= marginResult;
-            toolbar.setLayoutParams(params);
-        }
-        // end of workaround
-
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-
-        if(actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-            //actionBar.setTitle("BARK");
-        }
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +99,77 @@ public class BarkDetailActivity extends AppCompatActivity {
                 performSend(chattext, listFragment);
             }
         });
+    }
+
+    public void onEvent(RecievedPostForNotification event) {
+        initView(event.getPost());
+        EventBus.getDefault().post(new RequestUpdateRepliesEvent());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        mPostObjectId = intent.getStringExtra(EXTRA_POST);
+
+        setContentView(R.layout.bark_detail_activity);
+
+        mPost = MasterList.GetPost(mPostObjectId);
+
+        if(mPostObjectId == null || mPostObjectId.equals("") || mPost == null) {
+            mPostObjectId = intent.getStringExtra(EXTRA_POST_ID);
+            if(mPostObjectId == null || mPostObjectId.equals(""))
+            {
+                Toast.makeText(this, "Failed to load BARK", Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+
+            mCameFromNotification = true;
+            GetPostById.run(UserId.get(this), mPostObjectId);
+        }
+        else {
+            initView(mPost);
+            mCameFromNotification = false;
+        }
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        // todo CAUTION this is a WORKAROUND
+        // remove me when google fixes issue
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+            int marginResult = 0;
+            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                marginResult = getResources().getDimensionPixelSize(resourceId)*2;
+            }
+            CollapsingToolbarLayout.LayoutParams params = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
+            params.topMargin -= marginResult;
+            toolbar.setLayoutParams(params);
+        }
+        // end of workaround
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+            //actionBar.setTitle("BARK");
+        }
 
         //CollapsingToolbarLayout collapsingToolbar =
         //        (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -159,6 +203,13 @@ public class BarkDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                if(mCameFromNotification)
+                {
+                    Intent i = new Intent(this, MainActivity.class);
+                    this.startActivity(i);
+                    return true;
+                }
+
                 finish();
                 return true;
             case R.id.action_flag:

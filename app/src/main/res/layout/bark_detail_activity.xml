@@ -52,7 +52,7 @@
                         android:textSize="17sp"
                         android:paddingRight="8dp"
                         android:maxLines="1"
-                        android:text="0" />
+                        android:text="-" />
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
@@ -67,7 +67,7 @@
                         android:paddingRight="20dp"
                         android:textSize="17sp"
                         android:maxLines="1"
-                        android:text="0 m" />
+                        android:text="- m" />
                     <TextView
                         android:id="@+id/distance"
                         android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                         android:paddingRight="20dp"
                         android:textSize="17sp"
                         android:maxLines="1"
-                        android:text="0 km" />
+                        android:text="- km" />
                 </LinearLayout>
                 <TextView
                     android:id="@+id/bark_text"
@@ -89,7 +89,7 @@
                     android:lines="4"
                     android:textSize="20sp"
                     android:textColor="@android:color/white"
-                    android:text="Hier steht der Text des BARKs und so weiter und so fort und bla bla bla was ist hier eigentlich los"/>
+                    android:text="Loading ..."/>
 
             </RelativeLayout>
 

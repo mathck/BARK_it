@@ -26,6 +26,7 @@ import com.barkitapp.android.prime.MainActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseInstallation;
 
 import java.util.HashMap;
 
@@ -118,6 +119,11 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
     }
 
     public void onEvent(UserIdRecievedEvent event) {
+
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("user_id", UserId.get(this));
+        installation.saveInBackground();
+
         AppStart();
     }
 

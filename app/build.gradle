@@ -8,8 +8,8 @@ android {
         applicationId "com.barkitapp.android"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 8
-        versionName "Beta 4"
+        versionCode 9
+        versionName "Alpha 5"
     }
     buildTypes {
         release {
@@ -27,16 +27,33 @@ repositories {
     jcenter()
 }
 
+
 dependencies {
 
-    compile ('io.nlopez.smartlocation:library:3.0.11') {
+    compile('io.nlopez.smartlocation:library:3.0.11') {
         transitive = false
     }
 
-    compile 'com.android.support:design:22.2.0'
-    compile ('com.android.support:appcompat-v7:22.2.0') { exclude module: 'bolts-android' }
-    compile ('com.android.support:cardview-v7:22.2.0') { exclude module: 'bolts-android' }
-    compile ('com.android.support:recyclerview-v7:22.2.0') { exclude module: 'bolts-android' }
+    compile('com.android.support:appcompat-v7:22.2.0') { exclude module: 'bolts-android' }
+    compile('com.android.support:cardview-v7:22.2.0') { exclude module: 'bolts-android' }
+    compile('com.android.support:recyclerview-v7:22.2.0') { exclude module: 'bolts-android' }
+
+    // Fly refresh
+    //compile 'com.race604.flyrefresh:library:1.0.1'
+
+    // SQL ORM
+    
+
+    // Eventbus
+    
+    // App Intro
+    
+    // Google Places API Autocomplete Searchviewcompile ('se.walkercrou:google-places-api-java:2.1.2') { exclude module: 'bolts-android' }
+    //compile ('org.apache.httpcomponents:httpclient-android:4.3.5.1') { exclude module: 'bolts-android' }
+
+    // Parse
+    compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+    compile 'com.android.support:design:22.2.1'
     compile 'com.github.bumptech.glide:glide:3.6.0'
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.github.adnan-SM:TimelyTextView:1.0'
@@ -46,24 +63,9 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
     compile 'in.srain.cube:ultra-ptr:1.0.9'
     compile 'com.google.android.gms:play-services:7.5.0'
-
-    // Fly refresh
-    //compile 'com.race604.flyrefresh:library:1.0.1'
-
-    // SQL ORM
     compile 'com.github.satyan:sugar:1.3.1'
-
-    // Eventbus
     compile 'de.greenrobot:eventbus:2.4.0'
-
-    // App Intro
     compile 'com.github.paolorotolo:appintro:3.0.0'
-
-    // Google Places API Autocomplete Searchview
-    compile ('se.walkercrou:google-places-api-java:2.1.2') { exclude module: 'bolts-android' }
-    //compile ('org.apache.httpcomponents:httpclient-android:4.3.5.1') { exclude module: 'bolts-android' }
-
-    // Parse
     compile 'com.parse.bolts:bolts-android:1.2.0'
-    compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+    compile 'com.android.support:support-v4:22.2.1'
 }
