@@ -58,8 +58,7 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
         {
             try {
                 type = Push.values()[data.getInt("push_type")];
-            } catch (JSONException e) {
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
                 return;
             }
         }
