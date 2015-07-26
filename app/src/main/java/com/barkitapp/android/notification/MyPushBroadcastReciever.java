@@ -19,13 +19,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
 
     public static final String PARSE_DATA_KEY = "com.parse.Data";
     Uri notifySound;
     Intent resultIntent;
-    private static ArrayList<String> replies;
+    private static LinkedHashMap<String, ArrayList<String>> replies;
 
     /*
     @Override
@@ -46,7 +47,7 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
     protected void onPushReceive(Context context, Intent intent) {
 
         if(replies == null)
-            replies = new ArrayList<>();
+            replies = new LinkedHashMap<>();
 
         String text = "";
         String post_id = "";
@@ -68,7 +69,13 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
                 text = data.getString("alert");
                 post_id = data.getString("post_id");
 
-                replies.add(text);
+                ArrayList<String> current = replies.get(post_id);
+                if(current == null)
+                    current = new ArrayList<>();
+
+                current.add(text);
+                replies.remove(post_id);
+                replies.put(post_id, current);
 
                 NotificationManager notificationManager =
                         (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -78,19 +85,19 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-                if(replies.size() != 1) {
-                    builder.setNumber(replies.size());
+                if(current.size() != 1) {
+                    builder.setNumber(current.size());
                     NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
                     // Moves events into the big view
-                    for (int i=0; i < replies.size(); i++) {
-                        inboxStyle.addLine(replies.get(i));
+                    for (int i=0; i < current.size(); i++) {
+                        inboxStyle.addLine(current.get(i));
                     }
 
                     builder.setStyle(inboxStyle);
 
                     // Sets a title for the Inbox style big view
-                    inboxStyle.setBigContentTitle(replies.size() + " new replies");
+                    inboxStyle.setBigContentTitle(current.size() + " new replies");
                 }
 
                 builder.setContentTitle("Bark reply");
@@ -102,20 +109,31 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
                 builder.setAutoCancel(true);
 
                 resultIntent = new Intent(context, BarkDetailActivity.class);
-                resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 resultIntent.putExtra(BarkDetailActivity.EXTRA_POST_ID, post_id);
 
                 PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
-                        0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
                 builder.setContentIntent(resultPendingIntent);
-                builder.setVibrate(new long[] { 0, 500 });
+                builder.setVibrate(new long[]{0, 500});
 
                 //LED
                 builder.setLights(Color.RED, 2000, 500);
 
-                notificationManager.notify(type.ordinal(), builder.build());
+                // post_id -> int
+                String t = "";
+                for (int i = 0; i < post_id.length(); ++i) {
+                    char ch = post_id.charAt(i);
+                    int n = (int)ch - (int)'a' + 1;
+
+                    if(n < 0)
+                        n *= -1;
+
+                    t += String.valueOf(n);
+                }
+
+                notificationManager.notify(Integer.parseInt(t.substring(0, t.length() / 3)), builder.build());
 
             } catch (JSONException e) {
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();

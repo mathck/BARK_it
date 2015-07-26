@@ -31,6 +31,7 @@ import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.UserId;
+import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.parse.functions.PostPost;
 import com.parse.ParseGeoPoint;
 
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Context mContext;
     private ActionBar actionBar;
+
+    private long lastPostPerformed = 0;
 
     @Override
     public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
@@ -128,13 +131,26 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
-        if(viewPager != null)
+        if(viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
+
+            if(tabLayout.getTabAt(0) == null || tabLayout.getTabAt(1) == null)
+                return;
+
+            tabLayout.getTabAt(0).setIcon(R.drawable.ic_new_releases_white_18dp);
+            tabLayout.getTabAt(1).setIcon(R.drawable.ic_whatshot_white_18dp);
+        }
     }
 
     private void performSend(EditText chattext, ViewPager viewPager) {
         String textToPost = chattext.getText().toString();
         if(textToPost.isEmpty()) {
+            return;
+        }
+
+        if(System.currentTimeMillis() - lastPostPerformed < Constants.POST_BLOCK)
+        {
+            Toast.makeText(this, "Please wait a few seconds to bark again", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -148,6 +164,8 @@ public class MainActivity extends AppCompatActivity {
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 textToPost,
                 0);
+
+        lastPostPerformed = System.currentTimeMillis();
 
         //newFragment.addItem(new Post(Constants.UNKNOWN, Constants.TEMP_USER_ID, new Date(), new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
         //        textToPost, "", 0, 0, 0, 0, VoteType.NEUTRAL.ordinal()));
@@ -183,8 +201,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new NewFragment(), "NEW");
-        adapter.addFragment(new HotFragment(), "HOT");
+        adapter.addFragment(new NewFragment(), "  NEW");
+        adapter.addFragment(new HotFragment(), "  HOT");
         viewPager.setAdapter(adapter);
     }
 

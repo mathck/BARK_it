@@ -30,6 +30,7 @@ import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
+import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
 import com.barkitapp.android.parse.enums.ContentType;
@@ -51,6 +52,7 @@ public class BarkDetailActivity extends AppCompatActivity {
     public String mPostObjectId;
     public String mPostUserId;
 
+    private long lastPostPerformed = 0;
     private boolean mCameFromNotification = false;
 
     private void initView(Post post) {
@@ -182,6 +184,12 @@ public class BarkDetailActivity extends AppCompatActivity {
             return;
         }
 
+        if(System.currentTimeMillis() - lastPostPerformed < Constants.REPLY_BLOCK)
+        {
+            Toast.makeText(this, "Please wait a few seconds to reply again", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Coordinates location = LocationService.getLocation(getApplicationContext());
 
         PostReply.run(UserId.get(this),
@@ -190,6 +198,8 @@ public class BarkDetailActivity extends AppCompatActivity {
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 textToPost,
                 0);
+
+        lastPostPerformed = System.currentTimeMillis();
 
         //listFragment.getRepliesFromParse();
 
@@ -238,6 +248,20 @@ public class BarkDetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        if(mCameFromNotification)
+        {
+            Intent i = new Intent(this, MainActivity.class);
+            this.startActivity(i);
+            finish();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

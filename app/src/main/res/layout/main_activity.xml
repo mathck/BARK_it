@@ -33,7 +33,7 @@
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
                     android:singleLine="true"
-                    android:maxLength="100"
+                    android:maxLength="140"
                     android:layout_centerInParent="true"
                     android:layout_centerVertical="true"
                     android:lines="1"

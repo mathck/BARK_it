@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
+import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
@@ -46,6 +47,7 @@ public class ReplyRecyclerViewAdapter
     private List<Reply> mValues;
     private BarkDetailActivity mContext;
     private Post mPost;
+    private String myId = "";
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public Reply mBoundReply;
@@ -76,7 +78,9 @@ public class ReplyRecyclerViewAdapter
         mBackground = mTypedValue.resourceId;
         mValues = items;
 
-        //mPost = MasterList.GetPost(context.mPostObjectId);
+        myId = UserId.get(mContext);
+
+        mPost = MasterList.GetPost(context.mPostObjectId);
     }
 
     @Override
@@ -126,10 +130,20 @@ public class ReplyRecyclerViewAdapter
         final ImageView flagReply = (ImageView) holder.mView.findViewById(R.id.flagReply);
 
         // set OP
-        if(holder.mBoundReply.getUserId().equals(mPost.getUserId())) {
-            final TextView op = (TextView) holder.mView.findViewById(R.id.op);
-            op.setVisibility(View.VISIBLE);
-        }
+        //if(mPost != null && holder.mBoundReply.getUserId().equals(mPost.getUserId())) {
+        //    final TextView op = (TextView) holder.mView.findViewById(R.id.op);
+        //    op.setVisibility(View.VISIBLE);
+        //}
+        //else if(holder.mBoundReply.getUserId().equals(myId)) {
+        //    final TextView op = (TextView) holder.mView.findViewById(R.id.op);
+        //    op.setVisibility(View.VISIBLE);
+        //}
+
+        // set ME
+        //if(holder.mBoundReply.getUserId().equals(myId)) {
+        //    final TextView me = (TextView) holder.mView.findViewById(R.id.me);
+        //    me.setVisibility(View.VISIBLE);
+        //}
 
         /*
         if(holder.mBoundReply.getObjectId().equals(Constants.UNKNOWN))

@@ -46,6 +46,7 @@ public class PostRecyclerViewAdapter
     private List<Post> mValues;
     private Context mContext;
     private Order mOrder;
+    private String myId;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public Post mBoundPost;
@@ -76,6 +77,8 @@ public class PostRecyclerViewAdapter
         context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
         mBackground = mTypedValue.resourceId;
         mValues = items;
+
+        myId = UserId.get(mContext);
     }
 
     @Override
@@ -130,6 +133,12 @@ public class PostRecyclerViewAdapter
         // set distance
         final TextView distance = (TextView) holder.mView.findViewById(R.id.distance);
         distance.setText(DistanceConverter.GetDistanceInKm(mContext, holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()));
+
+        // set ME
+        //if(holder.mBoundPost.getUserId().equals(myId)) {
+        //    final TextView me = (TextView) holder.mView.findViewById(R.id.me);
+        //    me.setVisibility(View.VISIBLE);
+        //}
 
         /*
         if(holder.mBoundPost.getObjectId().equals(Constants.UNKNOWN))

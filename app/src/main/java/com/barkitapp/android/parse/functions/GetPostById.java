@@ -35,6 +35,8 @@ public class GetPostById {
                                 post.getInt("badge"),
                                 VoteType.NEUTRAL.ordinal());
 
+                    result.save();
+
                     EventBus.getDefault().post(new RecievedPostForNotification(result));
                 }
             }
