@@ -76,7 +76,8 @@ public class MasterList {
             EventBus.getDefault().post(new InitialPostsReceivedEvent());
 
         } catch (Exception e) {
-            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+            if(context != null)
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

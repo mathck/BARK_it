@@ -37,6 +37,7 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
     private ReplyRecyclerViewAdapter mAdapter;
     private ImageView loadingBar;
     private TextView noRepliesText;
+    private RecyclerView mRecyclerView;
 
     public void addNewItem(Reply item) {
         mAdapter.getValues().add(0, item);
@@ -100,6 +101,8 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
+        mRecyclerView = recyclerView;
+
         List<Reply> mValues = new ArrayList<>();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));

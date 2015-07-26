@@ -1,7 +1,11 @@
 package com.barkitapp.android.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -12,12 +16,14 @@ import com.barkitapp.android.Messages.UserIdRecievedEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.DeviceId;
+import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Connectivity;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.RandomBarkGenerator;
+import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.CreateUser;
 import com.barkitapp.android.parse.functions.UpdatePosts;
@@ -28,6 +34,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseInstallation;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import de.greenrobot.event.EventBus;
@@ -89,6 +96,13 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
         MasterList.clearMasterList();
 
+        if(lastKnownLocation == null) {
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
+
+            if (location != null)
+                lastKnownLocation = new Coordinates(location.getLatitude(), location.getLongitude(), new Date());
+        }
 
         if(lastKnownLocation != null)
         {
@@ -102,7 +116,8 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
                     true);
         }
         else {
-            Toast.makeText(this, "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Loading GPS data ...", Toast.LENGTH_LONG).show();
+            InternalAppData.Store(this, SharedPrefKeys.WAITING_FOR_GPS, true);
         }
 
         //startTime = System.currentTimeMillis();

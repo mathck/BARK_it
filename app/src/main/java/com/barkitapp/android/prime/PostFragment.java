@@ -202,7 +202,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
         if(location == null) {
             setRefreshing(false);
-            Toast.makeText(getActivity(), "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -215,7 +215,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 Constants.GET_POSTS_COUNT,
                 getOrder(),
-                false);
+                MasterList.GetMasterList().isEmpty());
     }
 
     @UiThread

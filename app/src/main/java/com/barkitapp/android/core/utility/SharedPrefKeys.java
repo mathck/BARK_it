@@ -16,4 +16,6 @@ public final class SharedPrefKeys {
     public static final String LAST_REFRESH = "com.barkitapp.android.lastrefresh";
 
     public static final String DEVICE_ID_UNIQUE = "com.barkitapp.android.unique";
+
+    public static final String WAITING_FOR_GPS = "com.barkitapp.android.wait.for.gps";
 }
