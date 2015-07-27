@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barkitapp.android.Messages.CollapseLayoutEvent;
 import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
@@ -124,6 +125,12 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
             noRepliesText.setVisibility(View.GONE);
 
         NotifyAdapter();
+
+        // scroll to bottom of list
+        if(mRecyclerView != null && mAdapter.getItemCount() > 0) {
+            mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount()-1);
+            EventBus.getDefault().post(new CollapseLayoutEvent());
+        }
     }
 
     @Override

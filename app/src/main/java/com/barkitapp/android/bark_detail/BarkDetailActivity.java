@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.annotation.UiThread;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barkitapp.android.Messages.CollapseLayoutEvent;
 import com.barkitapp.android.Messages.RecievedPostForNotification;
 import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
 import com.barkitapp.android.R;
@@ -52,6 +56,17 @@ public class BarkDetailActivity extends AppCompatActivity {
 
     private long lastPostPerformed = 0;
     private boolean mCameFromNotification = false;
+
+    @UiThread
+    private void collapseToolbar() {
+        AppBarLayout appbarLayout = (AppBarLayout) findViewById(R.id.appbar);
+
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appbarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if(behavior != null) {
+            behavior.onNestedFling((CoordinatorLayout) findViewById(R.id.main_content), appbarLayout, null, 0, 10000, false);
+        }
+    }
 
     private void initView(Post post) {
 
@@ -104,6 +119,10 @@ public class BarkDetailActivity extends AppCompatActivity {
     public void onEvent(RecievedPostForNotification event) {
         initView(event.getPost());
         EventBus.getDefault().post(new RequestUpdateRepliesEvent());
+    }
+
+    public void onEvent(CollapseLayoutEvent event) {
+        collapseToolbar();
     }
 
     @Override
