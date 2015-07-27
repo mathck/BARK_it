@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void performSend(EditText chattext, ViewPager viewPager) {
         String textToPost = chattext.getText().toString();
-        if(textToPost.isEmpty()) {
+        if(textToPost.trim().isEmpty()) {
             return;
         }
 
