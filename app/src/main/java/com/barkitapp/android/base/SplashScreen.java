@@ -91,6 +91,14 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
             Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
         }
 
+        /*
+        for EMULATOR
+        Location targetLocation = new Location("");//provider name is unecessary
+        targetLocation.setLatitude(48.20877d);//your coords of course
+        targetLocation.setLongitude(16.37071d);
+        LocationService.storeLocation(this, targetLocation);
+        */
+
         // get last known location
         Coordinates lastKnownLocation = LocationService.getLocation(this);
 

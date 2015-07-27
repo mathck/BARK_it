@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -169,16 +171,17 @@ public class BarkDetailActivity extends AppCompatActivity {
 
         // todo CAUTION this is a WORKAROUND
         // remove me when google fixes issue
-        //if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-        //    int marginResult = 0;
-        //    int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        //    if (resourceId > 0) {
-        //        marginResult = getResources().getDimensionPixelSize(resourceId)*2;
-        //    }
-        //   CollapsingToolbarLayout.LayoutParams params = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
-        //   params.topMargin -= marginResult;
-        //   toolbar.setLayoutParams(params);
-        //}
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+            int marginResult = 0;
+            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                marginResult = getResources().getDimensionPixelSize(resourceId)*2;
+            }
+
+            CollapsingToolbarLayout.LayoutParams params = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
+            params.topMargin -= marginResult;
+            toolbar.setLayoutParams(params);
+        }
         // end of workaround
 
         setSupportActionBar(toolbar);
