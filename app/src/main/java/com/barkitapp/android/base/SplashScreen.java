@@ -87,10 +87,6 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         if(!SmartLocation.with(this).location().state().isGpsAvailable())
             Toast.makeText(this, "Please enable GPS on your device to improve your BARK it experience.", Toast.LENGTH_LONG).show();
 
-        if(!Connectivity.isOnline(this)) {
-            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
-        }
-
         /*
         for EMULATOR
         Location targetLocation = new Location("");//provider name is unecessary
@@ -112,20 +108,25 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
                 lastKnownLocation = new Coordinates(location.getLatitude(), location.getLongitude(), new Date());
         }
 
-        if(lastKnownLocation != null)
-        {
-            // get Posts from Parse
-            UpdatePostsLat.run(this, this,
-                    UserId.get(this),
-                    new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
-                    new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
-                    Constants.GET_POSTS_COUNT,
-                    Order.TIME,
-                    true);
+        if(!Connectivity.isOnline(this)) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
         }
         else {
-            Toast.makeText(this, "Loading GPS data ...", Toast.LENGTH_LONG).show();
-            InternalAppData.Store(this, SharedPrefKeys.WAITING_FOR_GPS, true);
+            if(lastKnownLocation != null)
+            {
+                // get Posts from Parse
+                UpdatePostsLat.run(this, this,
+                        UserId.get(this),
+                        new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
+                        new ParseGeoPoint(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()),
+                        Constants.GET_POSTS_COUNT,
+                        Order.TIME,
+                        true);
+            }
+            else {
+                Toast.makeText(this, "Loading GPS data ...", Toast.LENGTH_LONG).show();
+                InternalAppData.Store(this, SharedPrefKeys.WAITING_FOR_GPS, true);
+            }
         }
 
         //startTime = System.currentTimeMillis();

@@ -29,11 +29,11 @@ public class DistanceConverter {
         if(distanceInMeters <= 100.0f) {
             return "0,1" + KM;
         }
-        else if(distanceInMeters < 1000.0f) {
+        else if(distanceInMeters < 5000.0f) {
             // 0,1 - 0,9 km
             return String.format("%.1f", (distanceInMeters / 1000.0f)) + KM;
         }
-        else if(distanceInMeters > 1000.0f) {
+        else if(distanceInMeters > 5000.0f) {
             return (int) ((distanceInMeters / 1000.0f) - 0.5f) + KM;
         }
 
