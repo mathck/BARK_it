@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        PostPost.run(UserId.get(this),
+        PostPost.run(this, UserId.get(this),
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 textToPost,
                 0);

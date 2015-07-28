@@ -211,7 +211,7 @@ public class PostRecyclerViewAdapter
 
     private void performVoting(Post boundPost, TextView votes_count, ImageView upvote, ImageView downvote, VoteType voteType, int valueChange) {
         // post to parse
-        PostVote.run(UserId.get(mContext),
+        PostVote.run(mContext, UserId.get(mContext),
                 boundPost.getObjectId(),
                 ContentType.POST,
                 new ParseGeoPoint(boundPost.getLatitude(), boundPost.getLongitude()),

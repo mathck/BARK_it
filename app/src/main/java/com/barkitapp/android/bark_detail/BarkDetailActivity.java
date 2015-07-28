@@ -163,7 +163,7 @@ public class BarkDetailActivity extends AppCompatActivity {
             }
 
             mCameFromNotification = true;
-            GetPostById.run(UserId.get(this), mPostObjectId);
+            GetPostById.run(this, UserId.get(this), mPostObjectId);
         }
         else {
             initView(mPost);
@@ -215,7 +215,7 @@ public class BarkDetailActivity extends AppCompatActivity {
 
         Coordinates location = LocationService.getLocation(getApplicationContext());
 
-        PostReply.run(UserId.get(this),
+        PostReply.run(this, UserId.get(this),
                 mPost.getObjectId(),
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),

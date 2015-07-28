@@ -239,7 +239,7 @@ public class ReplyRecyclerViewAdapter
 
     private void performVoting(Reply boundReply, TextView votes_count, ImageView upvote, ImageView downvote, VoteType voteType, int valueChange) {
         // post to parse
-        PostVote.run(UserId.get(mContext),
+        PostVote.run(mContext, UserId.get(mContext),
                 boundReply.getObjectId(),
                 ContentType.REPLY,
                 new ParseGeoPoint(boundReply.getLocation().getLatitude(), boundReply.getLocation().getLongitude()),

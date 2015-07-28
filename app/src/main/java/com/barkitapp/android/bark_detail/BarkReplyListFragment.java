@@ -95,7 +95,7 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
             return;
         }
 
-        UpdateReplies.run(this,
+        UpdateReplies.run(getActivity(), this,
                 UserId.get(getActivity()),
                 activity.mPostObjectId,
                 new ParseGeoPoint(loc.getLatitude(), loc.getLongitude()));
