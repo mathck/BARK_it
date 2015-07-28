@@ -82,6 +82,8 @@ public class BarkDetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.hours)).setText(TimeConverter.getPostAge(mPost.getTime_created()));
         ((TextView) findViewById(R.id.distance)).setText(DistanceConverter.GetDistanceInKm(this, mPost.getLatitude(), mPost.getLongitude()));
 
+        // share FAB was removed (see Bug 466)
+        /*
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +96,7 @@ public class BarkDetailActivity extends AppCompatActivity {
             }
         });
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.accent)));
+        */
 
         final BarkReplyListFragment listFragment = (BarkReplyListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
 
@@ -242,6 +245,15 @@ public class BarkDetailActivity extends AppCompatActivity {
 
                 finish();
                 return true;
+
+            case R.id.action_share:
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this BARK"); // todo replace link
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mPost.getText() + "\n\n" + "Start barking http://barkitapp.com/");
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+                return true;
+
             case R.id.action_flag:
                 final Coordinates location = LocationService.getLocation(this);
                 new AlertDialog.Builder(this)

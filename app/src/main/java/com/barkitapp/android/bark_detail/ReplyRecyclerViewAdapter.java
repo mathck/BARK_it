@@ -109,7 +109,7 @@ public class ReplyRecyclerViewAdapter
         holder.mView.findViewById(R.id.reply).setPadding(0, 0, 0, 0);
 
         if(position == 0)
-            holder.mView.findViewById(R.id.reply).setPadding(0, convertDpToPixel(36), 0, 0);
+            holder.mView.findViewById(R.id.reply).setPadding(0, convertDpToPixel(8), 0, 0);
         else if(position == (getItemCount() - 1))
             holder.mView.findViewById(R.id.reply).setPadding(0, 0, 0, convertDpToPixel(140));
 
