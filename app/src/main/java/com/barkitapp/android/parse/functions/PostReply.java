@@ -1,6 +1,8 @@
 package com.barkitapp.android.parse.functions;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
 import com.parse.FunctionCallback;
@@ -16,7 +18,7 @@ import de.greenrobot.event.EventBus;
 
 public class PostReply {
 
-    public static void run(String user_id, String post_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, String text, int badge) {
+    public static void run(final Context context, String user_id, String post_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, String text, int badge) {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("user_id", user_id);
         params.put("post_id", post_id);
@@ -29,6 +31,7 @@ public class PostReply {
             public void done(JSONObject result, ParseException e) {
                 if (e != null) {
                     Log.d("ERROR", Log.getStackTraceString(e));
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
                 else {
                     EventBus.getDefault().post(new RequestUpdateRepliesEvent());

@@ -191,6 +191,6 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
     @Override
     public void onUpdatePostsFailed(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        
     }
 }

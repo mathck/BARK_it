@@ -1,6 +1,7 @@
 package com.barkitapp.android.parse.functions;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.barkitapp.android.core.utility.LastRefresh;
 import com.barkitapp.android.parse.enums.Order;
@@ -20,7 +21,7 @@ public class UpdatePosts {
 
     private static OnUpdatePostsCompleted listener;
 
-    public static void run(Context context, OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int radius, int max_count, Order order, boolean resetUserCache) {
+    public static void run(final Context context, OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int radius, int max_count, Order order, boolean resetUserCache) {
 
         LastRefresh.now(context);
 
@@ -41,6 +42,7 @@ public class UpdatePosts {
                     UpdatePosts.listener.onUpdatePostsCompleted(result);
                 } else {
                     UpdatePosts.listener.onUpdatePostsFailed(e.getMessage());
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -135,7 +135,6 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
 
     @Override
     public void onUpdateRepliesFailed(String error) {
-        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
         stopLoadingBar();
     }
 

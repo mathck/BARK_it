@@ -1,5 +1,8 @@
 package com.barkitapp.android.parse.functions;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.barkitapp.android.Messages.RecievedPostForNotification;
 import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.objects.Post;
@@ -14,7 +17,7 @@ import de.greenrobot.event.EventBus;
 
 public class GetPostById {
 
-    public static void run(String user_id, String post_id) {
+    public static void run(final Context context,String user_id, String post_id) {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("user_id", user_id);
         params.put("post_id", post_id);
@@ -38,6 +41,9 @@ public class GetPostById {
                     result.save();
 
                     EventBus.getDefault().post(new RecievedPostForNotification(result));
+                }
+                else {
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });

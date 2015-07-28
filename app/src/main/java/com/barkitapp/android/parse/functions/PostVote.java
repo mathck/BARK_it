@@ -1,6 +1,8 @@
 package com.barkitapp.android.parse.functions;
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.barkitapp.android.parse.enums.ContentType;
 import com.barkitapp.android.parse.enums.VoteType;
@@ -15,7 +17,7 @@ import java.util.HashMap;
 
 public class PostVote {
 
-    public static void run(String user_id, String content_id, ContentType content_type, ParseGeoPoint current_location, VoteType vote_type) {
+    public static void run(final Context context, String user_id, String content_id, ContentType content_type, ParseGeoPoint current_location, VoteType vote_type) {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("user_id", user_id);
         params.put("content_id", content_id);
@@ -27,6 +29,7 @@ public class PostVote {
             public void done(JSONObject result, ParseException e) {
                 if (e != null) {
                     Log.d("ERROR", Log.getStackTraceString(e));
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
