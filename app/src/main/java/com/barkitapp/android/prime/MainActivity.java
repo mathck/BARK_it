@@ -218,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
                         menuItem.setChecked(true);
                         return true;
                     case R.id.nav_places:
-                        Toast.makeText(mContext, "Change location and featured places will be available on 27.07", Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, "Change location and featured places will be available when we expand outside of vienna.", Toast.LENGTH_LONG).show();
                         //Intent intent = new Intent(mContext, PlacesActivity.class);
                         //mContext.startActivity(intent);
                         return true;
