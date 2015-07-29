@@ -15,11 +15,12 @@
         android:contentDescription="@string/app_name" />
 
     <TextView
+        android:id="@+id/app_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
         android:layout_gravity="bottom"
-        android:text="@string/current_version"
+        android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
 </FrameLayout>

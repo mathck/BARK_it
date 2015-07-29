@@ -2,6 +2,7 @@ package com.barkitapp.android.prime;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.barkitapp.android.BuildConfig;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
@@ -207,6 +209,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
+
+        TextView app_version = (TextView) navigationView.findViewById(R.id.app_version);
+        try {
+            String appVersionText = BuildConfig.VERSION_NAME + " " + BuildConfig.VERSION_CODE;
+            if(app_version != null)
+                app_version.setText(appVersionText);
+        }
+        catch (Exception e)
+        {
+
+        }
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -225,6 +239,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_feedback:
                         Intent i = new Intent(mContext, FeedbackActivity.class);
                         mContext.startActivity(i);
+                        return true;
+                    case R.id.nav_facebook:
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/groups/barkitEA/")));
                         return true;
                     //case R.id.nav_settings:
                     //    Intent intent3 = new Intent(mContext, SettingsActivity.class);

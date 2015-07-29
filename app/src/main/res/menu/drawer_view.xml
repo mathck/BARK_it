@@ -26,6 +26,10 @@
                 android:id="@+id/nav_bug"
                 android:icon="@drawable/ic_bug_report_black_48dp"
                 android:title="@string/report_error" />
+            <item
+                android:id="@+id/nav_facebook"
+                android:icon="@drawable/ic_facebook"
+                android:title="@string/facebook" />
             <!--
             <item
                 android:id="@+id/nav_settings"
