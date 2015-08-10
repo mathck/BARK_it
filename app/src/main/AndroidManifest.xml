@@ -26,6 +26,9 @@
 
     <uses-permission android:name="com.barkitapp.android.permission.C2D_MESSAGE" />
 
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:name=".base.Setup"
         android:allowBackup="true"
