@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar actionBar;
 
     private long lastPostPerformed = 0;
+    private String mCity;
 
     @Override
     public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
@@ -57,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        String city = LocationService.getLocationCity(this, LocationService.getLocation(this));
+        mCity = LocationService.getLocationCity(this, LocationService.getLocation(this));
         actionBar = getSupportActionBar();
         if(actionBar != null) {
-            if(city != null && !city.isEmpty()) {
-                actionBar.setTitle(city);
+            if(mCity != null && !mCity.isEmpty()) {
+                actionBar.setTitle("New in " + mCity);
             }
             else {
                 actionBar.setTitle(R.string.app_name);
@@ -139,8 +140,8 @@ public class MainActivity extends AppCompatActivity {
             if(tabLayout.getTabAt(0) == null || tabLayout.getTabAt(1) == null)
                 return;
 
-            tabLayout.getTabAt(0).setIcon(R.drawable.ic_new_releases_white_18dp);
-            tabLayout.getTabAt(1).setIcon(R.drawable.ic_whatshot_white_18dp);
+            tabLayout.getTabAt(0).setIcon(R.drawable.ic_access_time_white_24dp);
+            tabLayout.getTabAt(1).setIcon(R.drawable.ic_whatshot_white_24dp);
         }
     }
 
@@ -203,8 +204,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new NewFragment(), "  NEW");
-        adapter.addFragment(new HotFragment(), "  HOT");
+        adapter.addFragment(new NewFragment(), "");
+        adapter.addFragment(new HotFragment(), "");
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if(actionBar != null && actionBar.getTitle() != null) {
+                    actionBar.setTitle((position == 0 ? "New in " : "Hot in ") + mCity);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //if(actionBar != null && actionBar.getTitle() != null) {
+                //    actionBar.setTitle((position == 0 ? "New in " : "Hot in ") + mCity);
+                //}
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         viewPager.setAdapter(adapter);
     }
 
