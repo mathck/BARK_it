@@ -106,8 +106,8 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
 
             builder.setContentTitle(vote_count + " points");
             builder.setContentText("Your bark has " + vote_count + " points");
-            builder.setSmallIcon(R.drawable.ic_keyboard_arrow_up_white_48dp);
-            Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+            Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_up_notification);
             builder.setLargeIcon(largeIcon);
             builder.setSound(notifySound);
             builder.setGroup(type.toString());
@@ -173,8 +173,8 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
 
             builder.setContentTitle("Bark reply");
             builder.setContentText(text);
-            builder.setSmallIcon(R.drawable.ic_forum);
-            Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+            Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_chat_notification);
             builder.setLargeIcon(largeIcon);
             builder.setSound(notifySound);
             builder.setGroup(type.toString());
