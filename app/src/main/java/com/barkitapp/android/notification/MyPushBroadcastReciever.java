@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android.bark_detail.BarkDetailActivity;
+import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.parse.enums.ContentType;
 import com.barkitapp.android.parse.enums.Push;
 import com.barkitapp.android.prime.MainActivity;
@@ -41,12 +42,17 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
     }
     */
 
-    /*
+
     @Override
     protected void onPushOpen(Context context, Intent intent) {
-        Toast.makeText(context, "@Beni, das beudetet ich habe den Push richtig erhalten.", Toast.LENGTH_LONG).show();
+        try {
+            MasterList.clearMasterList();
+        }
+        catch(Exception ignored) {
+
+        }
     }
-    */
+
 
     @Override
     protected void onPushReceive(Context context, Intent intent) {
