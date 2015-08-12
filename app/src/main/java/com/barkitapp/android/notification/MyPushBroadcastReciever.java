@@ -82,7 +82,54 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
                 case Vote:
                     onVoteNotification(context, data, type);
                     break;
+                case PostOfTheDay:
+                    onBarkOfTheDayNotification(context, data, type);
+                    break;
             }
+        }
+    }
+
+    private void onBarkOfTheDayNotification(Context context, JSONObject data, Push type) {
+        try {
+            String post_id = data.getString("post_id");
+            String text = data.getString("alert");
+
+            NotificationManager notificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            notifySound = RingtoneManager
+                    .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+            builder.setContentTitle("Bark Of The Day");
+            builder.setContentText(text);
+            builder.setSmallIcon(R.drawable.ic_bark);
+            Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_hot_notification);
+            builder.setLargeIcon(largeIcon);
+            builder.setSound(notifySound);
+            builder.setGroup(type.toString());
+            builder.setGroupSummary(true);
+            builder.setAutoCancel(true);
+
+            resultIntent = new Intent(context, BarkDetailActivity.class);
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            resultIntent.putExtra(BarkDetailActivity.EXTRA_POST_ID, post_id);
+
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
+                    0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            builder.setContentIntent(resultPendingIntent);
+            builder.setVibrate(new long[]{0, 500});
+
+            //LED
+            builder.setLights(Color.RED, 2000, 500);
+
+            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+
+        } catch (JSONException e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+            return;
         }
     }
 
@@ -112,7 +159,7 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
 
             builder.setContentTitle(vote_count + " points");
             builder.setContentText("Your bark has " + vote_count + " points");
-            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setSmallIcon(R.drawable.ic_bark);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_up_notification);
             builder.setLargeIcon(largeIcon);
             builder.setSound(notifySound);
@@ -179,7 +226,7 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
 
             builder.setContentTitle("Bark reply");
             builder.setContentText(text);
-            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setSmallIcon(R.drawable.ic_bark);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_chat_notification);
             builder.setLargeIcon(largeIcon);
             builder.setSound(notifySound);
