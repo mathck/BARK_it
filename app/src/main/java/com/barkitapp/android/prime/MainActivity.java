@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     private long lastPostPerformed = 0;
     private String mCity;
+    private Uri path;
 
     @Override
     public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
 
+        /*
         ImageView takeAPicture = (ImageView) findViewById(R.id.picture);
         takeAPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 dispatchTakePictureIntent();
             }
         });
+        */
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
@@ -178,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photoFile));
+                        path = Uri.fromFile(photoFile));
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
@@ -191,6 +194,10 @@ public class MainActivity extends AppCompatActivity {
             //Bitmap imageBitmap = (Bitmap) extras.get("data");
             Toast.makeText(this, "Yay i got the pic!", Toast.LENGTH_LONG).show();
             //mImageView.setImageBitmap(imageBitmap);
+
+            Intent intent = new Intent(mContext, PictureActivity.class);
+            intent.putExtra("path", path.toString());
+            mContext.startActivity(intent);
         }
     }
 

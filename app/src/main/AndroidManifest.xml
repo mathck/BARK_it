@@ -104,6 +104,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".prime.MainActivity" />
         </activity>
+
+        <activity
+            android:name=".prime.PictureActivity"
+            android:label="Picture View"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".prime.PictureActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".prime.MainActivity" />
+        </activity>
+
         <activity
             android:screenOrientation="portrait"
             android:name=".places.PlacesActivity"

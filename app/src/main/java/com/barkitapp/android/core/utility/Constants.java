@@ -19,6 +19,8 @@ public final class Constants {
     public static final int REPLY_BLOCK = 5000;
 
     public static final int POST_BLOCK = 5000;
+    public static final int BARK_OF_THE_DAY_NOTIFICATION_ID = 1337;
+    public static final int UPVOTE_NOTIFICATION_VALUE = 123456;
 
     //public static final String TEMP_USER_ID = "kHoG2ihhvD";
 

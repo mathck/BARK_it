@@ -15,6 +15,9 @@ import android.widget.Toast;
 import com.barkitapp.android.R;
 import com.barkitapp.android.bark_detail.BarkDetailActivity;
 import com.barkitapp.android.core.services.MasterList;
+import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.utility.Settings;
+import com.barkitapp.android.parse.converter.NotificationConverter;
 import com.barkitapp.android.parse.enums.ContentType;
 import com.barkitapp.android.parse.enums.Push;
 import com.barkitapp.android.prime.MainActivity;
@@ -25,7 +28,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Random;
 
 public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
 
@@ -56,6 +58,9 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
 
     @Override
     protected void onPushReceive(Context context, Intent intent) {
+
+        if(!Settings.isNotificationEnabled(context))
+            return;
 
         if(replies == null)
             replies = new LinkedHashMap<>();
@@ -97,6 +102,8 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+            notificationManager.cancel(Constants.BARK_OF_THE_DAY_NOTIFICATION_ID);
+
             notifySound = RingtoneManager
                     .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -107,7 +114,10 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
             builder.setSmallIcon(R.drawable.ic_bark);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_hot_notification);
             builder.setLargeIcon(largeIcon);
-            builder.setSound(notifySound);
+
+            if(Settings.isNotificationSoundEnabled(context))
+                builder.setSound(notifySound);
+
             builder.setGroup(type.toString());
             builder.setGroupSummary(true);
             builder.setAutoCancel(true);
@@ -125,7 +135,7 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
             //LED
             builder.setLights(Color.RED, 2000, 500);
 
-            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+            notificationManager.notify(Constants.BARK_OF_THE_DAY_NOTIFICATION_ID, builder.build());
 
         } catch (JSONException e) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -136,9 +146,20 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
     private void onVoteNotification(Context context, JSONObject data, Push type) {
         try {
             String content_type = data.getString("content_type");
+            String post_id;
+            String text;
+            String vote_count = data.getString("vote_count");
 
             try {
-                if(ContentType.POST.ordinal() != Integer.parseInt(content_type)) {
+                if(ContentType.REPLY.ordinal() == Integer.parseInt(content_type)) {
+                    post_id = data.getString("parent_id");
+                    text = "Your reply has " + vote_count + " points";
+                }
+                else if (ContentType.POST.ordinal() == Integer.parseInt(content_type)) {
+                    post_id = data.getString("content_id");
+                    text = "Your bark has " + vote_count + " points";
+                }
+                else {
                     return;
                 }
             }
@@ -146,11 +167,10 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
                 return;
             }
 
-            String vote_count = data.getString("vote_count");
-            String post_id = data.getString("content_id");
-
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            notificationManager.cancel(NotificationConverter.getIdFromPostId(post_id) + Constants.UPVOTE_NOTIFICATION_VALUE);
 
             notifySound = RingtoneManager
                     .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -158,11 +178,14 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
             builder.setContentTitle(vote_count + " points");
-            builder.setContentText("Your bark has " + vote_count + " points");
+            builder.setContentText(text);
             builder.setSmallIcon(R.drawable.ic_bark);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_up_notification);
             builder.setLargeIcon(largeIcon);
-            builder.setSound(notifySound);
+
+            if(Settings.isNotificationSoundEnabled(context))
+                builder.setSound(notifySound);
+
             builder.setGroup(type.toString());
             builder.setGroupSummary(true);
             builder.setAutoCancel(true);
@@ -180,7 +203,7 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
             //LED
             builder.setLights(Color.RED, 2000, 500);
 
-            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+            notificationManager.notify(NotificationConverter.getIdFromPostId(post_id) + Constants.UPVOTE_NOTIFICATION_VALUE, builder.build());
 
         } catch (JSONException e) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -229,7 +252,10 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
             builder.setSmallIcon(R.drawable.ic_bark);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_chat_notification);
             builder.setLargeIcon(largeIcon);
-            builder.setSound(notifySound);
+
+            if(Settings.isNotificationSoundEnabled(context))
+                builder.setSound(notifySound);
+
             builder.setGroup(type.toString());
             builder.setGroupSummary(true);
             builder.setAutoCancel(true);
@@ -247,24 +273,18 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
             //LED
             builder.setLights(Color.RED, 2000, 500);
 
-            // post_id -> int
-            String t = "";
-            for (int i = 0; i < post_id.length(); ++i) {
-                char ch = post_id.charAt(i);
-                int n = (int)ch - (int)'a' + 1;
-
-                if(n < 0)
-                    n *= -1;
-
-                t += String.valueOf(n);
-            }
-
-            notificationManager.notify(Integer.parseInt(t.substring(0, t.length() / 3)), builder.build());
+            notificationManager.notify(NotificationConverter.getIdFromPostId(post_id), builder.build());
 
         } catch (JSONException e) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
             return;
         }
+    }
+
+    private boolean isNotificationVisible(Context context, int id) {
+        Intent notificationIntent = new Intent(context, MainActivity.class);
+        PendingIntent test = PendingIntent.getActivity(context, id, notificationIntent, PendingIntent.FLAG_NO_CREATE);
+        return test != null;
     }
 
     private JSONObject getDataFromIntent(Intent intent) {

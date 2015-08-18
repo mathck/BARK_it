@@ -1,5 +1,6 @@
 package com.barkitapp.android.bark_detail;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +38,8 @@ import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
+import com.barkitapp.android.notification.MyPushBroadcastReciever;
+import com.barkitapp.android.parse.converter.NotificationConverter;
 import com.barkitapp.android.parse.enums.ContentType;
 import com.barkitapp.android.parse.functions.Flag;
 import com.barkitapp.android.parse.functions.GetPostById;
@@ -76,6 +79,8 @@ public class BarkDetailActivity extends AppCompatActivity {
             mPost = post;
 
         mPostUserId = mPost.getUserId();
+
+        removeNotificationsForPost(mPost.getObjectId());
 
         ((TextView) findViewById(R.id.bark_text)).setText(mPost.getText());
         ((TextView) findViewById(R.id.comments_count)).setText(mPost.getReply_counter() + "");
@@ -142,18 +147,25 @@ public class BarkDetailActivity extends AppCompatActivity {
         super.onStop();
     }
 
+    private void removeNotificationsForPost(String post_id) {
+        // remove all active notifications for that id
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(ns);
+        nMgr.cancel(NotificationConverter.getIdFromPostId(post_id));
+        nMgr.cancel(NotificationConverter.getIdFromPostId(post_id) + Constants.UPVOTE_NOTIFICATION_VALUE);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
         mPostObjectId = intent.getStringExtra(EXTRA_POST);
-
         setContentView(R.layout.bark_detail_activity);
-
         mPost = MasterList.GetPost(mPostObjectId);
 
         if(mPostObjectId == null || mPostObjectId.equals("") || mPost == null) {
+            // coming from notification
             mPostObjectId = intent.getStringExtra(EXTRA_POST_ID);
             if(mPostObjectId == null || mPostObjectId.equals(""))
             {
@@ -164,6 +176,8 @@ public class BarkDetailActivity extends AppCompatActivity {
 
             mCameFromNotification = true;
             GetPostById.run(this, UserId.get(this), mPostObjectId);
+
+            removeNotificationsForPost(mPostObjectId);
         }
         else {
             initView(mPost);
@@ -174,6 +188,7 @@ public class BarkDetailActivity extends AppCompatActivity {
 
         // todo CAUTION this is a WORKAROUND
         // remove me when google fixes issue
+        /*
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
             int marginResult = 0;
             int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -186,6 +201,7 @@ public class BarkDetailActivity extends AppCompatActivity {
             toolbar.setLayoutParams(params);
         }
         // end of workaround
+        */
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
     android:background="@color/card_background">
 
     <android.support.design.widget.AppBarLayout
@@ -139,62 +143,83 @@
             android:id="@+id/chatbox"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:padding="8dp"
+            android:paddingTop="4dp"
             android:layout_alignParentBottom="true"
             android:background="@color/card_background">
 
             <android.support.v7.widget.CardView
+                android:id="@+id/card"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginRight="52dp">
-
-                <EditText
-                    android:id="@+id/chattext"
+                android:layout_height="wrap_content">
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_margin="0dp"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:singleLine="true"
-                    android:maxLength="300"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:background="@null"
-                    android:imeOptions="actionSend"
-                    android:inputType="text"
-                    android:textCursorDrawable="@drawable/edit_text"
-                    android:hint="Reply anonymously ..." >
-                    <requestFocus />
-                </EditText>
+                    android:layout_height="wrap_content">
+                    <!--
+                                    <ImageView
+                                        android:id="@+id/smiley"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:layout_marginLeft="12dp"
+                                        android:scaleType="centerInside"
+                                        android:layout_alignParentLeft="true"
+                                        android:src="@drawable/ic_insert_emoticon_black_48dp"
+                                        android:layout_centerVertical="true"
+                                        android:tint="@color/secondary_text" />
 
+                                        for chattext
+                                        android:layout_toRightOf="@id/smiley"
+                                        -->
+
+                    <EditText
+                        android:id="@+id/chattext"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="54dp"
+                        android:layout_marginRight="65dp"
+                        android:paddingLeft="12dp"
+                        android:scrollHorizontally="false"
+                        android:paddingRight="12dp"
+                        android:maxLength="140"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:imeOptions="actionSend"
+                        android:inputType="text"
+                        android:textSize="18sp"
+                        android:background="@null"
+                        android:textCursorDrawable="@drawable/edit_text"
+                        android:hint="Bark now ..." >
+                        <requestFocus />
+                    </EditText>
+                    <!--
+                                    <ImageView
+                                        android:id="@+id/picture"
+                                        android:layout_width="32dp"
+                                        android:layout_height="32dp"
+                                        android:scaleType="centerInside"
+                                        android:src="@drawable/ic_photo_camera_black_48dp"
+                                        android:layout_marginRight="14dp"
+                                        android:layout_centerVertical="true"
+                                        android:tint="@color/secondary_text"
+                                        android:layout_toLeftOf="@id/fab" />
+                    -->
+                    <ImageView
+                        android:id="@+id/fab"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_bark"
+                        android:layout_marginRight="12dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/fab"/>
+                </RelativeLayout>
             </android.support.v7.widget.CardView>
 
-            <ImageView
-                android:id="@+id/fab"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_bark"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/fab"/>
-
         </RelativeLayout>
-<!--
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:layout_marginRight="6dp"
-            app:elevation="@dimen/floating_button_elevation"
-            app:borderWidth="0dp"
-            app:rippleColor="@color/accent_dark"
-            app:backgroundTint="@color/primary"
-            android:src="@drawable/ic_send_white_48dp" />
-            -->
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>
