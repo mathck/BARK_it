@@ -183,7 +183,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="54dp"
-                        android:layout_marginRight="65dp"
+                        android:layout_marginRight="108dp"
                         android:paddingLeft="12dp"
                         android:scrollHorizontally="false"
                         android:paddingRight="12dp"
@@ -200,7 +200,6 @@
                         android:hint="Bark now ..." >
                         <requestFocus />
                     </EditText>
-                    <!--
                                     <ImageView
                                         android:id="@+id/picture"
                                         android:layout_width="32dp"
@@ -211,7 +210,6 @@
                                         android:layout_centerVertical="true"
                                         android:tint="@color/secondary_text"
                                         android:layout_toLeftOf="@id/fab" />
-                    -->
                     <ImageView
                         android:id="@+id/fab"
                         android:layout_width="40dp"
