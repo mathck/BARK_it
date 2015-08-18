@@ -34,5 +34,6 @@
   <string name="app">App</string>
   <string name="share_bark">Share BARK</string>
   <string name="facebook">Facebook</string>
+  <string name="shadow">shadow</string>
 
 </resources>

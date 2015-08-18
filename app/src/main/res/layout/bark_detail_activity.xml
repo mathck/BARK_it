@@ -139,11 +139,18 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_above="@+id/chatbox"
+            android:src="@drawable/shadow"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/shadow" />
+
         <RelativeLayout
             android:id="@+id/chatbox"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:paddingTop="4dp"
             android:layout_alignParentBottom="true"
             android:background="@color/card_background">
 
