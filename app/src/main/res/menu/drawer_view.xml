@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_comment_multiple_outline_black_48dp"
             android:title="@string/navigation_drawer_barks" />
         <item
+            android:id="@+id/nav_mybarks"
+            android:icon="@drawable/ic_person_black_48dp"
+            android:title="@string/navigation_drawer_mybarks" />
+        <item
             android:id="@+id/nav_places"
             android:icon="@drawable/ic_earth_black_48dp"
             android:title="@string/navigation_drawer_places" />

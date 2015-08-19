@@ -35,5 +35,7 @@
   <string name="share_bark">Share BARK</string>
   <string name="facebook">Facebook</string>
   <string name="shadow">shadow</string>
+  <string name="navigation_drawer_mybarks">My Barks</string>
+    <string name="title_activity_my_barks">MyBarksActivity</string>
 
 </resources>

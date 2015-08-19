@@ -339,6 +339,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         menuItem.setChecked(true);
                         return true;
+                    case R.id.nav_mybarks:
+                        Intent intentMy = new Intent(mContext, MyBarksActivity.class);
+                        mContext.startActivity(intentMy);
+                        return true;
                     case R.id.nav_places:
                         Toast.makeText(mContext, "will be available soon", Toast.LENGTH_LONG).show();
                         //Intent intent = new Intent(mContext, PlacesActivity.class);
