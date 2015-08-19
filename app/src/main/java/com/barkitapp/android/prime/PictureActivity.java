@@ -1,5 +1,6 @@
 package com.barkitapp.android.prime;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -29,6 +30,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,13 +50,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PictureActivity extends AppCompatActivity {
+public class PictureActivity extends Activity {
 
     private Context mContext;
 
     @Override
     public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
         return super.onCreateView(name, mContext = context, attrs);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // FULLSCREEN VIEW
+
     }
 
     @Override
@@ -66,9 +76,17 @@ public class PictureActivity extends AppCompatActivity {
         if (extras != null) {
             String value = extras.getString("path");
 
-            Bitmap myBitmap = BitmapFactory.decodeFile(value);
+            //Bitmap myBitmap = BitmapFactory.decodeFile(value);
             ImageView myImage = (ImageView) findViewById(R.id.image);
-            myImage.setImageBitmap(myBitmap);
+            myImage.setImageURI(Uri.parse(value));
         }
+
+        RelativeLayout cancelButton = (RelativeLayout) findViewById(R.id.cancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

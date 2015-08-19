@@ -10,6 +10,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- Parse Recv Notifications -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -109,7 +110,19 @@
             android:name=".prime.PictureActivity"
             android:label="Picture View"
             android:screenOrientation="portrait"
-            android:parentActivityName=".prime.PictureActivity" >
+            android:parentActivityName=".prime.MainActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".prime.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".prime.Custom_CameraActivity"
+            android:label="Camera View"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".prime.MainActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".prime.MainActivity" />

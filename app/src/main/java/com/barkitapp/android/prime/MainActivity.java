@@ -141,15 +141,16 @@ public class MainActivity extends AppCompatActivity {
         });
         //fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
 
-        /*
         ImageView takeAPicture = (ImageView) findViewById(R.id.picture);
         takeAPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dispatchTakePictureIntent();
+                //dispatchTakePictureIntent();
+
+                Intent intent = new Intent(mContext, Custom_CameraActivity.class);
+                mContext.startActivity(intent);
             }
         });
-        */
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
@@ -192,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
             //Bundle extras = data.getExtras();
             //Bitmap imageBitmap = (Bitmap) extras.get("data");
-            Toast.makeText(this, "Yay i got the pic!", Toast.LENGTH_LONG).show();
             //mImageView.setImageBitmap(imageBitmap);
 
             Intent intent = new Intent(mContext, PictureActivity.class);

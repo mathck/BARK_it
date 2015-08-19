@@ -9,29 +9,54 @@
     <ImageView
         android:id="@+id/image"
         android:contentDescription="Your taken picture"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:adjustViewBounds="true"
         android:src="@drawable/abc_btn_rating_star_on_mtrl_alpha" />
 
     <LinearLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:weightSum="2">
-        <Button
+        android:layout_height="80dp"
+        android:layout_marginBottom="0dp"
+        android:weightSum="5">
+        <RelativeLayout
             android:id="@+id/cancel"
-            android:text="Cancel"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/accept"
-            android:text="Accept"
             android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="#AA000000">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:alpha="0.6"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_cancel_white_48dp" />
+        </RelativeLayout>
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="#AA000000">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:alpha="0.6"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_replay_white_48dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:background="#AA000000">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_bark" />
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>
