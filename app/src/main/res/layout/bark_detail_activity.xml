@@ -84,10 +84,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
                         android:layout_marginRight="40dp"
-                        android:layout_marginBottom="26dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_above="@id/bark_info"
-                        android:maxLines="4"
-                        android:lines="4"
+                        android:maxLines="5"
+                        android:lines="5"
                         android:textSize="20sp"
                         android:textColor="@android:color/white"
                         android:text="Loading ..."/>
@@ -154,13 +154,10 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/card_background">
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white">
                         <!--
                                         <ImageView
                                             android:id="@+id/smiley"
@@ -200,6 +197,7 @@
                             android:hint="Bark now ..." >
                             <requestFocus />
                         </EditText>
+                        <!--
                         <ImageView
                             android:id="@+id/picture"
                             android:layout_width="32dp"
@@ -210,6 +208,7 @@
                             android:layout_centerVertical="true"
                             android:tint="@color/secondary_text"
                             android:layout_toLeftOf="@+id/fab" />
+                            -->
                         <ImageView
                             android:id="@+id/fab"
                             android:layout_width="40dp"
@@ -221,7 +220,6 @@
                             android:layout_alignParentRight="true"
                             android:background="@drawable/fab"/>
                     </RelativeLayout>
-                </android.support.v7.widget.CardView>
 
             </RelativeLayout>
         </RelativeLayout>
