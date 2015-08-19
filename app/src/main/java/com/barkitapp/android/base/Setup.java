@@ -5,11 +5,14 @@ import android.widget.Toast;
 
 import com.barkitapp.android.Messages.MasterListUpdatedEvent;
 import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
+import com.barkitapp.android.R;
 import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.parse.Connection;
 import com.barkitapp.android.parse.functions.UpdatePosts;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.orm.SugarApp;
 
 import java.util.Date;
@@ -60,5 +63,20 @@ public class Setup extends SugarApp implements OnLocationUpdatedListener, Update
     @Override
     public void onUpdatePostsFailed(String error) {
 
+    }
+
+    private Tracker mTracker;
+
+    /**
+     * Gets the default {@link Tracker} for this {@link SugarApp}.
+     * @return tracker
+     */
+    synchronized public Tracker getDefaultTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            mTracker = analytics.newTracker("UA-66486624-1");
+        }
+        return mTracker;
     }
 }

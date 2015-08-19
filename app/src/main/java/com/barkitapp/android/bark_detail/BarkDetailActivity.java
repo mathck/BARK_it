@@ -31,6 +31,7 @@ import com.barkitapp.android.Messages.CollapseLayoutEvent;
 import com.barkitapp.android.Messages.RecievedPostForNotification;
 import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
 import com.barkitapp.android.R;
+import com.barkitapp.android.base.Setup;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
@@ -46,6 +47,8 @@ import com.barkitapp.android.parse.functions.GetPostById;
 import com.barkitapp.android.parse.functions.PostReply;
 import com.barkitapp.android.parse.objects.Post;
 import com.barkitapp.android.prime.MainActivity;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.parse.ParseGeoPoint;
 
 import de.greenrobot.event.EventBus;
@@ -61,6 +64,8 @@ public class BarkDetailActivity extends AppCompatActivity {
 
     private long lastPostPerformed = 0;
     private boolean mCameFromNotification = false;
+
+    private Tracker mTracker;
 
     @UiThread
     private void collapseToolbar() {
@@ -156,8 +161,19 @@ public class BarkDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        mTracker.setScreenName(BarkDetailActivity.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Setup application = (Setup) getApplication();
+        mTracker = application.getDefaultTracker();
 
         Intent intent = getIntent();
         mPostObjectId = intent.getStringExtra(EXTRA_POST);

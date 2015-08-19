@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,11 +35,14 @@ import android.widget.Toast;
 
 import com.barkitapp.android.BuildConfig;
 import com.barkitapp.android.R;
+import com.barkitapp.android.base.Setup;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.parse.functions.PostPost;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.parse.ParseGeoPoint;
 
 import java.io.File;
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private long lastPostPerformed = 0;
     private String mCity;
     private Uri path;
+    private Tracker mTracker;
 
     @Override
     public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
@@ -66,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        mTracker.setScreenName(MainActivity.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         mCity = LocationService.getLocationCity(this, LocationService.getLocation(this));
         actionBar = getSupportActionBar();
@@ -83,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        // Obtain the shared Tracker instance.
+        Setup application = (Setup) getApplication();
+        mTracker = application.getDefaultTracker();
 
         //AppBarLayout appbar = (AppBarLayout) findViewById(R.id.appbar);
         //appbar.ScrollingViewBehavior = new PatchedScrollingViewBehavior();
