@@ -107,7 +107,7 @@
         </activity>
 
         <activity
-            android:name=".prime.PictureActivity"
+            android:name=".pictures.PictureActivity"
             android:label="Picture View"
             android:screenOrientation="portrait"
             android:parentActivityName=".prime.MainActivity"
@@ -118,7 +118,7 @@
         </activity>
 
         <activity
-            android:name=".prime.Custom_CameraActivity"
+            android:name=".pictures.Custom_CameraActivity"
             android:label="Camera View"
             android:screenOrientation="portrait"
             android:parentActivityName=".prime.MainActivity"

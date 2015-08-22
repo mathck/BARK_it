@@ -1,4 +1,4 @@
-package com.barkitapp.android.prime;
+package com.barkitapp.android.pictures;
 
 import android.content.Context;
 import android.hardware.Camera;
