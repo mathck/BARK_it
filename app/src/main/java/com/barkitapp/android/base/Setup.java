@@ -10,6 +10,8 @@ import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.parse.Connection;
 import com.barkitapp.android.parse.functions.UpdatePosts;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.orm.SugarApp;
 
 import java.util.Date;
@@ -30,6 +32,9 @@ public class Setup extends SugarApp implements OnLocationUpdatedListener, Update
 
         SmartLocation.with(this).location()
                 .start(this);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.barkitapp.android.parse.objects.Post;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 import java.util.HashMap;
@@ -26,6 +27,12 @@ public class GetPostById {
             public void done(ParseObject post, ParseException e) {
                 if (e == null) {
 
+                    ParseFile file = post.getParseFile("image_small");
+                    String image_url = "";
+
+                    if(file != null)
+                        image_url = file.getUrl();
+
                     Post result = new Post(post.getObjectId(),
                                 post.getString("user_id"),
                                 post.getDate("time_created"),
@@ -36,6 +43,7 @@ public class GetPostById {
                                 post.getInt("vote_counter"),
                                 post.getInt("reply_counter"),
                                 post.getInt("badge"),
+                                image_url,
                                 VoteType.NEUTRAL.ordinal());
 
                     result.save();

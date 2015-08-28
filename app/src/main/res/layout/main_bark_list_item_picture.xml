@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginBottom="@dimen/card_margin"
+        android:layout_marginLeft="@dimen/card_margin"
+        android:layout_marginRight="@dimen/card_margin">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@android:color/white"
+            android:contentDescription="Picture taken by a Barker" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.pnikosis.materialishprogress.ProgressWheel
+                android:id="@+id/progressBar"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                wheel:matProg_barColor="@color/primary_dark"
+                wheel:matProg_progressIndeterminate="true" />
+
+            <RelativeLayout
+                android:id="@+id/voteBar"
+                android:layout_width="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.85"
+                    android:background="@android:color/white" />
+                <ImageView
+                    android:id="@+id/upvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="8dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_gravity="top"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_keyboard_arrow_up_white_48dp"
+                    android:onClick="upvote"/>
+                <LinearLayout
+                    android:id="@+id/vote_layout"
+                    android:layout_width="68dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/upvote"
+                    android:layout_alignParentRight="true">
+                    <TextView
+                        android:id="@+id/votes_count"
+                        android:layout_width="68dp"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/secondary_text"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textSize="18sp"
+                        android:text="7" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/downvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_below="@id/vote_layout"
+                    android:layout_gravity="center"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_keyboard_arrow_down_white_48dp"
+                    android:onClick="downvote"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/infoBar"
+                android:layout_alignParentBottom="true"
+                android:paddingTop="18dp"
+                android:paddingBottom="14dp"
+                android:paddingLeft="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/black_gradient"
+                android:paddingRight="70dp">
+
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="2"
+                    android:maxLength="300"
+                    android:textColor="@android:color/white"
+                    android:ellipsize="end"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="6dp"
+                    android:lineSpacingExtra="3dp"
+                    android:text="" />
+
+                <RelativeLayout
+                    android:layout_below="@id/text1"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="18dp">
+                    <ImageView
+                        android:id="@+id/comment_icon"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:tint="@android:color/white"
+                        android:src="@drawable/ic_comment_multiple_outline_black_48dp"/>
+                    <TextView
+                        android:id="@+id/comments_count"
+                        android:layout_toRightOf="@id/comment_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="20dp"
+                        android:maxLines="1"
+                        android:textColor="@android:color/white"
+                        android:textSize="12sp"
+                        android:layout_alignParentBottom="true"
+                        android:text="0" />
+                    <ImageView
+                        android:id="@+id/hours_icon"
+                        android:layout_toRightOf="@id/comments_count"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginRight="4dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:tint="@android:color/white"
+                        android:src="@drawable/ic_access_time_black_48dp"/>
+                    <TextView
+                        android:layout_toRightOf="@id/hours_icon"
+                        android:id="@+id/hours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="20dp"
+                        android:textColor="@android:color/white"
+                        android:maxLines="1"
+                        android:textSize="12sp"
+                        android:layout_alignParentBottom="true"
+                        android:text="0 m" />
+                    <TextView
+                        android:layout_toRightOf="@id/hours"
+                        android:id="@+id/distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="20dp"
+                        android:maxLines="1"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/white"
+                        android:layout_alignParentBottom="true"
+                        android:text="0 km" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

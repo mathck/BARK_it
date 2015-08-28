@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/image"
         android:contentDescription="Your taken picture"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"

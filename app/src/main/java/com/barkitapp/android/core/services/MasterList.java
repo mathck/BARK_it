@@ -8,6 +8,7 @@ import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.objects.Post;
 import com.orm.query.Condition;
 import com.orm.query.Select;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -32,6 +33,13 @@ public class MasterList {
 
                 if(Select.from(Post.class).where(Condition.prop("object_Id").eq(objectId)).count() == 0) {
                     // INSERT NEW IF NOT EXIST
+
+                    ParseFile file = post.getParseFile("image_small");
+                    String image_url = "";
+
+                    if(file != null)
+                        image_url = file.getUrl();
+
                     new Post(objectId,
                             post.getString("user_id"),
                             post.getDate("time_created"),
@@ -42,6 +50,7 @@ public class MasterList {
                             post.getInt("vote_counter"),
                             post.getInt("reply_counter"),
                             post.getInt("badge"),
+                            image_url,
                             VoteType.NEUTRAL.ordinal()).save();
                 }
                 else {
@@ -82,7 +91,13 @@ public class MasterList {
     }
 
     public static void clearMasterList() {
-        Post.deleteAll(Post.class);
+        try {
+            Post.deleteAll(Post.class);
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public static List<Post> GetMasterList() {
