@@ -91,25 +91,25 @@ public class PictureActivity extends Activity {
             myImage.setImageURI(Uri.parse(imagePath));
 
 
-        RelativeLayout cancelButton = (RelativeLayout) findViewById(R.id.cancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+            RelativeLayout cancelButton = (RelativeLayout) findViewById(R.id.cancel);
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
 
 
-        ImageView fab = (ImageView) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            ImageView fab = (ImageView) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                new LongOperation().execute(imagePath);
-                finish();
-                // todo do me on background thread
-            }
-        });
+                    new LongOperation().execute(((EditText) findViewById(R.id.chattext)).getText().toString());
+                    finish();
+                    // todo do me on background thread
+                }
+            });
         }
         else {
             finish();
@@ -119,7 +119,7 @@ public class PictureActivity extends Activity {
     private class LongOperation extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(final String... params) {
 
             Bitmap bitmap = null;
             //Bitmap thumbImage = null;
@@ -159,7 +159,7 @@ public class PictureActivity extends Activity {
 
                         PostPost.run(mContext, UserId.get(mContext),
                                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                                "", 0, media, MediaType.PICTURE, media);
+                                params[0], 0, media, MediaType.PICTURE, media);
 
                     }
                 }

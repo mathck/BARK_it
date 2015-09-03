@@ -15,7 +15,39 @@
         android:adjustViewBounds="true"
         android:src="@drawable/abc_btn_rating_star_on_mtrl_alpha" />
 
+    <RelativeLayout
+        android:layout_above="@+id/blackbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/black_gradient">
+        <EditText
+            android:id="@+id/chattext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:minHeight="54dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:paddingLeft="12dp"
+            android:scrollHorizontally="false"
+            android:paddingRight="12dp"
+            android:maxLength="140"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:lines="1"
+            android:singleLine="true"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:textSize="18sp"
+            android:background="@null"
+            android:textCursorDrawable="@drawable/edit_text"
+            android:hint="Text ..." >
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+
     <LinearLayout
+        android:id="@+id/blackbar"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="74dp"
