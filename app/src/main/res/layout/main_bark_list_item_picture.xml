@@ -34,65 +34,6 @@
                 wheel:matProg_progressIndeterminate="true" />
 
             <RelativeLayout
-                android:id="@+id/voteBar"
-                android:layout_width="70dp"
-                android:layout_alignParentRight="true"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.85"
-                    android:background="@android:color/white" />
-                <ImageView
-                    android:id="@+id/upvote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="8dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:layout_gravity="top"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_keyboard_arrow_up_white_48dp"
-                    android:onClick="upvote"/>
-                <LinearLayout
-                    android:id="@+id/vote_layout"
-                    android:layout_width="68dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/upvote"
-                    android:layout_alignParentRight="true">
-                    <TextView
-                        android:id="@+id/votes_count"
-                        android:layout_width="68dp"
-                        android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        android:textAlignment="center"
-                        android:textColor="@color/secondary_text"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:textSize="18sp"
-                        android:text="7" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/downvote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="6dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:layout_below="@id/vote_layout"
-                    android:layout_gravity="center"
-                    android:scaleType="center"
-                    android:src="@drawable/ic_keyboard_arrow_down_white_48dp"
-                    android:onClick="downvote"/>
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/infoBar"
                 android:layout_alignParentBottom="true"
                 android:paddingTop="18dp"
@@ -177,6 +118,72 @@
                         android:text="0 km" />
                 </RelativeLayout>
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/voteBar"
+                android:layout_width="70dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content">
+                <!--
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:alpha="0.85"
+                    android:background="@android:color/white" />
+                    -->
+                <ImageView
+                    android:id="@+id/upvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="8dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:tint="@android:color/white"
+                    android:layout_gravity="top"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_keyboard_arrow_up_white_48dp"
+                    android:onClick="upvote"/>
+                <LinearLayout
+                    android:id="@+id/vote_layout"
+                    android:layout_width="68dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/upvote"
+                    android:layout_alignParentRight="true">
+                    <TextView
+                        android:id="@+id/votes_count"
+                        android:layout_width="68dp"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textSize="18sp"
+                        android:text="7" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/downvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="6dp"
+                    android:paddingLeft="20dp"
+                    android:tint="@android:color/white"
+                    android:paddingRight="20dp"
+                    android:layout_below="@id/vote_layout"
+                    android:layout_gravity="center"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_keyboard_arrow_down_white_48dp"
+                    android:onClick="downvote"/>
+            </RelativeLayout>
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
