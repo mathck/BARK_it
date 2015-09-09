@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.barkitapp.android.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -82,6 +83,27 @@ public class Custom_CameraActivity extends Activity {
         return camera;
     }
 
+    private static Bitmap resize(Bitmap image, int maxWidth, int maxHeight) {
+        if (maxHeight > 0 && maxWidth > 0) {
+            int width = image.getWidth();
+            int height = image.getHeight();
+            float ratioBitmap = (float) width / (float) height;
+            float ratioMax = (float) maxWidth / (float) maxHeight;
+
+            int finalWidth = maxWidth;
+            int finalHeight = maxHeight;
+            if (ratioMax > 1) {
+                finalWidth = (int) ((float)maxHeight * ratioBitmap);
+            } else {
+                finalHeight = (int) ((float)maxWidth / ratioBitmap);
+            }
+            image = Bitmap.createScaledBitmap(image, finalWidth, finalHeight, true);
+            return image;
+        } else {
+            return image;
+        }
+    }
+
     Camera.PictureCallback mPicture = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
@@ -90,8 +112,15 @@ public class Custom_CameraActivity extends Activity {
                 return;
             }
             try {
+
+                Bitmap original = BitmapFactory.decodeByteArray(data , 0, data.length);
+                Bitmap resized = resize(original, 500, 500);
+
+                ByteArrayOutputStream blob = new ByteArrayOutputStream();
+                resized.compress(Bitmap.CompressFormat.JPEG, 100, blob);
+
                 FileOutputStream fos = new FileOutputStream(pictureFile);
-                fos.write(data);
+                fos.write(blob.toByteArray());
                 fos.close();
 
                 Intent intent = new Intent(getApplicationContext(), PictureActivity.class);
@@ -111,10 +140,10 @@ public class Custom_CameraActivity extends Activity {
         File mediaStorageDir = new File(
                 Environment
                         .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "MyCameraApp");
+                "Bark it Camera");
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d("MyCameraApp", "failed to create directory");
+                Log.d("Bark it Camera", "failed to create directory");
                 return null;
             }
         }
