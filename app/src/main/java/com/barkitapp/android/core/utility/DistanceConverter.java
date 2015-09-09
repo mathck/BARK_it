@@ -14,10 +14,15 @@ public class DistanceConverter {
      * @return returns a string with the distance in KM
      */
     public static String GetDistanceInKm(Context context, double latitude, double longitude) {
-        Coordinates current_location = LocationService.getLocation(context);
+        try {
+            Coordinates current_location = LocationService.getLocation(context);
 
-        double distanceInMeters = distFrom(current_location.getLatitude(), current_location.getLongitude(), latitude, longitude);
-        return GetDistanceInKm(distanceInMeters);
+            double distanceInMeters = distFrom(current_location.getLatitude(), current_location.getLongitude(), latitude, longitude);
+            return GetDistanceInKm(distanceInMeters);
+        }
+        catch (Exception e) {
+            return "-";
+        }
     }
 
     /**
