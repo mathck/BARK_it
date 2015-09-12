@@ -43,7 +43,7 @@ import io.nlopez.smartlocation.SmartLocation;
 public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsCompleted {
 
     private ImageView mLogo;
-    private TextView mSpeech;
+    //private TextView mSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +51,12 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         setContentView(R.layout.splash_activity);
 
         mLogo = ((ImageView) findViewById(R.id.imgLogo));
-        mSpeech = (TextView) findViewById(R.id.speech);
+        //mSpeech = (TextView) findViewById(R.id.speech);
 
         // random speech bubble for the dog
-        if(mSpeech != null) {
-            mSpeech.setText(RandomBarkGenerator.Run(this));
-        }
+        //if(mSpeech != null) {
+        //    mSpeech.setText(RandomBarkGenerator.Run(this));
+        //}
 
         // if emulator TODO remove me
         // UserId.store(this, "qsct9gQBzc");
@@ -167,17 +167,17 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
     protected void onResume() {
         super.onResume();
 
-        if(mLogo != null) {
-            YoYo.with(Techniques.Bounce)
-                    .duration(1000)
-                    .playOn(mLogo);
-        }
+        //if(mLogo != null) {
+        //    YoYo.with(Techniques.Bounce)
+        //            .duration(1000)
+        //            .playOn(mLogo);
+        //}
 
-        if(mSpeech != null) {
-            YoYo.with(Techniques.Tada)
-                    .duration(1000)
-                    .playOn(mSpeech);
-        }
+        //if(mSpeech != null) {
+        //    YoYo.with(Techniques.Tada)
+        //            .duration(1000)
+        //            .playOn(mSpeech);
+        //}
     }
 
     //long startTime;

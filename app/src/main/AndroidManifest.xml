@@ -71,12 +71,6 @@
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
         <meta-data
-            android:name="DATABASE"
-            android:value="barkit.db" />
-        <meta-data
-            android:name="VERSION"
-            android:value="2" />
-        <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
         <meta-data

@@ -80,7 +80,7 @@ public class ReplyRecyclerViewAdapter
 
         myId = UserId.get(mContext);
 
-        mPost = MasterList.GetPost(context.mPostObjectId);
+        mPost = MasterList.GetPostPost(context.mPostObjectId);
     }
 
     @Override

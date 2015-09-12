@@ -178,7 +178,7 @@ public class BarkDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         mPostObjectId = intent.getStringExtra(EXTRA_POST);
         setContentView(R.layout.bark_detail_activity);
-        mPost = MasterList.GetPost(mPostObjectId);
+        mPost = MasterList.GetPostPost(mPostObjectId);
 
         if(mPostObjectId == null || mPostObjectId.equals("") || mPost == null) {
             // coming from notification

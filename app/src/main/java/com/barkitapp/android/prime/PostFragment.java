@@ -139,6 +139,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     public void UpdateList() {
         int initial_barks = mAdapter.getItemCount();
         mAdapter.getValues().clear();
+        mAdapter.updateVotes();
         mAdapter.setValues(getList());
         int after_barks = mAdapter.getItemCount();
 
@@ -188,7 +189,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     }
 
     public List<Post> getList() {
-        List<Post> list = MasterList.GetMasterList();
+        List<Post> list = MasterList.GetMasterListPost();
         sort(list);
 
         return list;

@@ -26,6 +26,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.parse.ParseGeoPoint;
 
+import java.util.HashMap;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -38,6 +39,8 @@ public class PostRecyclerViewAdapter
     public List<Post> getValues() {
         return mValues;
     }
+
+    private HashMap<String, VoteType> mVotes;
 
     public void setValues(List<Post> mValues) {
         this.mValues = mValues;
@@ -79,6 +82,20 @@ public class PostRecyclerViewAdapter
         mValues = items;
 
         myId = UserId.get(mContext);
+
+        updateVotes();
+    }
+
+    public void updateVotes() {
+        mVotes = MasterList.GetVotes();
+    }
+
+    private VoteType getVote(String id) {
+
+        if(mVotes == null)
+            updateVotes();
+
+        return mVotes.get(id);
     }
 
     @Override
@@ -91,6 +108,7 @@ public class PostRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
         holder.mBoundPost = mValues.get(position);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +150,11 @@ public class PostRecyclerViewAdapter
 
         // set distance
         final TextView distance = (TextView) holder.mView.findViewById(R.id.distance);
-        distance.setText(DistanceConverter.GetDistanceInKm(mContext, holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude()));
+        String distanceString = DistanceConverter.GetDistanceInKm(mContext, holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude());
+        distance.setText(distanceString);
+
+        if(distanceString.startsWith("6"))
+            holder.mView.setVisibility(View.GONE);
 
         // set ME
         //if(holder.mBoundPost.getUserId().equals(myId)) {
@@ -152,17 +174,19 @@ public class PostRecyclerViewAdapter
         */
 
         // set the colors for already voted posts
-        if(holder.mBoundPost.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
+        final VoteType myVote = getVote(holder.mBoundPost.getObjectId());
+
+        if(myVote == VoteType.UP_VOTE) {
             votes_count.setTextColor(mContext.getResources().getColor(R.color.accent));
             upvote.setColorFilter(mContext.getResources().getColor(R.color.accent));
             downvote.setColorFilter(null);
         }
-        else if(holder.mBoundPost.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
+        else if(myVote == VoteType.DOWN_VOTE) {
             votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
             upvote.setColorFilter(null);
             downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
         }
-        else if(holder.mBoundPost.getMy_Vote() == VoteType.NEUTRAL.ordinal()) {
+        else if(myVote == VoteType.NEUTRAL) {
             votes_count.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
             upvote.setColorFilter(null);
             downvote.setColorFilter(null);
@@ -171,15 +195,15 @@ public class PostRecyclerViewAdapter
         upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.mBoundPost.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
+                if(myVote == VoteType.UP_VOTE) {
                     // UPVOTE -> NEUTRAL
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.NEUTRAL, -1);
                 }
-                else if(holder.mBoundPost.getMy_Vote() == VoteType.NEUTRAL.ordinal()) {
+                else if(myVote == VoteType.NEUTRAL) {
                     // NEUTRAL -> UPVOTE
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.UP_VOTE, +1);
                 }
-                else if(holder.mBoundPost.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
+                else if(myVote == VoteType.DOWN_VOTE) {
                     // DOWNVOTE -> UPVOTE
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.UP_VOTE, +2);
                 }
@@ -191,15 +215,15 @@ public class PostRecyclerViewAdapter
         downvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(holder.mBoundPost.getMy_Vote() == VoteType.DOWN_VOTE.ordinal()) {
+                if(myVote == VoteType.DOWN_VOTE) {
                     // DOWNVOTE -> NEUTRAL
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.NEUTRAL, +1);
                 }
-                else if(holder.mBoundPost.getMy_Vote() == VoteType.NEUTRAL.ordinal()) {
+                else if(myVote == VoteType.NEUTRAL) {
                     // NEUTRAL -> DOWNVOTE
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.DOWN_VOTE, -1);
                 }
-                else if(holder.mBoundPost.getMy_Vote() == VoteType.UP_VOTE.ordinal()) {
+                else if(myVote == VoteType.UP_VOTE) {
                     // UPVOTE -> DOWNVOTE
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.DOWN_VOTE, -2);
                 }
@@ -218,12 +242,12 @@ public class PostRecyclerViewAdapter
                 voteType);
 
         // store in master list
-        Post cur = MasterList.GetPost(boundPost.getObjectId());
-        cur.setMy_Vote(voteType.ordinal());
-        cur.save();
+//        Post cur = MasterList.GetPostPost(boundPost.getObjectId());
+//        cur.setMy_Vote(voteType.ordinal());
+        //cur.save(); todo
 
         // set this item ui
-        boundPost.setMy_Vote(voteType.ordinal());
+        //boundPost.setMy_Vote(voteType.ordinal());
 
         // vote counter animation
         int currentValue = Integer.parseInt(votes_count.getText().toString());

@@ -37,5 +37,7 @@
   <string name="shadow">shadow</string>
   <string name="navigation_drawer_mybarks">My Barks</string>
     <string name="title_activity_my_barks">MyBarksActivity</string>
+  <string name="limited_edition">limited Edition</string>
+  <string name="bark_it_logo">BARK it Logo</string>
 
 </resources>

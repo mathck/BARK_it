@@ -2,19 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/barkit" >
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:background="@color/primary"
     android:layout_centerInParent="true">
+
+    <RelativeLayout
+        android:id="@+id/imgContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
     <ImageView
         android:id="@+id/imgLogo"
         android:layout_width="wrap_content"
         android:layout_height="240dp"
         android:src="@mipmap/splash"
-        android:contentDescription="BARKT it Logo" />
+        android:contentDescription="@string/bark_it_logo"
+        android:layout_centerInParent="true" />
+    </RelativeLayout>
 
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="100dp"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="italic"
+        android:textColor="@android:color/white"
+        android:text="@string/limited_edition" />
+<!--
     <TextView
         android:id="@+id/speech"
         android:layout_width="114dp"
@@ -28,14 +44,6 @@
         android:gravity="center_horizontal|center_vertical"
         android:background="@mipmap/speech"
         android:src="@mipmap/speech" />
+-->
 
-    <ImageView
-        android:id="@+id/imgText"
-        android:layout_below="@id/imgLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-
-        android:src="@mipmap/splash_text"
-        android:contentDescription="BARKT it Logo" />
-</RelativeLayout>
 </RelativeLayout>

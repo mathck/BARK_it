@@ -21,6 +21,7 @@ public class UpdatePosts {
 
     private static OnUpdatePostsCompleted listener;
 
+    @Deprecated
     public static void run(final Context context, OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int radius, int max_count, Order order, boolean resetUserCache) {
 
         LastRefresh.now(context);

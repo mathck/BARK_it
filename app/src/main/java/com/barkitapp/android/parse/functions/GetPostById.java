@@ -10,6 +10,7 @@ import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import java.util.HashMap;
 
@@ -23,24 +24,30 @@ public class GetPostById {
         params.put("post_id", post_id);
 
         ParseCloud.callFunctionInBackground("GetPostById", params, new FunctionCallback<ParseObject>() {
-            public void done(ParseObject post, ParseException e) {
+            public void done(final ParseObject post, ParseException e) {
                 if (e == null) {
 
-                    Post result = new Post(post.getObjectId(),
-                                post.getString("user_id"),
-                                post.getDate("time_created"),
-                                post.getParseGeoPoint("location"),
-                                post.getString("text"),
-                                post.getString("media_content"),
-                                post.getInt("media_type"),
-                                post.getInt("vote_counter"),
-                                post.getInt("reply_counter"),
-                                post.getInt("badge"),
-                                VoteType.NEUTRAL.ordinal());
+                    post.pinInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            EventBus.getDefault().post(new RecievedPostForNotification(new Post(post)));
+                        }
+                    });
 
-                    result.save();
+//                    Post result = new Post(post.getObjectId(),
+//                                post.getString("user_id"),
+//                                post.getDate("time_created"),
+//                                post.getParseGeoPoint("location"),
+//                                post.getString("text"),
+//                                post.getString("media_content"),
+//                                post.getInt("media_type"),
+//                                post.getInt("vote_counter"),
+//                                post.getInt("reply_counter"),
+//                                post.getInt("badge"),
+//                                VoteType.NEUTRAL.ordinal());
+//
+//                    result.save();
 
-                    EventBus.getDefault().post(new RecievedPostForNotification(result));
                 }
                 else {
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();

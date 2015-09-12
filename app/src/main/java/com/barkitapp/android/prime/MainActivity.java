@@ -2,8 +2,6 @@ package com.barkitapp.android.prime;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,7 +19,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,16 +53,32 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private Context mContext;
-    private ActionBar actionBar;
+    private ActionBar mActionBar;
 
     private long lastPostPerformed = 0;
-    private String mCity;
     private Uri path;
     private Tracker mTracker;
+    private String mCityName = "";
 
     @Override
     public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
         return super.onCreateView(name, mContext = context, attrs);
+    }
+
+    private String getCityName(boolean force) {
+
+        if(!force && mCityName != null && !mCityName.isEmpty() && !mCityName.equals("null")) {
+            return " in " + mCityName;
+        }
+
+        String city = LocationService.getLocationCity(this, LocationService.getLocation(this));
+        if(city != null && !city.isEmpty() && !city.equals("null")) {
+            mCityName = city;
+            return " in " + city;
+        }
+        else {
+            return mCityName = " Barks";
+        }
     }
 
     @Override
@@ -75,16 +88,9 @@ public class MainActivity extends AppCompatActivity {
         mTracker.setScreenName(MainActivity.class.getSimpleName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-        mCity = LocationService.getLocationCity(this, LocationService.getLocation(this));
-        actionBar = getSupportActionBar();
-        if(actionBar != null) {
-            if(mCity != null && !mCity.isEmpty()) {
-                actionBar.setTitle("New in " + mCity);
-            }
-            else {
-                actionBar.setTitle(R.string.app_name);
-            }
-        }
+        mActionBar = getSupportActionBar();
+        if(mActionBar != null)
+            mActionBar.setTitle("Barks" + getCityName(true));
     }
 
     @Override
@@ -102,9 +108,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        actionBar = getSupportActionBar();
+        mActionBar = getSupportActionBar();
 
-        if(actionBar != null) {
+        if(mActionBar != null) {
 
             String city = LocationService.getLocationCity(this, LocationService.getLocation(this));
             if(city != null && !city.isEmpty()) {
@@ -116,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
 
             getSupportActionBar().setTitle(R.string.app_name);
 
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            mActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            mActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -296,15 +302,15 @@ public class MainActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if(actionBar != null && actionBar.getTitle() != null) {
-                    actionBar.setTitle((position == 0 ? "New in " : "Hot in ") + mCity);
+                if(mActionBar != null && mActionBar.getTitle() != null) {
+                    mActionBar.setTitle((position == 0 ? "New " : "Hot") + getCityName(false));
                 }
             }
 
             @Override
             public void onPageSelected(int position) {
-                //if(actionBar != null && actionBar.getTitle() != null) {
-                //    actionBar.setTitle((position == 0 ? "New in " : "Hot in ") + mCity);
+                //if(mActionBar != null && mActionBar.getTitle() != null) {
+                //    mActionBar.setTitle((position == 0 ? "New in " : "Hot in ") + mCity);
                 //}
             }
 

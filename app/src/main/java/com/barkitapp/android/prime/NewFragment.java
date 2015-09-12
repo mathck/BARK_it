@@ -9,7 +9,6 @@ import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.objects.Post;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.orm.SugarApp;
 
 import java.util.Collections;
 import java.util.List;
