@@ -82,11 +82,21 @@ public class MasterList {
     }
 
     public static void clearMasterList() {
-        Post.deleteAll(Post.class);
+        try {
+            Post.deleteAll(Post.class);
+        }
+        catch(Exception e) {
+
+        }
     }
 
     public static List<Post> GetMasterList() {
-        return Post.listAll(Post.class);
+        try {
+            return Post.listAll(Post.class);
+        }
+        catch (Exception e) {
+            return new ArrayList<Post>();
+        }
     }
 
     public static Post GetPost(String objectId) {
