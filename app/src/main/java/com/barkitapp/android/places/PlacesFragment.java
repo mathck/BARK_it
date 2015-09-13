@@ -13,6 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.barkitapp.android.R;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +32,15 @@ public class PlacesFragment extends Fragment {
 
         View fragmentView = inflater.inflate(R.layout.places_fragment, container, false);
 
-        RecyclerView featuredList = (RecyclerView) fragmentView.findViewById(R.id.featuredList);
+        final RecyclerView featuredList = (RecyclerView) fragmentView.findViewById(R.id.featuredList);
 
-        setupFeaturedView(featuredList);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("FeaturedLocation");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                setupFeaturedView(featuredList, list);
+            }
+        });
 
         return fragmentView;
     }
@@ -42,14 +53,13 @@ public class PlacesFragment extends Fragment {
         mAdpater.notifyDataSetChanged();
     }
 
-    private void setupFeaturedView(RecyclerView recyclerView) {
+    private void setupFeaturedView(RecyclerView recyclerView, List<ParseObject> featuredPlaces) {
         mPlaces = new ArrayList<>();
-        mPlaces.add("Featured");
-        mPlaces.add("Featured 1");
-        mPlaces.add("Featured 2");
-        mPlaces.add("Featured 3");
-        mPlaces.add("Featured 4");
-        mPlaces.add("Featured 5");
+        mPlaces.add("Featured Places");
+
+        for(ParseObject fPlace : featuredPlaces) {
+            mPlaces.add(fPlace.getString("name"));
+        }
 
 //        mPlaces.add("My Places");
 //        mPlaces.add("Place 1");
