@@ -38,6 +38,7 @@ import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.parse.functions.PostPost;
+import com.barkitapp.android.places.PlacesActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.parse.ParseGeoPoint;
@@ -287,10 +288,10 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            //case R.id.action_places:
-                //Intent intent = new Intent(mContext, PlacesActivity.class);
-                //mContext.startActivity(intent);
-                //return true;
+            case R.id.action_places:
+                Intent intent = new Intent(mContext, PlacesActivity.class);
+                mContext.startActivity(intent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -345,14 +346,14 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         menuItem.setChecked(true);
                         return true;
-                    case R.id.nav_mybarks:
-                        Intent intentMy = new Intent(mContext, MyBarksActivity.class);
-                        mContext.startActivity(intentMy);
-                        return true;
+//                    case R.id.nav_mybarks:
+//                        Intent intentMy = new Intent(mContext, MyBarksActivity.class);
+//                        mContext.startActivity(intentMy);
+//                        return true;
                     case R.id.nav_places:
-                        Toast.makeText(mContext, "will be available soon", Toast.LENGTH_LONG).show();
-                        //Intent intent = new Intent(mContext, PlacesActivity.class);
-                        //mContext.startActivity(intent);
+                        //Toast.makeText(mContext, "will be available soon", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(mContext, PlacesActivity.class);
+                        mContext.startActivity(intent);
                         return true;
                     case R.id.nav_feedback:
                         Intent i = new Intent(mContext, FeedbackActivity.class);

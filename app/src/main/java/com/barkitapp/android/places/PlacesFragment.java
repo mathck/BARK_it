@@ -51,12 +51,12 @@ public class PlacesFragment extends Fragment {
         mPlaces.add("Featured 4");
         mPlaces.add("Featured 5");
 
-        mPlaces.add("My Places");
-        mPlaces.add("Place 1");
-        mPlaces.add("Place 2");
-        mPlaces.add("Place 3");
-        mPlaces.add("Place 4");
-        mPlaces.add("Place 5");
+//        mPlaces.add("My Places");
+//        mPlaces.add("Place 1");
+//        mPlaces.add("Place 2");
+//        mPlaces.add("Place 3");
+//        mPlaces.add("Place 4");
+//        mPlaces.add("Place 5");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         SimpleStringRecyclerViewAdapter adapter = new SimpleStringRecyclerViewAdapter(getActivity(), mPlaces);

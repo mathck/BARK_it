@@ -1,5 +1,6 @@
 package com.barkitapp.android.places;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -28,18 +29,23 @@ public class PlacesActivity extends AppCompatActivity {
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Places");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, MapsActivity.class);
-                mContext.startActivity(intent);
-            }
-        });
-        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Places");
+        }
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(mContext, MapsActivity.class);
+//                mContext.startActivity(intent);
+//            }
+//        });
+//        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
     }
 
     @Override

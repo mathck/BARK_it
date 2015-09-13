@@ -146,6 +146,7 @@ public class MasterList {
     }
 
     public static Post GetPostPost(String objectId) {
-        return new Post(GetPost(objectId));
+        ParseObject post = GetPost(objectId);
+        return post != null ? new Post(post) : null;
     }
 }
