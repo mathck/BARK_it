@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
 import com.barkitapp.android.core.utility.PostComperator;
+import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.objects.Post;
 import com.parse.GetCallback;
@@ -20,7 +21,7 @@ import de.greenrobot.event.EventBus;
 
 public class MasterList {
 
-    public static void StoreMasterList(Context context, HashMap<String, Object> result) {
+    public static void StoreMasterList(Context context, HashMap<String, Object> result, Order order) {
         try {
 
             ArrayList<ParseObject> posts = (ArrayList<ParseObject>) result.get("posts");
@@ -28,8 +29,8 @@ public class MasterList {
 
             //String myUserId = UserId.get(context);
 
-            ParseObject.pinAllInBackground(posts);
-            ParseObject.pinAllInBackground(votes);
+            ParseObject.pinAllInBackground(order.toString(), posts);
+            ParseObject.pinAllInBackground(order.toString(), votes);
 
 //            for(ParseObject vote : votes) {
 //                String userId = vote.getString("user_id");
@@ -50,31 +51,20 @@ public class MasterList {
         }
     }
 
-    public static void clearMasterList() {
+    public static void clearMasterList(Order order) {
         try {
-            ParseObject.unpinAllInBackground(GetMasterList());
-            ParseObject.unpinAllInBackground(GetMasterListVotes());
+            ParseObject.unpinAllInBackground(order.toString(), GetMasterList(order));
+            ParseObject.unpinAllInBackground(order.toString(), GetMasterListVotes());
         }
         catch(Exception e) {
 
         }
     }
 
-    /**
-     * Get my vote on postid
-     * @param content_id the post id
-     * @return my vote
-     */
-//    public static VoteType GetVote(String content_id) {
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
-//        query.fromLocalDatastore();
-//        query.whereEqualTo("content_id", content_id);
-//        try {
-//            return VoteType.values()[query.find().get(0).getInt("vote_type")];
-//        } catch (Exception e) {
-//            return VoteType.NEUTRAL;
-//        }
-//    }
+    public static void clearMasterListAll() {
+        clearMasterList(Order.TIME);
+        clearMasterList(Order.UP_VOTES);
+    }
 
     public static HashMap<String, VoteType> GetVotes() {
         try {
@@ -94,10 +84,10 @@ public class MasterList {
         }
     }
 
-    public static List<Post> GetMasterListPost() {
+    public static List<Post> GetMasterListPost(Order order) {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-            query.fromLocalDatastore();
+            query.fromLocalDatastore().fromPin(order.toString());
             List<ParseObject> objects = query.find();
             ArrayList<Post> posts = new ArrayList<>();
 
@@ -112,10 +102,10 @@ public class MasterList {
         }
     }
 
-    public static List<ParseObject> GetMasterList() {
+    public static List<ParseObject> GetMasterList(Order order) {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-            query.fromLocalDatastore();
+            query.fromLocalDatastore().fromPin(order.toString());
             return query.find();
         }
         catch (Exception e) {
@@ -147,6 +137,6 @@ public class MasterList {
 
     public static Post GetPostPost(String objectId) {
         ParseObject post = GetPost(objectId);
-        return post != null ? new Post(post) : null;
+        return new Post(post);
     }
 }

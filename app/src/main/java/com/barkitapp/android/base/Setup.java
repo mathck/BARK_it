@@ -30,6 +30,9 @@ public class Setup extends Application implements OnLocationUpdatedListener, Upd
         // establish parse connection
         Connection.Connect(this);
 
+        InternalAppData.Store(this, SharedPrefKeys.HAS_SET_MANUAL_LOCATION, false);
+        InternalAppData.Store(this, SharedPrefKeys.MANUAL_TITLE, "");
+
         SmartLocation.with(this).location()
                 .start(this);
     }

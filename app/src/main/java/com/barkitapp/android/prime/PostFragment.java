@@ -29,7 +29,10 @@ import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.barkitapp.android.parse.functions.UpdatePostsLat;
 import com.barkitapp.android.parse.objects.Post;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -92,11 +95,32 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                     if (dy > 0 && totalItemCount >= 20 && (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = true;
                         // todo show loading bark icon and start loading
-                        onRefresh();
+                        LoadNewBarks();
                     }
                 }
             }
         });
+    }
+
+    private void LoadNewBarks() {
+        Coordinates location = LocationService.getLocation(getActivity());
+
+        if(location == null) {
+            setRefreshing(false);
+            //Toast.makeText(getActivity(), "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        setRefreshing(true);
+
+        UpdatePostsLat.run(getActivity(),
+                this,
+                UserId.get(getActivity()),
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                Constants.GET_POSTS_COUNT,
+                getOrder(),
+                MasterList.GetMasterList(getOrder()).isEmpty());
     }
 
     public void addItem(Post item) {
@@ -127,8 +151,12 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
             Toast.makeText(getActivity(), "No Internet connection", Toast.LENGTH_LONG).show();
         }
 
-        if(LastRefresh.isAvailable(getActivity()))
+        if(LastRefresh.isAvailable(getActivity()) || MasterList.GetMasterList(getOrder()).isEmpty())
         {
+            if(MasterList.GetMasterList(getOrder()).isEmpty()) {
+                UpdateList();
+            }
+
             if(mSwipeLayout != null)
                 mSwipeLayout.setRefreshing(true);
 
@@ -189,7 +217,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     }
 
     public List<Post> getList() {
-        List<Post> list = MasterList.GetMasterListPost();
+        List<Post> list = MasterList.GetMasterListPost(getOrder());
         sort(list);
 
         return list;
@@ -199,6 +227,12 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
+
+        if(getList().isEmpty()) {
+            LoadNewBarks();
+            return;
+        }
+
         Coordinates location = LocationService.getLocation(getActivity());
 
         if(location == null) {
@@ -206,6 +240,9 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
             //Toast.makeText(getActivity(), "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
             return;
         }
+
+        MasterList.clearMasterList(getOrder());
+        UpdateList();
 
         setRefreshing(true);
 
@@ -216,7 +253,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 Constants.GET_POSTS_COUNT,
                 getOrder(),
-                MasterList.GetMasterList().isEmpty());
+                MasterList.GetMasterList(getOrder()).isEmpty());
     }
 
     @UiThread
@@ -240,7 +277,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     public abstract Order getOrder();
 
     public void onUpdatePostsCompleted(HashMap<String, Object> result) {
-        MasterList.StoreMasterList(getActivity(), result);
+        MasterList.StoreMasterList(getActivity(), result, getOrder());
         UpdateList();
     }
 

@@ -78,7 +78,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
     private void AppStart() {
 
-        MasterList.clearMasterList();
+        MasterList.clearMasterListAll();
 
         // Notify about location info
         if(!SmartLocation.with(this).location().state().locationServicesEnabled())
@@ -97,8 +97,6 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
         // get last known location
         Coordinates lastKnownLocation = LocationService.getLocation(this);
-
-        MasterList.clearMasterList();
 
         if(lastKnownLocation == null) {
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -186,7 +184,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
     public void onUpdatePostsCompleted(HashMap<String, Object> result) {
         //long difference = System.currentTimeMillis() - startTime;
         //Toast.makeText(this, difference + "ms", Toast.LENGTH_LONG).show();
-        MasterList.StoreMasterList(this, result);
+        MasterList.StoreMasterList(this, result, Order.TIME);
     }
 
     @Override

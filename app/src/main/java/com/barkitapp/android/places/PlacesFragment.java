@@ -1,26 +1,34 @@
 package com.barkitapp.android.places;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.R;
+import com.barkitapp.android.core.services.InternalAppData;
+import com.barkitapp.android.core.services.MasterList;
+import com.barkitapp.android.core.utility.SharedPrefKeys;
+import com.barkitapp.android.parse.objects.FeaturedLocation;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 public class PlacesFragment extends Fragment {
 
@@ -30,48 +38,44 @@ public class PlacesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        mPlaces = new ArrayList<>();
+
         View fragmentView = inflater.inflate(R.layout.places_fragment, container, false);
 
         final RecyclerView featuredList = (RecyclerView) fragmentView.findViewById(R.id.featuredList);
+
+        featuredList.setLayoutManager(new LinearLayoutManager(featuredList.getContext()));
+        SimpleStringRecyclerViewAdapter adapter = new SimpleStringRecyclerViewAdapter(getActivity(), mPlaces);
+        featuredList.setAdapter(mAdapter = adapter);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("FeaturedLocation");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                setupFeaturedView(featuredList, list);
+                setupFeaturedView(list);
             }
         });
 
         return fragmentView;
     }
 
-    private SimpleStringRecyclerViewAdapter mAdpater;
-    private List<String> mPlaces;
+    private SimpleStringRecyclerViewAdapter mAdapter;
+    private List<FeaturedLocation> mPlaces;
 
-    public void addNewItem(String item) {
+    public void addNewItem(FeaturedLocation item) {
         mPlaces.add(0, item);
-        mAdpater.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
     }
 
-    private void setupFeaturedView(RecyclerView recyclerView, List<ParseObject> featuredPlaces) {
-        mPlaces = new ArrayList<>();
-        mPlaces.add("Featured Places");
+    private void setupFeaturedView(List<ParseObject> featuredPlaces) {
 
         for(ParseObject fPlace : featuredPlaces) {
-            mPlaces.add(fPlace.getString("name"));
+            mPlaces.add(new FeaturedLocation(fPlace));
         }
 
-//        mPlaces.add("My Places");
-//        mPlaces.add("Place 1");
-//        mPlaces.add("Place 2");
-//        mPlaces.add("Place 3");
-//        mPlaces.add("Place 4");
-//        mPlaces.add("Place 5");
+        Collections.sort(mPlaces);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        SimpleStringRecyclerViewAdapter adapter = new SimpleStringRecyclerViewAdapter(getActivity(), mPlaces);
-
-        recyclerView.setAdapter(mAdpater = adapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     public static class SimpleStringRecyclerViewAdapter
@@ -79,11 +83,11 @@ public class PlacesFragment extends Fragment {
 
         private final TypedValue mTypedValue = new TypedValue();
         private int mBackground;
-        private List<String> mValues;
+        private List<FeaturedLocation> mValues;
         private Context mContext;
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
-            public String mBoundString;
+            public FeaturedLocation mBoundLocation;
 
             public final View mView;
             //public final ImageView mImageView;
@@ -102,11 +106,11 @@ public class PlacesFragment extends Fragment {
             }
         }
 
-        public String getValueAt(int position) {
+        public FeaturedLocation getValueAt(int position) {
             return mValues.get(position);
         }
 
-        public SimpleStringRecyclerViewAdapter(Context context, List<String> items) {
+        public SimpleStringRecyclerViewAdapter(Context context, List<FeaturedLocation> items) {
             mContext = context;
             context.getTheme().resolveAttribute(R.attr.selectableItemBackground, mTypedValue, true);
             mBackground = mTypedValue.resourceId;
@@ -123,17 +127,17 @@ public class PlacesFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.mBoundString = mValues.get(position);
+            holder.mBoundLocation = mValues.get(position);
             //holder.mTextView.setText(mPlaces.get(position));
 
-            if(position == 0 || position == 6) {
-                ((ImageView) holder.mView.findViewById(R.id.icon)).setImageResource(android.R.color.transparent);
-                ((TextView) holder.mView.findViewById(R.id.text1)).setPadding(0,0,0,0);
-            }
+//            if(position == 0 || position == 6) {
+//                ((ImageView) holder.mView.findViewById(R.id.icon)).setImageResource(android.R.color.transparent);
+//                ((TextView) holder.mView.findViewById(R.id.text1)).setPadding(0,0,0,0);
+//            }
 
-            if(position > 6) {
-                ((ImageView) holder.mView.findViewById(R.id.icon)).setImageResource(R.drawable.ic_map_black_48dp);
-            }
+//            if(position > 6) {
+//                ((ImageView) holder.mView.findViewById(R.id.icon)).setImageResource(R.drawable.ic_map_black_48dp);
+//            }
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -145,11 +149,22 @@ public class PlacesFragment extends Fragment {
                     //context.startActivity(intent);
 
                     // todo set location, navigate to main view
+
+                    InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LATITUDE_MANUAL, holder.mBoundLocation.getLocation().getLatitude() + "");
+                    InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LONGITUDE_MANUAL, holder.mBoundLocation.getLocation().getLongitude() + "");
+                    InternalAppData.Store(mContext, SharedPrefKeys.HAS_SET_MANUAL_LOCATION, true);
+                    InternalAppData.Store(mContext, SharedPrefKeys.MANUAL_TITLE, holder.mBoundLocation.getName());
+
+                    MasterList.clearMasterListAll();
+
+                    EventBus.getDefault().post(new RequestUpdatePostsEvent());
+
+                    ((FragmentActivity) mContext).finish();
                 }
             });
 
             final TextView text = (TextView) holder.mView.findViewById(R.id.text1);
-            text.setText(mValues.get(position));
+            text.setText(mValues.get(position).getName());
         }
 
         @Override
