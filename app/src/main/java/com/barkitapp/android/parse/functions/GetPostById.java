@@ -9,6 +9,7 @@ import com.barkitapp.android.parse.objects.Post;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
@@ -48,6 +49,7 @@ public class GetPostById {
 //
 //                    result.save();
 
+                    EventBus.getDefault().post(new RecievedPostForNotification(result));
                 }
                 else {
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();

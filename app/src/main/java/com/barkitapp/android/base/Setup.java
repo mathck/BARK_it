@@ -13,6 +13,8 @@ import com.barkitapp.android.parse.Connection;
 import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -35,6 +37,9 @@ public class Setup extends Application implements OnLocationUpdatedListener, Upd
 
         SmartLocation.with(this).location()
                 .start(this);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
     }
 
     @Override

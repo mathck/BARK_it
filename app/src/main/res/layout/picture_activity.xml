@@ -9,29 +9,89 @@
     <ImageView
         android:id="@+id/image"
         android:contentDescription="Your taken picture"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:adjustViewBounds="true"
         android:src="@drawable/abc_btn_rating_star_on_mtrl_alpha" />
 
-    <LinearLayout
-        android:layout_alignParentBottom="true"
+    <RelativeLayout
+        android:layout_above="@+id/blackbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:weightSum="2">
-        <Button
+        android:background="@drawable/black_gradient">
+        <EditText
+            android:id="@+id/chattext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:minHeight="54dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:paddingLeft="12dp"
+            android:scrollHorizontally="false"
+            android:paddingRight="12dp"
+            android:maxLength="140"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:lines="1"
+            android:singleLine="true"
+            android:imeOptions="actionSend"
+            android:inputType="text"
+            android:textSize="18sp"
+            android:background="@null"
+            android:textCursorDrawable="@drawable/edit_text"
+            android:hint="Text ..." >
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/blackbar"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_marginBottom="0dp"
+        android:weightSum="5">
+        <RelativeLayout
             android:id="@+id/cancel"
-            android:text="Cancel"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/accept"
-            android:text="Accept"
             android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="#AA000000">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:alpha="0.6"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_cancel_white_48dp" />
+        </RelativeLayout>
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="#AA000000">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:alpha="0.6"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_replay_white_48dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:background="#AA000000">
+            <ImageView
+                android:id="@+id/fab"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_bark"
+                android:layout_centerInParent="true"
+                android:background="@drawable/fab" />
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

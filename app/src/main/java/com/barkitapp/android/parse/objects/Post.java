@@ -35,6 +35,16 @@ public class Post {
         this.my_Vote = my_Vote;
     }
 
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    String image_url;
+
     int my_Vote;
 
     public Post() {
@@ -55,8 +65,8 @@ public class Post {
         this.badge = parseObject.getInt("badge");
         this.my_Vote = parseObject.has("my_vote") ? parseObject.getInt("my_vote") : VoteType.NEUTRAL.ordinal();
     }
-
-    public Post(String objectId, String userId, Date time_created, ParseGeoPoint location, String text, String media_content, int media_type, int vote_counter, int reply_counter, int badge, int my_Vote) {
+    
+    public Post(String objectId, String userId, Date time_created, ParseGeoPoint location, String text, String media_content, int media_type, int vote_counter, int reply_counter, int badge, String image_url, int my_Vote) {
         this.objectId = objectId;
         this.userId = userId;
         this.time_created = time_created;
@@ -69,6 +79,7 @@ public class Post {
         this.vote_counter = vote_counter;
         this.reply_counter = reply_counter;
         this.badge = badge;
+        this.image_url = image_url;
         this.my_Vote = my_Vote;
     }
 

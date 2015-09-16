@@ -2,12 +2,15 @@ package com.barkitapp.android.prime;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.barkitapp.android.Messages.UpdateListItemEvent;
@@ -18,14 +21,19 @@ import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
 import com.barkitapp.android.parse.enums.ContentType;
+import com.barkitapp.android.parse.enums.MediaType;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.functions.PostVote;
 import com.barkitapp.android.parse.objects.Post;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +44,8 @@ public class PostRecyclerViewAdapter
         extends RecyclerView.Adapter<PostRecyclerViewAdapter.ViewHolder> {
 
     private int mBackground;
+
+    private ImageLoader imageLoader;
 
     public List<Post> getValues() {
         return mValues;
@@ -83,19 +93,45 @@ public class PostRecyclerViewAdapter
         mValues = items;
 
         myId = UserId.get(mContext);
+
+        imageLoader = ImageLoader.getInstance();
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.main_bark_list_item, parent, false);
-        view.setBackgroundResource(mBackground);
-        return new ViewHolder(view);
+    public PostRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = null;
+        PostRecyclerViewAdapter.ViewHolder viewHolder = null;
+
+        switch (MediaType.values()[viewType]) {
+            case WITHOUT:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.main_bark_list_item, parent, false);
+                view.setBackgroundResource(mBackground);
+
+                viewHolder = new PostRecyclerViewAdapter.ViewHolder(view);
+                break;
+            case PICTURE:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.main_bark_list_item_picture, parent, false);
+                view.setBackgroundResource(mBackground);
+
+                viewHolder = new PostRecyclerViewAdapter.ViewHolder(view);
+                break;
+            default:
+                // todo dont show view
+                break;
+        }
+
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public int getItemViewType(int position) {
+        return mValues.get(position).getMedia_type();
+    }
 
+    private void configureViewWithout(final ViewHolder holder, int position) {
+    
         holder.mBoundPost = mValues.get(position);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -218,6 +254,62 @@ public class PostRecyclerViewAdapter
                 EventBus.getDefault().post(new UpdateListItemEvent(holder.mBoundPost, mOrder));
             }
         });
+    }
+
+    private void configureViewPicture(final ViewHolder holder, int position) {
+        configureViewWithout(holder, position);
+
+        final ImageView imageView = (ImageView) holder.mView.findViewById(R.id.image);
+
+        if(imageLoader == null)
+            imageLoader = ImageLoader.getInstance();
+
+        //imageLoader.displayImage(holder.mBoundPost.getImage_url(), imageView);
+
+        final ProgressWheel spinner = (ProgressWheel) holder.mView.findViewById(R.id.progressBar);
+        final RelativeLayout infoBar = (RelativeLayout) holder.mView.findViewById(R.id.infoBar);
+        final RelativeLayout voteBar = (RelativeLayout) holder.mView.findViewById(R.id.voteBar);
+
+        imageLoader.displayImage(holder.mBoundPost.getImage_url(), imageView, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+                spinner.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.GONE);
+                infoBar.setVisibility(View.GONE);
+                voteBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                spinner.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+                infoBar.setVisibility(View.VISIBLE);
+                voteBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                spinner.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+                infoBar.setVisibility(View.VISIBLE);
+                voteBar.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        switch (MediaType.values()[holder.getItemViewType()]) {
+            case WITHOUT:
+                configureViewWithout(holder, position);
+                break;
+            case PICTURE:
+                configureViewPicture(holder, position);
+                break;
+            default:
+                break;
+        }
     }
 
     private void performVoting(Post boundPost, TextView votes_count, ImageView upvote, ImageView downvote, VoteType voteType, int valueChange) {

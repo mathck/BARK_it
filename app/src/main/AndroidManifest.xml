@@ -10,6 +10,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- Parse Recv Notifications -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -70,6 +71,12 @@
 
         <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
+        <meta-data
+            android:name="DATABASE"
+            android:value="barkit.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="2" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -132,10 +139,22 @@
                 android:value=".prime.MainActivity" />
         </activity>
         <activity
-            android:name=".prime.PictureActivity"
+            android:name=".pictures.PictureActivity"
             android:label="Picture View"
-            android:parentActivityName=".prime.PictureActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:parentActivityName=".prime.MainActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".prime.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".pictures.Custom_CameraActivity"
+            android:label="Camera View"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".prime.MainActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".prime.MainActivity" />
@@ -161,8 +180,7 @@
         <activity
             android:name=".prime.FeedbackActivity"
             android:label="@string/your_opinion_counts"
-            android:parentActivityName=".prime.MainActivity"
-            android:screenOrientation="portrait" >
+            android:parentActivityName=".prime.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".prime.MainActivity" />
