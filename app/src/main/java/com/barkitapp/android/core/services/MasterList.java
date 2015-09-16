@@ -4,19 +4,11 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
-import com.barkitapp.android.core.utility.PostComperator;
 import com.barkitapp.android.parse.enums.Order;
-import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.objects.Post;
-import com.barkitapp.android.prime.HotFragment;
-import com.parse.GetCallback;
-import com.orm.query.Condition;
-import com.orm.query.Select;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,49 +33,6 @@ public class MasterList {
 //                    updateVoteForPost(vote);
 //                }
 //            }
-
-                if(Select.from(Post.class).where(Condition.prop("object_Id").eq(objectId)).count() == 0) {
-                    // INSERT NEW IF NOT EXIST
-                    new Post(objectId,
-                            post.getString("user_id"),
-                            post.getDate("time_created"),
-                            post.getParseGeoPoint("location"),
-                            post.getString("text"),
-                            post.getString("media_content"),
-                            post.getInt("media_type"),
-                            post.getInt("vote_counter"),
-                            post.getInt("reply_counter"),
-                            post.getInt("badge"),
-                            VoteType.NEUTRAL.ordinal()).save();
-                }
-                else {
-                    // UPDATE IN DB
-                    Post postInDb = Select.from(Post.class).where(Condition.prop("object_Id").eq(objectId)).first();
-
-                    //postInDb.setUserId(post.getString("user_Id"));
-                    //postInDb.setTime_created(post.getDate("time_created"));
-                    //postInDb.setLatitude(post.getParseGeoPoint("location").getLatitude());
-                    //postInDb.setLongitude(post.getParseGeoPoint("location").getLongitude());
-                    //postInDb.setText(post.getString("text"));
-                    //postInDb.setMedia_content(post.getString("media_content"));
-                    //postInDb.setMedia_type(post.getInt("media_type"));
-                    postInDb.setVote_counter(post.getInt("vote_counter"));
-                    postInDb.setReply_counter(post.getInt("reply_counter"));
-                    //postInDb.setBadge(post.getInt("badge"));
-
-                    postInDb.save();
-                }
-            }
-
-            for(ParseObject vote : votes) {
-                String userId = vote.getString("user_id");
-
-                if(myUserId.equals(userId)) {
-                    Post post = GetPost(vote.getString("content_id"));
-                    post.setMy_Vote(vote.getInt("vote_type"));
-                    post.save();
-                }
-            }
 
             EventBus.getDefault().post(new InitialPostsReceivedEvent());
 

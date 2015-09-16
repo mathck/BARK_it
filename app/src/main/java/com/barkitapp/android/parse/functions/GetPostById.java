@@ -48,8 +48,6 @@ public class GetPostById {
 //                                VoteType.NEUTRAL.ordinal());
 //
 //                    result.save();
-
-                    EventBus.getDefault().post(new RecievedPostForNotification(result));
                 }
                 else {
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
