@@ -9,8 +9,8 @@ android {
         applicationId "com.barkitapp.android"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 17
-        versionName "Beta"
+        versionCode 18
+        versionName "Alpha"
     }
     buildTypes {
         release {

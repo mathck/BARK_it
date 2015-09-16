@@ -25,6 +25,7 @@ import com.barkitapp.android.parse.objects.Post;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -82,20 +83,6 @@ public class PostRecyclerViewAdapter
         mValues = items;
 
         myId = UserId.get(mContext);
-
-        updateVotes();
-    }
-
-    public void updateVotes() {
-        mVotes = MasterList.GetVotes();
-    }
-
-    private VoteType getVote(String id) {
-
-        if(mVotes == null)
-            updateVotes();
-
-        return mVotes.get(id);
     }
 
     @Override
@@ -174,7 +161,7 @@ public class PostRecyclerViewAdapter
         */
 
         // set the colors for already voted posts
-        final VoteType myVote = getVote(holder.mBoundPost.getObjectId());
+        final VoteType myVote = VoteType.values()[holder.mBoundPost.getMy_Vote()];
 
         if(myVote == VoteType.UP_VOTE) {
             votes_count.setTextColor(mContext.getResources().getColor(R.color.accent));
@@ -242,12 +229,11 @@ public class PostRecyclerViewAdapter
                 voteType);
 
         // store in master list
-//        Post cur = MasterList.GetPostPost(boundPost.getObjectId());
-//        cur.setMy_Vote(voteType.ordinal());
-        //cur.save(); todo
+//        ParseObject post = MasterList.GetPost(boundPost.getObjectId());
+//        MasterList.updateVoteForPost(post, voteType);
 
         // set this item ui
-        //boundPost.setMy_Vote(voteType.ordinal());
+        boundPost.setMy_Vote(voteType.ordinal());
 
         // vote counter animation
         int currentValue = Integer.parseInt(votes_count.getText().toString());

@@ -33,14 +33,9 @@ public class MasterList {
             ParseObject.pinAllInBackground(order.toString(), posts);
             ParseObject.pinAllInBackground(order.toString(), votes);
 
-//            for(ParseObject vote : votes) {
-//                String userId = vote.getString("user_id");
-//
-//                if(myUserId.equals(userId)) {
-//                    ParseObject post = GetPost(vote.getString("content_id"));
-//                    post.get("asdasd") = "sad";
-//                    post.setMy_Vote(vote.getInt("vote_type"));
-//                    post.save();
+//            for(ParseObject post : posts) {
+//                for(ParseObject vote : votes) {
+//                    updateVoteForPost(vote);
 //                }
 //            }
 
@@ -55,7 +50,7 @@ public class MasterList {
     public static void clearMasterList(Order order) {
         try {
             ParseObject.unpinAllInBackground(order.toString(), GetMasterList(order));
-            ParseObject.unpinAllInBackground(order.toString(), GetMasterListVotes());
+            //ParseObject.unpinAllInBackground(order.toString(), GetMasterListVotes(order));
         }
         catch(Exception e) {
 
@@ -67,23 +62,21 @@ public class MasterList {
         clearMasterList(Order.UP_VOTES);
     }
 
-    public static HashMap<String, VoteType> GetVotes() {
-        try {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-            query.fromLocalDatastore();
-            List<ParseObject> objects = query.find();
-            HashMap<String, VoteType> votes = new HashMap<>();
-
-            for(ParseObject obj : objects) {
-                votes.put(obj.getString("content_id"), VoteType.values()[obj.getInt("vote_type")]);
-            }
-
-            return votes;
-
-        } catch (Exception e) {
-            return new HashMap<>();
-        }
-    }
+//    public static HashMap<String, VoteType> GetVotes(Order order) {
+//        try {
+//            List<ParseObject> objects = GetMasterListVotes(order);
+//            HashMap<String, VoteType> votes = new HashMap<>();
+//
+//            for(ParseObject obj : objects) {
+//                votes.put(obj.getString("content_id"), VoteType.values()[obj.getInt("vote_type")]);
+//            }
+//
+//            return votes;
+//
+//        } catch (Exception e) {
+//            return new HashMap<>();
+//        }
+//    }
 
     public static List<Post> GetMasterListPost(Order order) {
         try {
@@ -114,16 +107,16 @@ public class MasterList {
         }
     }
 
-    public static List<ParseObject> GetMasterListVotes() {
-        try {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
-            query.fromLocalDatastore();
-            return query.find();
-        }
-        catch (Exception e) {
-            return new ArrayList<ParseObject>();
-        }
-    }
+//    public static List<ParseObject> GetMasterListVotes(Order order) {
+//        try {
+//            ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
+//            query.fromLocalDatastore().fromPin(order.toString());
+//            return query.find();
+//        }
+//        catch (Exception e) {
+//            return new ArrayList<ParseObject>();
+//        }
+//    }
 
     public static ParseObject GetPost(String objectId) {
         try {

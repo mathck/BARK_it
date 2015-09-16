@@ -27,6 +27,14 @@ public class Post {
     int reply_counter;
     int badge;
 
+    public int getMy_Vote() {
+        return my_Vote;
+    }
+
+    public void setMy_Vote(int my_Vote) {
+        this.my_Vote = my_Vote;
+    }
+
     int my_Vote;
 
     public Post() {
@@ -45,7 +53,7 @@ public class Post {
         this.vote_counter = parseObject.getInt("vote_counter");
         this.reply_counter = parseObject.getInt("reply_counter");
         this.badge = parseObject.getInt("badge");
-        this.my_Vote = VoteType.NEUTRAL.ordinal();
+        this.my_Vote = parseObject.has("my_vote") ? parseObject.getInt("my_vote") : VoteType.NEUTRAL.ordinal();
     }
 
     public Post(String objectId, String userId, Date time_created, ParseGeoPoint location, String text, String media_content, int media_type, int vote_counter, int reply_counter, int badge, int my_Vote) {

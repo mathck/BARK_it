@@ -167,7 +167,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     public void UpdateList() {
         int initial_barks = mAdapter.getItemCount();
         mAdapter.getValues().clear();
-        mAdapter.updateVotes();
+        //mAdapter.updateVotes();
         mAdapter.setValues(getList());
         int after_barks = mAdapter.getItemCount();
 
