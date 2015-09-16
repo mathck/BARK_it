@@ -25,4 +25,5 @@ public final class SharedPrefKeys {
     public static final String HAS_SET_MANUAL_LOCATION = "com.barkitapp.android.has.set.manual.location";
 
     public static final String MANUAL_TITLE = "com.barkitapp.android.manual.title";
+    public static final String IS_LOADING_BAKS = "com.barkitapp.android.is.loading.barks";
 }

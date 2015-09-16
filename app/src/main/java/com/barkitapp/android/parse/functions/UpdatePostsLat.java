@@ -3,7 +3,9 @@ package com.barkitapp.android.parse.functions;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.utility.LastRefresh;
+import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.parse.enums.Order;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
@@ -23,37 +25,34 @@ public class UpdatePostsLat {
 
     public static void run(final Context context, UpdatePosts.OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int max_count, Order order, boolean resetUserCache) {
 
-        //for(int i = 0; i < times; i++)
-        //{
-            LastRefresh.now(context);
+        LastRefresh.now(context);
 
-            UpdatePostsLat.listener = listener;
+        UpdatePostsLat.listener = listener;
 
-            HashMap<String, Object> params = new HashMap<String, Object>();
-            params.put("user_id", user_id);
-            params.put("current_location", current_location);
-            params.put("chosen_location", chosen_location);
-            params.put("southwest", boundRect(current_location, SOUTH_WEST_RANGE));
-            params.put("northeast", boundRect(current_location, NORTH_EAST_RANGE));
-            params.put("max_count", max_count);
-            params.put("order", order.ordinal());
-            params.put("resetUserCache", resetUserCache);
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("user_id", user_id);
+        params.put("current_location", current_location);
+        params.put("chosen_location", chosen_location);
+        params.put("southwest", boundRect(current_location, SOUTH_WEST_RANGE));
+        params.put("northeast", boundRect(current_location, NORTH_EAST_RANGE));
+        params.put("max_count", max_count);
+        params.put("order", order.ordinal());
+        params.put("resetUserCache", resetUserCache);
 
-            //starttime[i] = System.currentTimeMillis();
+        //starttime[i] = System.currentTimeMillis();
 
-            //final int finalI = i;
-            ParseCloud.callFunctionInBackground("UpdatePostsLat", params, new FunctionCallback<HashMap<String, Object>>() {
-                public void done(HashMap<String, Object> result, ParseException e) {
-                    //Log.e("TIME", "Request " + finalI + ": " + (System.currentTimeMillis() - starttime[finalI]));
-                    if (e == null) {
-                        UpdatePostsLat.listener.onUpdatePostsCompleted(result);
-                    } else {
-                        UpdatePostsLat.listener.onUpdatePostsFailed(e.getMessage());
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+        //final int finalI = i;
+        ParseCloud.callFunctionInBackground("UpdatePostsLat", params, new FunctionCallback<HashMap<String, Object>>() {
+            public void done(HashMap<String, Object> result, ParseException e) {
+                //Log.e("TIME", "Request " + finalI + ": " + (System.currentTimeMillis() - starttime[finalI]));
+                if (e == null) {
+                    UpdatePostsLat.listener.onUpdatePostsCompleted(result);
+                } else {
+                    UpdatePostsLat.listener.onUpdatePostsFailed(e.getMessage());
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
-            });
-          //}
+            }
+        });
     }
 
     private static ParseGeoPoint boundRect(ParseGeoPoint location, double range) {

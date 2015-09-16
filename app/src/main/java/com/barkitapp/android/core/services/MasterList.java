@@ -8,6 +8,7 @@ import com.barkitapp.android.core.utility.PostComperator;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.enums.VoteType;
 import com.barkitapp.android.parse.objects.Post;
+import com.barkitapp.android.prime.HotFragment;
 import com.parse.GetCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;

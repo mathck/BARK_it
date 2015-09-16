@@ -145,23 +145,23 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onResume() {
         super.onResume();
-        loading = false;
-
-        if(!Connectivity.isOnline(getActivity())) {
-            Toast.makeText(getActivity(), "No Internet connection", Toast.LENGTH_LONG).show();
-        }
-
-        if(LastRefresh.isAvailable(getActivity()) || MasterList.GetMasterList(getOrder()).isEmpty())
-        {
-            if(MasterList.GetMasterList(getOrder()).isEmpty()) {
-                UpdateList();
-            }
-
-            if(mSwipeLayout != null)
-                mSwipeLayout.setRefreshing(true);
-
-            onRefresh();
-        }
+//        loading = false;
+//
+//        if(!Connectivity.isOnline(getActivity())) {
+//            Toast.makeText(getActivity(), "No Internet connection", Toast.LENGTH_LONG).show();
+//        }
+//
+//        if(LastRefresh.isAvailable(getActivity()) || MasterList.GetMasterList(getOrder()).isEmpty())
+//        {
+//            if(MasterList.GetMasterList(getOrder()).isEmpty()) {
+//                UpdateList();
+//            }
+//
+//            if(mSwipeLayout != null)
+//                mSwipeLayout.setRefreshing(true);
+//
+//            onRefresh();
+//        }
     }
 
     public void UpdateList() {
@@ -204,10 +204,22 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
     public void onEvent(InitialPostsReceivedEvent event) {
         UpdateList();
+
+        if(MasterList.GetMasterList(Order.UP_VOTES).isEmpty()) {
+            if(this instanceof HotFragment) {
+                onRefresh();
+            }
+        }
     }
 
     public void onEvent(MasterListUpdatedEvent event) {
         UpdateList();
+
+        if(MasterList.GetMasterList(Order.UP_VOTES).isEmpty()) {
+            if(this instanceof HotFragment) {
+                onRefresh();
+            }
+        }
     }
 
     @UiThread
