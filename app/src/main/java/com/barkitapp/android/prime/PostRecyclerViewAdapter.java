@@ -197,19 +197,18 @@ public class PostRecyclerViewAdapter
         */
 
         // set the colors for already voted posts
-        final VoteType myVote = VoteType.values()[holder.mBoundPost.getMy_Vote()];
 
-        if(myVote == VoteType.UP_VOTE) {
+        if(VoteType.values()[holder.mBoundPost.getMy_Vote()] == VoteType.UP_VOTE) {
             votes_count.setTextColor(mContext.getResources().getColor(R.color.accent));
             upvote.setColorFilter(mContext.getResources().getColor(R.color.accent));
             downvote.setColorFilter(null);
         }
-        else if(myVote == VoteType.DOWN_VOTE) {
+        else if(VoteType.values()[holder.mBoundPost.getMy_Vote()] == VoteType.DOWN_VOTE) {
             votes_count.setTextColor(mContext.getResources().getColor(R.color.primary));
             upvote.setColorFilter(null);
             downvote.setColorFilter(mContext.getResources().getColor(R.color.primary));
         }
-        else if(myVote == VoteType.NEUTRAL) {
+        else if(VoteType.values()[holder.mBoundPost.getMy_Vote()] == VoteType.NEUTRAL) {
             votes_count.setTextColor(mContext.getResources().getColor(R.color.secondary_text));
             upvote.setColorFilter(null);
             downvote.setColorFilter(null);
@@ -218,15 +217,15 @@ public class PostRecyclerViewAdapter
         upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myVote == VoteType.UP_VOTE) {
+                if(VoteType.values()[holder.mBoundPost.getMy_Vote()] == VoteType.UP_VOTE) {
                     // UPVOTE -> NEUTRAL
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.NEUTRAL, -1);
                 }
-                else if(myVote == VoteType.NEUTRAL) {
+                else if(VoteType.values()[holder.mBoundPost.getMy_Vote()] == VoteType.NEUTRAL) {
                     // NEUTRAL -> UPVOTE
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.UP_VOTE, +1);
                 }
-                else if(myVote == VoteType.DOWN_VOTE) {
+                else if(VoteType.values()[holder.mBoundPost.getMy_Vote()] == VoteType.DOWN_VOTE) {
                     // DOWNVOTE -> UPVOTE
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.UP_VOTE, +2);
                 }
@@ -238,15 +237,15 @@ public class PostRecyclerViewAdapter
         downvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myVote == VoteType.DOWN_VOTE) {
+                if(VoteType.values()[holder.mBoundPost.getMy_Vote()] == VoteType.DOWN_VOTE) {
                     // DOWNVOTE -> NEUTRAL
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.NEUTRAL, +1);
                 }
-                else if(myVote == VoteType.NEUTRAL) {
+                else if(VoteType.values()[holder.mBoundPost.getMy_Vote()] == VoteType.NEUTRAL) {
                     // NEUTRAL -> DOWNVOTE
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.DOWN_VOTE, -1);
                 }
-                else if(myVote == VoteType.UP_VOTE) {
+                else if(VoteType.values()[holder.mBoundPost.getMy_Vote()] == VoteType.UP_VOTE) {
                     // UPVOTE -> DOWNVOTE
                     performVoting(holder.mBoundPost, votes_count, upvote, downvote, VoteType.DOWN_VOTE, -2);
                 }
@@ -321,8 +320,9 @@ public class PostRecyclerViewAdapter
                 voteType);
 
         // store in master list
-//        ParseObject post = MasterList.GetPost(boundPost.getObjectId());
-//        MasterList.updateVoteForPost(post, voteType);
+        ParseObject post = MasterList.GetPost(boundPost.getObjectId());
+        post.put("my_vote", voteType.ordinal());
+        post.pinInBackground();
 
         // set this item ui
         boundPost.setMy_Vote(voteType.ordinal());

@@ -39,5 +39,6 @@
     <string name="title_activity_my_barks">MyBarksActivity</string>
   <string name="limited_edition">limited Edition</string>
   <string name="bark_it_logo">BARK it Logo</string>
+    <string name="title_activity_fullscreen_picture">FullscreenPictureActivity</string>
 
 </resources>

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
@@ -24,6 +26,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,9 +49,12 @@ import com.barkitapp.android.parse.functions.Flag;
 import com.barkitapp.android.parse.functions.GetPostById;
 import com.barkitapp.android.parse.functions.PostReply;
 import com.barkitapp.android.parse.objects.Post;
+import com.barkitapp.android.pictures.FullscreenPictureActivity;
 import com.barkitapp.android.prime.MainActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.parse.ParseGeoPoint;
 
 import de.greenrobot.event.EventBus;
@@ -66,6 +72,7 @@ public class BarkDetailActivity extends AppCompatActivity {
     private boolean mCameFromNotification = false;
 
     private Tracker mTracker;
+    private ImageLoader imageLoader;
 
     @UiThread
     private void collapseToolbar() {
@@ -228,9 +235,28 @@ public class BarkDetailActivity extends AppCompatActivity {
             //actionBar.setTitle("BARK");
         }
 
-        //CollapsingToolbarLayout collapsingToolbar =
-        //        (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        //collapsingToolbar.setTitle("BARK");
+        if(!mPost.getImage_url().isEmpty())
+        {
+            ImageView backdrop = (ImageView) findViewById(R.id.image);
+            View overlay = (View) findViewById(R.id.overlay);
+
+            overlay.setVisibility(View.VISIBLE);
+
+            if(imageLoader == null)
+                imageLoader = ImageLoader.getInstance();
+
+            imageLoader.displayImage(mPost.getImage_url(), backdrop);
+
+            backdrop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), FullscreenPictureActivity.class);
+                    intent.putExtra(FullscreenPictureActivity.EXTRA_IMAGE_URL, mPost.getImage_url());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getApplicationContext().startActivity(intent);
+                }
+            });
+        }
     }
 
     private void performSend(EditText chattext, BarkReplyListFragment listFragment) {

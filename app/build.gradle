@@ -45,12 +45,12 @@ dependencies {
     //compile 'com.race604.flyrefresh:library:1.0.1'
 
     // SQL ORM
-    
+
 
     // Eventbus
-    
+
     // App Intro
-    
+
     // Google Places API Autocomplete Searchviewcompile ('se.walkercrou:google-places-api-java:2.1.2') { exclude module: 'bolts-android' }
     //compile ('org.apache.httpcomponents:httpclient-android:4.3.5.1') { exclude module: 'bolts-android' }
 

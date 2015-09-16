@@ -32,7 +32,7 @@
         android:required="true" />
 
     <application
-        android:name="com.barkitapp.android.base.Setup"
+        android:name=".base.Setup"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -141,20 +141,19 @@
         <activity
             android:name=".pictures.PictureActivity"
             android:label="Picture View"
-            android:screenOrientation="portrait"
             android:parentActivityName=".prime.MainActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".prime.MainActivity" />
         </activity>
-
         <activity
             android:name=".pictures.Custom_CameraActivity"
             android:label="Camera View"
-            android:screenOrientation="portrait"
             android:parentActivityName=".prime.MainActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".prime.MainActivity" />
@@ -231,6 +230,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.barkitapp.android.prime.MainActivity" />
+        </activity>
+        <activity
+            android:name=".pictures.FullscreenPictureActivity"
+            android:label="@string/title_activity_fullscreen_picture"
+            android:theme="@style/Theme.DesignDemo"
+            android:parentActivityName=".bark_detail.BarkDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.barkitapp.android.bark_detail.BarkDetailActivity" />
         </activity>
     </application>
 

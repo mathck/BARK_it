@@ -6,8 +6,11 @@ import android.widget.Toast;
 import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.objects.Post;
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,21 +28,50 @@ public class MasterList {
 
             //String myUserId = UserId.get(context);
 
-            ParseObject.pinAllInBackground(order.toString(), posts);
-            ParseObject.pinAllInBackground(order.toString(), votes);
+            //ParseObject.pinAll(order.toString(), votes);
 
-//            for(ParseObject post : posts) {
-//                for(ParseObject vote : votes) {
-//                    updateVoteForPost(vote);
-//                }
-//            }
+            for(ParseObject post : posts) {
+                ParseFile file = post.getParseFile("image_small");
+                String image_url = "";
 
-            EventBus.getDefault().post(new InitialPostsReceivedEvent());
+                if(file != null)
+                    image_url = file.getUrl();
+
+                post.put("image_url", image_url);
+            }
+
+            String myUserId = UserId.get(context);
+
+            for(ParseObject vote : votes) {
+                String userId = vote.getString("user_id");
+
+                if(myUserId.equals(userId)) {
+                    ParseObject post = posts.get(getIndexByProperty(posts, vote.getString("content_id")));
+                    post.put("my_vote", vote.getInt("vote_type"));
+                }
+            }
+
+            ParseObject.pinAllInBackground(order.toString(), posts, new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    EventBus.getDefault().post(new InitialPostsReceivedEvent());
+                }
+            });
 
         } catch (Exception e) {
             if(context != null)
                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private static int getIndexByProperty(ArrayList<ParseObject> posts, String content_id) {
+        for (int i = 0; i < posts.size(); i++) {
+            if (posts.get(i) !=null && posts.get(i).getObjectId().equals(content_id)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public static void clearMasterList(Order order) {

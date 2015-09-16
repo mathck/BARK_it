@@ -63,6 +63,7 @@ public class Post {
         this.vote_counter = parseObject.getInt("vote_counter");
         this.reply_counter = parseObject.getInt("reply_counter");
         this.badge = parseObject.getInt("badge");
+        this.image_url = parseObject.getString("image_url");
         this.my_Vote = parseObject.has("my_vote") ? parseObject.getInt("my_vote") : VoteType.NEUTRAL.ordinal();
     }
     
