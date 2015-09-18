@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             mActionBar.setTitle("Barks" + getCityName(true));
+            //mActionBar.setSubtitle(is_manual_location ? "Featured Location" : "");
         }
 
         invalidateOptionsMenu();

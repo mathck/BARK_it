@@ -7,23 +7,23 @@ import android.widget.Toast;
 
 import com.barkitapp.android.R;
 import com.github.paolorotolo.appintro.AppIntro;
+import com.github.paolorotolo.appintro.AppIntro2;
+import com.github.paolorotolo.appintro.AppIntroFragment;
 
-public class BarkitAppIntro extends AppIntro {
+public class BarkitAppIntro extends AppIntro2 {
     @Override
     public void init(Bundle savedInstanceState) {
-        addSlide(SampleSlide.newInstance(R.layout.intro));
-        addSlide(SampleSlide.newInstance(R.layout.intro2));
-        addSlide(SampleSlide.newInstance(R.layout.intro3));
+
+        addSlide(AppIntroFragment.newInstance("Ein Bark ist ...", "Neuigkeiten und Interessantes in deiner Nähe", R.mipmap.intro0, getResources().getColor(R.color.red_500)));
+        addSlide(AppIntroFragment.newInstance("Lokal", "Sieh was in deiner Umgebung passiert", R.mipmap.intro1, getResources().getColor(R.color.blue_500)));
+        addSlide(AppIntroFragment.newInstance("Anonym", "Teile anonym deine Meinung", R.mipmap.intro2, getResources().getColor(R.color.teal_500)));
+
+        setFlowAnimation();
     }
 
     private void loadMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    public void onSkipPressed() {
-        loadMainActivity();
     }
 
     @Override
