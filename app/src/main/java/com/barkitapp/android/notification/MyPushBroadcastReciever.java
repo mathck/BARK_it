@@ -48,7 +48,7 @@ public class MyPushBroadcastReciever extends ParsePushBroadcastReceiver {
     @Override
     protected void onPushOpen(Context context, Intent intent) {
         try {
-            MasterList.clearMasterListAll();
+            //MasterList.clearMasterListAll();
         }
         catch(Exception ignored) {
 

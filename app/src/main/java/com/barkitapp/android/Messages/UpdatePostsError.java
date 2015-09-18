@@ -1,6 +1,6 @@
 package com.barkitapp.android.Messages;
 
-public class UpdatePostsError {
+public class UpdatePostsError extends EventMessage {
 
         public UpdatePostsError() {
         }

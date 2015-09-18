@@ -28,6 +28,7 @@ import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.CreateUser;
 import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.barkitapp.android.parse.functions.UpdatePostsLat;
+import com.barkitapp.android.prime.BarkitAppIntro;
 import com.barkitapp.android.prime.MainActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -64,7 +65,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         String userId = UserId.get(this);
         if(userId != null && !userId.isEmpty())
         {
-            AppStart();
+            AppStart(false);
         }
         else {
             Toast.makeText(this, "Initializing first app start", Toast.LENGTH_LONG).show();
@@ -76,9 +77,9 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         }
     }
 
-    private void AppStart() {
+    private void AppStart(final boolean firstStart) {
 
-        MasterList.clearMasterListAll();
+        MasterList.clearMasterListAllSlow();
 
         // Notify about location info
         if(!SmartLocation.with(this).location().state().locationServicesEnabled())
@@ -133,7 +134,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashScreen.this, MainActivity.class);
+                Intent i = new Intent(SplashScreen.this, firstStart ? BarkitAppIntro.class : MainActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -146,7 +147,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         installation.put("user_id", UserId.get(this));
         installation.saveInBackground();
 
-        AppStart();
+        AppStart(true);
     }
 
     @Override

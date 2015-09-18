@@ -27,10 +27,6 @@ public class NewFragment extends PostFragment {
         return Order.TIME;
     }
 
-    public void onEvent(RequestUpdatePostsEvent event) {
-        onRefresh();
-    }
-
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);

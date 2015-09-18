@@ -3,11 +3,14 @@ package com.barkitapp.android.prime;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.annotation.UiThread;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -265,33 +268,39 @@ public class PostRecyclerViewAdapter
 
         //imageLoader.displayImage(holder.mBoundPost.getImage_url(), imageView);
 
-        final ProgressWheel spinner = (ProgressWheel) holder.mView.findViewById(R.id.progressBar);
+        //final ImageView spinner = (ImageView) holder.mView.findViewById(R.id.progressBar);
         final RelativeLayout infoBar = (RelativeLayout) holder.mView.findViewById(R.id.infoBar);
-        final RelativeLayout voteBar = (RelativeLayout) holder.mView.findViewById(R.id.voteBar);
+        //final RelativeLayout voteBar = (RelativeLayout) holder.mView.findViewById(R.id.voteBar);
+
+        final Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.shake);
 
         imageLoader.displayImage(holder.mBoundPost.getImage_url(), imageView, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-                spinner.setVisibility(View.VISIBLE);
+//                spinner.startAnimation(animation);
+//                spinner.setVisibility(View.VISIBLE);
+
                 imageView.setVisibility(View.GONE);
                 infoBar.setVisibility(View.GONE);
-                voteBar.setVisibility(View.GONE);
+                //voteBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                spinner.setVisibility(View.GONE);
+//                spinner.clearAnimation();
+//                spinner.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
                 infoBar.setVisibility(View.VISIBLE);
-                voteBar.setVisibility(View.VISIBLE);
+                //voteBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                spinner.setVisibility(View.GONE);
+//                spinner.clearAnimation();
+//                spinner.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
                 infoBar.setVisibility(View.VISIBLE);
-                voteBar.setVisibility(View.VISIBLE);
+                //voteBar.setVisibility(View.VISIBLE);
             }
         });
     }

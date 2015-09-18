@@ -9,10 +9,12 @@
     <include layout="@layout/include_list_viewpager"/>
 
     <RelativeLayout
+        android:id="@+id/chatbox_ui"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
 
         <ImageView
+            android:id="@+id/chatbox_shadow"
             android:layout_width="match_parent"
             android:layout_height="8dp"
             android:layout_above="@+id/chatbox"

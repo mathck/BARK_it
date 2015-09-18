@@ -2,10 +2,11 @@ package com.barkitapp.android.prime;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -23,34 +24,39 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barkitapp.android.BuildConfig;
+import com.barkitapp.android.Messages.EventMessage;
+import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.base.Setup;
 import com.barkitapp.android.core.objects.Coordinates;
+import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
+import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.parse.functions.PostPost;
 import com.barkitapp.android.places.PlacesActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-import com.barkitapp.android.pictures.Custom_CameraActivity;
-import com.barkitapp.android.pictures.PictureActivity;
+import com.barkitapp.android.pictures.BarkitCamera;
 import com.parse.ParseGeoPoint;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,9 +97,37 @@ public class MainActivity extends AppCompatActivity {
         mTracker.setScreenName(MainActivity.class.getSimpleName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
+        RelativeLayout chatbox_ui = (RelativeLayout) findViewById(R.id.chatbox_ui);
+
+        //--------------------------------------------------------------------
+        // set Toolbar color depending on mode
+        // chatbox visibility
+        //--------------------------------------------------------------------
         mActionBar = getSupportActionBar();
         if(mActionBar != null)
+        {
+            boolean is_manual_location = InternalAppData.getBoolean(this, SharedPrefKeys.HAS_SET_MANUAL_LOCATION);
+
+            mActionBar.setBackgroundDrawable(is_manual_location ? new ColorDrawable(getResources().getColor(R.color.secondary_primary)) : new ColorDrawable(getResources().getColor(R.color.primary)));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(getResources().getColor(is_manual_location ? R.color.secondary_primary_dark : R.color.primary_dark));
+            }
+
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+            if(tabLayout != null) {
+                tabLayout.setBackgroundResource(is_manual_location ? R.color.secondary_primary : R.color.primary);
+            }
+
+            if(chatbox_ui != null) {
+                chatbox_ui.setVisibility(is_manual_location ? View.GONE : View.VISIBLE);
+            }
+
             mActionBar.setTitle("Barks" + getCityName(true));
+        }
+
+        invalidateOptionsMenu();
     }
 
     @Override
@@ -168,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //dispatchTakePictureIntent();
 
-                Intent intent = new Intent(mContext, Custom_CameraActivity.class);
+                Intent intent = new Intent(mContext, BarkitCamera.class);
                 mContext.startActivity(intent);
             }
         });
@@ -225,7 +259,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_actions, menu);
+        if(InternalAppData.getBoolean(this, SharedPrefKeys.HAS_SET_MANUAL_LOCATION)) {
+            getMenuInflater().inflate(R.menu.featured_main_actions, menu);
+        }
+        else {
+            getMenuInflater().inflate(R.menu.main_actions, menu);
+        }
+
         return true;
     }
 
@@ -236,8 +276,27 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_places:
-                Intent intent = new Intent(mContext, PlacesActivity.class);
-                mContext.startActivity(intent);
+
+                if(InternalAppData.getBoolean(this, SharedPrefKeys.HAS_SET_MANUAL_LOCATION)) {
+                    // todo resture UI + position + reload
+
+                    InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LATITUDE_MANUAL, "");
+                    InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LONGITUDE_MANUAL, "");
+                    InternalAppData.Store(mContext, SharedPrefKeys.HAS_SET_MANUAL_LOCATION, false);
+                    InternalAppData.Store(mContext, SharedPrefKeys.MANUAL_TITLE, "");
+                    InternalAppData.Store(mContext, SharedPrefKeys.RADIUS, 5000L);
+
+                    MasterList.clearMasterListAllSlow();
+
+                    EventBus.getDefault().post(new RequestUpdatePostsEvent());
+
+                    this.onResume();
+                }
+                else {
+                    Intent intent = new Intent(mContext, PlacesActivity.class);
+                    mContext.startActivity(intent);
+                }
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

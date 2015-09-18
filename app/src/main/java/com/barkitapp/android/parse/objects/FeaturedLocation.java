@@ -10,8 +10,8 @@ public class FeaturedLocation implements Comparable<FeaturedLocation> {
     public FeaturedLocation(ParseObject parseObject) {
         this.name = parseObject.getString("name");
         this.location = parseObject.getParseGeoPoint("location");
-        this.priority = (int) parseObject.getNumber("priority");
-        this.radius = (int) parseObject.getNumber("radius");
+        this.priority = parseObject.getInt("priority");
+        this.radius = parseObject.getInt("radius");
     }
 
     @Override

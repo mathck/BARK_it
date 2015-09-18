@@ -126,7 +126,7 @@ public class PlacesFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, final int position) {
             holder.mBoundLocation = mValues.get(position);
             //holder.mTextView.setText(mPlaces.get(position));
 
@@ -150,14 +150,15 @@ public class PlacesFragment extends Fragment {
 
                     // todo set location, navigate to main view
 
-                    InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LATITUDE_MANUAL, holder.mBoundLocation.getLocation().getLatitude() + "");
-                    InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LONGITUDE_MANUAL, holder.mBoundLocation.getLocation().getLongitude() + "");
+                    InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LATITUDE_MANUAL, mValues.get(position).getLocation().getLatitude() + "");
+                    InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LONGITUDE_MANUAL, mValues.get(position).getLocation().getLongitude() + "");
                     InternalAppData.Store(mContext, SharedPrefKeys.HAS_SET_MANUAL_LOCATION, true);
-                    InternalAppData.Store(mContext, SharedPrefKeys.MANUAL_TITLE, holder.mBoundLocation.getName());
+                    InternalAppData.Store(mContext, SharedPrefKeys.MANUAL_TITLE, mValues.get(position).getName());
+                    InternalAppData.Store(mContext, SharedPrefKeys.RADIUS, (long) mValues.get(position).getRadius());
 
-                    MasterList.clearMasterListAll();
+                    MasterList.clearMasterListAllSlow();
 
-                    EventBus.getDefault().post(new RequestUpdatePostsEvent());
+                    //EventBus.getDefault().post(new RequestUpdatePostsEvent());
 
                     ((FragmentActivity) mContext).finish();
                 }

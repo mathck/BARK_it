@@ -1,11 +1,17 @@
 package com.barkitapp.android.core.services;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
+import com.barkitapp.android.Messages.EventMessage;
 import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
+import com.barkitapp.android.Messages.MasterListUpdatedEvent;
+import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.objects.Post;
+import com.parse.DeleteCallback;
+import com.parse.FunctionCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -54,7 +60,7 @@ public class MasterList {
             ParseObject.pinAllInBackground(order.toString(), posts, new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    EventBus.getDefault().post(new InitialPostsReceivedEvent());
+                    EventBus.getDefault().post(new MasterListUpdatedEvent());
                 }
             });
 
@@ -85,8 +91,25 @@ public class MasterList {
     }
 
     public static void clearMasterListAll() {
-        clearMasterList(Order.TIME);
-        clearMasterList(Order.UP_VOTES);
+        try {
+            ParseObject.unpinAllInBackground(GetMasterList(), new DeleteCallback() {
+                @Override
+                public void done(ParseException e) {
+                }
+            });
+        }
+        catch(Exception e) {
+
+        }
+    }
+
+    public static void clearMasterListAllSlow() {
+        try {
+            ParseObject.unpinAll(GetMasterList());
+        }
+        catch(Exception e) {
+
+        }
     }
 
 //    public static HashMap<String, VoteType> GetVotes(Order order) {
@@ -134,6 +157,14 @@ public class MasterList {
         }
     }
 
+    public static List<ParseObject> GetMasterList() {
+        ArrayList<ParseObject> list = new ArrayList<ParseObject>();
+        list.addAll(GetMasterList(Order.TIME));
+        list.addAll(GetMasterList(Order.UP_VOTES));
+
+        return list;
+    }
+
 //    public static List<ParseObject> GetMasterListVotes(Order order) {
 //        try {
 //            ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
@@ -160,4 +191,6 @@ public class MasterList {
         ParseObject post = GetPost(objectId);
         return new Post(post);
     }
+
+
 }

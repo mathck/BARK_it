@@ -22,6 +22,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -115,7 +117,7 @@ public class BarkDetailActivity extends AppCompatActivity {
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.accent)));
         */
 
-        final BarkReplyListFragment listFragment = (BarkReplyListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        final BarkReplyListFragment listFragment = (BarkReplyListFragment) getFragmentManager().findFragmentById(R.id.fragment);
 
         final EditText chattext = (EditText) findViewById(R.id.chattext);
         chattext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -136,6 +138,8 @@ public class BarkDetailActivity extends AppCompatActivity {
                 performSend(chattext, listFragment);
             }
         });
+
+        invalidateOptionsMenu();
     }
 
     public void onEvent(RecievedPostForNotification event) {
@@ -250,12 +254,30 @@ public class BarkDetailActivity extends AppCompatActivity {
             backdrop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), FullscreenPictureActivity.class);
-                    intent.putExtra(FullscreenPictureActivity.EXTRA_IMAGE_URL, mPost.getImage_url());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getApplicationContext().startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), FullscreenPictureActivity.class);
+                intent.putExtra(FullscreenPictureActivity.EXTRA_IMAGE_URL, mPost.getImage_url());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(intent);
                 }
             });
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//
+//                if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+//                    int id = getResources().getIdentifier("config_enableTranslucentDecor", "bool", "android");
+//                    if (id == 0) {
+//                        // not on KitKat
+//                    } else {
+//                        boolean enabled = getResources().getBoolean(id);
+//                        if(!enabled) {
+//                            return;
+//                        }
+//                    }
+//                }
+//
+//                Window w = getWindow();
+//                w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            }
         }
     }
 
@@ -302,6 +324,15 @@ public class BarkDetailActivity extends AppCompatActivity {
                 }
 
                 finish();
+                return true;
+
+            case R.id.action_open:
+
+                Intent intent = new Intent(getApplicationContext(), FullscreenPictureActivity.class);
+                intent.putExtra(FullscreenPictureActivity.EXTRA_IMAGE_URL, mPost.getImage_url());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(intent);
+
                 return true;
 
             case R.id.action_share:
@@ -354,7 +385,15 @@ public class BarkDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.bark_actions, menu);
+
+        if(mPost != null && !mPost.getImage_url().isEmpty())
+        {
+            getMenuInflater().inflate(R.menu.bark_withpic_actions, menu);
+        }
+        else {
+            getMenuInflater().inflate(R.menu.bark_actions, menu);
+        }
+
         return true;
     }
 }

@@ -32,12 +32,10 @@
             android:scrollHorizontally="false"
             android:paddingRight="12dp"
             android:maxLength="140"
+            android:inputType="textMultiLine"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:lines="1"
             android:singleLine="true"
-            android:imeOptions="actionSend"
-            android:inputType="text"
             android:textSize="18sp"
             android:background="@null"
             android:textCursorDrawable="@drawable/edit_text"
@@ -53,6 +51,7 @@
         android:layout_height="74dp"
         android:layout_marginBottom="0dp"
         android:weightSum="5">
+        <!--
         <RelativeLayout
             android:id="@+id/cancel"
             android:layout_width="0dp"
@@ -77,16 +76,18 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/ic_replay_white_48dp" />
-        </RelativeLayout>
+        </RelativeLayout>                -->
+
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="5"
             android:layout_height="match_parent"
             android:background="#AA000000">
             <ImageView
                 android:id="@+id/fab"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_marginRight="32dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_bark"
                 android:layout_centerInParent="true"

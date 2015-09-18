@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:icon="@drawable/ic_photo_white_48dp"
+        android:id="@+id/action_open"
+        android:title="@string/open_picture"
+        app:showAsAction="always" />
+    <item
+        android:icon="@drawable/ic_share_white_48dp"
+        android:id="@+id/action_share"
+        android:title="@string/share_bark"
+        app:showAsAction="collapseActionView" />
+    <item
+        android:icon="@drawable/ic_flag_white_48dp"
+        android:id="@+id/action_flag"
+        android:title="@string/flag"
+        app:showAsAction="collapseActionView" />
+</menu>

@@ -16,15 +16,18 @@ import android.widget.Toast;
 
 import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
 import com.barkitapp.android.Messages.MasterListUpdatedEvent;
+import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.Messages.UpdateListItemEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.objects.Coordinates;
+import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Connectivity;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.LastRefresh;
+import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.barkitapp.android.parse.functions.UpdatePostsLat;
@@ -145,6 +148,31 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onResume() {
         super.onResume();
+
+        if(InternalAppData.getBoolean(getActivity(), SharedPrefKeys.HAS_SET_MANUAL_LOCATION)) {
+            Coordinates location = LocationService.getLocation(getActivity());
+
+            if(location == null) {
+                setRefreshing(false);
+                //Toast.makeText(getActivity(), "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            MasterList.clearMasterListAllSlow();
+            UpdateList();
+
+            setRefreshing(true);
+
+            UpdatePostsLat.run(getActivity(),
+                    this,
+                    UserId.get(getActivity()),
+                    new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                    new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                    Constants.GET_POSTS_COUNT,
+                    getOrder(),
+                    true);
+        }
+
 //        loading = false;
 //
 //        if(!Connectivity.isOnline(getActivity())) {
@@ -220,6 +248,12 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 onRefresh();
             }
         }
+
+        if(MasterList.GetMasterList(Order.TIME).isEmpty()) {
+            if(this instanceof NewFragment) {
+                onRefresh();
+            }
+        }
     }
 
     @UiThread
@@ -236,6 +270,30 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     }
 
     public abstract void sort(List<Post> masterList);
+
+    public void onEvent(RequestUpdatePostsEvent event) {
+        Coordinates location = LocationService.getLocation(getActivity());
+
+        if(location == null) {
+            setRefreshing(false);
+            //Toast.makeText(getActivity(), "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        MasterList.clearMasterList(getOrder());
+        UpdateList();
+
+        setRefreshing(true);
+
+        UpdatePostsLat.run(getActivity(),
+                this,
+                UserId.get(getActivity()),
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                Constants.GET_POSTS_COUNT,
+                getOrder(),
+                true);
+    }
 
     @Override
     public void onRefresh() {

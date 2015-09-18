@@ -1,6 +1,6 @@
 package com.barkitapp.android.Messages;
 
-public class InitialPostsReceivedEvent {
+public class InitialPostsReceivedEvent extends EventMessage {
 
         public InitialPostsReceivedEvent() {
         }

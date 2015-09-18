@@ -1,6 +1,6 @@
 package com.barkitapp.android.Messages;
 
-public class UserIdRecievedEvent {
+public class UserIdRecievedEvent extends EventMessage {
 
         public final String userId;
 

@@ -7,13 +7,13 @@ import android.view.SurfaceView;
 
 import java.io.IOException;
 
-public class CameraPreview extends SurfaceView implements
-        SurfaceHolder.Callback {
+@SuppressWarnings("deprecation")
+public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder mSurfaceHolder;
     private Camera mCamera;
 
     // Constructor that obtains context and camera
-    @SuppressWarnings("deprecation")
+
     public CameraPreview(Context context, Camera camera) {
         super(context);
         this.mCamera = camera;
@@ -35,7 +35,10 @@ public class CameraPreview extends SurfaceView implements
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        this.mSurfaceHolder.removeCallback(this);
+
         mCamera.stopPreview();
+        mCamera.setPreviewCallback(null);
         mCamera.release();
     }
 

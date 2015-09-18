@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <!-- Parse Recv Notifications -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -26,10 +28,6 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="com.barkitapp.android.permission.C2D_MESSAGE" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
 
     <application
         android:name=".base.Setup"
@@ -149,7 +147,7 @@
                 android:value=".prime.MainActivity" />
         </activity>
         <activity
-            android:name=".pictures.Custom_CameraActivity"
+            android:name=".pictures.BarkitCamera"
             android:label="Camera View"
             android:parentActivityName=".prime.MainActivity"
             android:screenOrientation="portrait"
@@ -224,6 +222,15 @@
         </receiver>
 
         <activity
+            android:name=".prime.BarkitAppIntro"
+            android:label="App Intro"
+            android:parentActivityName=".prime.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.barkitapp.android.prime.MainActivity" />
+        </activity>
+
+        <activity
             android:name=".prime.MyBarksActivity"
             android:label="@string/title_activity_my_barks"
             android:parentActivityName=".prime.MainActivity" >
@@ -234,7 +241,7 @@
         <activity
             android:name=".pictures.FullscreenPictureActivity"
             android:label="@string/title_activity_fullscreen_picture"
-            android:theme="@style/Theme.DesignDemo"
+            android:theme="@style/Theme.FullscreenTheme"
             android:parentActivityName=".bark_detail.BarkDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

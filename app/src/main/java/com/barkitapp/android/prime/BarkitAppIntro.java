@@ -12,12 +12,11 @@ public class BarkitAppIntro extends AppIntro {
     @Override
     public void init(Bundle savedInstanceState) {
         addSlide(SampleSlide.newInstance(R.layout.intro));
-        addSlide(SampleSlide.newInstance(R.layout.intro));
-        addSlide(SampleSlide.newInstance(R.layout.intro));
-        addSlide(SampleSlide.newInstance(R.layout.intro));
+        addSlide(SampleSlide.newInstance(R.layout.intro2));
+        addSlide(SampleSlide.newInstance(R.layout.intro3));
     }
 
-    private void loadMainActivity(){
+    private void loadMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -25,7 +24,6 @@ public class BarkitAppIntro extends AppIntro {
     @Override
     public void onSkipPressed() {
         loadMainActivity();
-        Toast.makeText(getApplicationContext(), getString(R.string.skip), Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.barkitapp.android.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class FullscreenPictureActivity extends AppCompatActivity {
@@ -32,7 +33,12 @@ public class FullscreenPictureActivity extends AppCompatActivity {
             if(imageLoader == null)
                 imageLoader = ImageLoader.getInstance();
 
-            imageLoader.displayImage(url, backdrop);
+            DisplayImageOptions options = new DisplayImageOptions.Builder()
+                    .showImageOnLoading(android.R.color.black)
+                    .showImageForEmptyUri(android.R.color.black)
+                    .build();
+
+            imageLoader.displayImage(url, backdrop, options);
 
             backdrop.setOnClickListener(new View.OnClickListener() {
                 @Override

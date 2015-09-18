@@ -52,7 +52,7 @@ public class PostPost {
         ParseCloud.callFunctionInBackground("PostPost", params, new FunctionCallback<JSONObject>() {
             public void done(JSONObject result, ParseException e) {
                 if (e == null) {
-                    EventBus.getDefault().post(new RequestUpdatePostsEvent());
+                    Toast.makeText(context, "Successfully submitted picture, it will appear shortly", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();

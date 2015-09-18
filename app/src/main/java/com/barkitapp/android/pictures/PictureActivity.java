@@ -91,13 +91,13 @@ public class PictureActivity extends Activity {
             myImage.setImageURI(Uri.parse(imagePath));
 
 
-            RelativeLayout cancelButton = (RelativeLayout) findViewById(R.id.cancel);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+//            RelativeLayout cancelButton = (RelativeLayout) findViewById(R.id.cancel);
+//            cancelButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    finish();
+//                }
+//            });
 
 
             ImageView fab = (ImageView) findViewById(R.id.fab);

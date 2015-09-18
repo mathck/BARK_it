@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="Theme.FullscreenTheme" parent="Theme.SplashTheme">
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
     <style name="Theme.SplashTheme" parent="Theme.DesignDemo">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">false</item>

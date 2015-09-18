@@ -6,15 +6,20 @@ import android.widget.Toast;
 
 import com.barkitapp.android.Messages.MasterListUpdatedEvent;
 import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
+import com.barkitapp.android.R;
 import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
+import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.parse.Connection;
+import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -34,11 +39,21 @@ public class Setup extends Application implements OnLocationUpdatedListener, Upd
 
         InternalAppData.Store(this, SharedPrefKeys.HAS_SET_MANUAL_LOCATION, false);
         InternalAppData.Store(this, SharedPrefKeys.MANUAL_TITLE, "");
+        InternalAppData.Store(this, SharedPrefKeys.RADIUS, 5000L);
 
         SmartLocation.with(this).location()
                 .start(this);
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+            .cacheInMemory(true)
+            .cacheOnDisk(true)
+            .displayer(new FadeInBitmapDisplayer(750))
+            .build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+            .defaultDisplayImageOptions(defaultOptions)
+            .build();
+
         ImageLoader.getInstance().init(config);
     }
 
@@ -64,6 +79,7 @@ public class Setup extends Application implements OnLocationUpdatedListener, Upd
 
     @Override
     public void onUpdatePostsCompleted(HashMap<String, Object> result) {
+        MasterList.StoreMasterList(this, result, Order.TIME);
         EventBus.getDefault().post(new MasterListUpdatedEvent());
     }
 

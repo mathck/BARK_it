@@ -1,6 +1,6 @@
 package com.barkitapp.android.Messages;
 
-public class RequestUpdateRepliesEvent {
+public class RequestUpdateRepliesEvent extends EventMessage {
 
         public RequestUpdateRepliesEvent() {
         }

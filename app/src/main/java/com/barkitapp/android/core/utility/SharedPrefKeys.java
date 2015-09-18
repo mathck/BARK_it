@@ -26,4 +26,5 @@ public final class SharedPrefKeys {
 
     public static final String MANUAL_TITLE = "com.barkitapp.android.manual.title";
     public static final String IS_LOADING_BAKS = "com.barkitapp.android.is.loading.barks";
+    public static final String RADIUS = "com.barkitapp.android.radius";
 }
