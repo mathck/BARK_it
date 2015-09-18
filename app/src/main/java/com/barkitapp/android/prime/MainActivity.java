@@ -108,16 +108,16 @@ public class MainActivity extends AppCompatActivity {
         {
             boolean is_manual_location = InternalAppData.getBoolean(this, SharedPrefKeys.HAS_SET_MANUAL_LOCATION);
 
-            mActionBar.setBackgroundDrawable(is_manual_location ? new ColorDrawable(getResources().getColor(R.color.secondary_primary)) : new ColorDrawable(getResources().getColor(R.color.primary)));
+            mActionBar.setBackgroundDrawable(is_manual_location ? new ColorDrawable(getResources().getColor(R.color.orange_500)) : new ColorDrawable(getResources().getColor(R.color.primary)));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(getResources().getColor(is_manual_location ? R.color.secondary_primary_dark : R.color.primary_dark));
+                window.setStatusBarColor(getResources().getColor(is_manual_location ? R.color.orange_700 : R.color.primary_dark));
             }
 
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
             if(tabLayout != null) {
-                tabLayout.setBackgroundResource(is_manual_location ? R.color.secondary_primary : R.color.primary);
+                tabLayout.setBackgroundResource(is_manual_location ? R.color.orange_500 : R.color.primary);
             }
 
             if(chatbox_ui != null) {

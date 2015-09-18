@@ -17,6 +17,9 @@
 
 <resources>
 
+    <style name="Theme.FullscreenTheme" parent="Theme.DesignDemo">
+    </style>
+
     <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo">
     </style>
 

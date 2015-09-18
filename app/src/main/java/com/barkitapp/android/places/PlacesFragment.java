@@ -1,5 +1,7 @@
 package com.barkitapp.android.places;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
@@ -23,6 +26,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,15 +52,51 @@ public class PlacesFragment extends Fragment {
         SimpleStringRecyclerViewAdapter adapter = new SimpleStringRecyclerViewAdapter(getActivity(), mPlaces);
         featuredList.setAdapter(mAdapter = adapter);
 
+        final RelativeLayout content = (RelativeLayout) fragmentView.findViewById(R.id.content);
+        final ProgressWheel progress = (ProgressWheel) fragmentView.findViewById(R.id.progressBar);
+        progress.setVisibility(View.VISIBLE);
+        content.setVisibility(View.GONE);
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("FeaturedLocation");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 setupFeaturedView(list);
+                crossfade(content, progress);
             }
         });
 
         return fragmentView;
+    }
+
+    private void crossfade(View meInvisible, final View meVisible) {
+
+        // Set the content view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+        meInvisible.setAlpha(0f);
+        meInvisible.setVisibility(View.VISIBLE);
+
+        // Animate the content view to 100% opacity, and clear any animation
+        // listener set on the view.
+        meInvisible.animate()
+                .alpha(1f)
+                .setDuration(getResources().getInteger(
+                        android.R.integer.config_shortAnimTime))
+                .setListener(null);
+
+        // Animate the loading view to 0% opacity. After the animation ends,
+        // set its visibility to GONE as an optimization step (it won't
+        // participate in layout passes, etc.)
+        meVisible.animate()
+                .alpha(0f)
+                .setDuration(getResources().getInteger(
+                        android.R.integer.config_shortAnimTime))
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        meVisible.setVisibility(View.GONE);
+                    }
+                });
     }
 
     private SimpleStringRecyclerViewAdapter mAdapter;

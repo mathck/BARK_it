@@ -32,7 +32,7 @@
             android:scrollHorizontally="false"
             android:paddingRight="12dp"
             android:maxLength="140"
-            android:inputType="textMultiLine"
+            android:inputType="textShortMessage|textMultiLine"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:singleLine="true"

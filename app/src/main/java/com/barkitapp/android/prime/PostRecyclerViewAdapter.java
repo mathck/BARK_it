@@ -268,7 +268,8 @@ public class PostRecyclerViewAdapter
 
         //imageLoader.displayImage(holder.mBoundPost.getImage_url(), imageView);
 
-        //final ImageView spinner = (ImageView) holder.mView.findViewById(R.id.progressBar);
+        final RelativeLayout loadingLayout = (RelativeLayout) holder.mView.findViewById(R.id.loadingLayout);
+        final ImageView spinner = (ImageView) holder.mView.findViewById(R.id.progressBar);
         final RelativeLayout infoBar = (RelativeLayout) holder.mView.findViewById(R.id.infoBar);
         //final RelativeLayout voteBar = (RelativeLayout) holder.mView.findViewById(R.id.voteBar);
 
@@ -277,8 +278,9 @@ public class PostRecyclerViewAdapter
         imageLoader.displayImage(holder.mBoundPost.getImage_url(), imageView, new SimpleImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-//                spinner.startAnimation(animation);
-//                spinner.setVisibility(View.VISIBLE);
+                spinner.startAnimation(animation);
+                spinner.setVisibility(View.VISIBLE);
+                loadingLayout.setVisibility(View.VISIBLE);
 
                 imageView.setVisibility(View.GONE);
                 infoBar.setVisibility(View.GONE);
@@ -287,8 +289,10 @@ public class PostRecyclerViewAdapter
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                spinner.clearAnimation();
-//                spinner.setVisibility(View.GONE);
+                spinner.clearAnimation();
+                spinner.setVisibility(View.GONE);
+                loadingLayout.setVisibility(View.GONE);
+
                 imageView.setVisibility(View.VISIBLE);
                 infoBar.setVisibility(View.VISIBLE);
                 //voteBar.setVisibility(View.VISIBLE);
@@ -296,8 +300,10 @@ public class PostRecyclerViewAdapter
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                spinner.clearAnimation();
-//                spinner.setVisibility(View.GONE);
+                spinner.clearAnimation();
+                spinner.setVisibility(View.GONE);
+                loadingLayout.setVisibility(View.GONE);
+
                 imageView.setVisibility(View.VISIBLE);
                 infoBar.setVisibility(View.VISIBLE);
                 //voteBar.setVisibility(View.VISIBLE);

@@ -8,10 +8,10 @@
         android:id="@+id/icon"
         android:layout_width="28dp"
         android:layout_height="28dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="26dp"
         android:scaleType="fitXY"
         android:layout_centerVertical="true"
-        android:tint="@color/secondary_text"
+        android:tint="@color/orange_500"
         android:src="@drawable/ic_star_black_48dp"
         android:onClick="upvote"/>
 
@@ -22,7 +22,8 @@
         android:maxLines="1"
         android:lines="1"
         android:ellipsize="end"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textColor="@color/primary_text"
         android:layout_centerVertical="true"
         android:paddingLeft="56dp"
         android:layout_marginLeft="16dp"
