@@ -12,8 +12,7 @@
         android:scaleType="fitXY"
         android:layout_centerVertical="true"
         android:tint="@color/orange_500"
-        android:src="@drawable/ic_star_black_48dp"
-        android:onClick="upvote"/>
+        android:src="@drawable/ic_star_black_48dp" />
 
     <TextView
         android:id="@+id/text1"

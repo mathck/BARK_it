@@ -117,7 +117,7 @@ public class BarkDetailActivity extends AppCompatActivity {
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.accent)));
         */
 
-        final BarkReplyListFragment listFragment = (BarkReplyListFragment) getFragmentManager().findFragmentById(R.id.fragment);
+        final BarkReplyListFragment listFragment = (BarkReplyListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
 
         final EditText chattext = (EditText) findViewById(R.id.chattext);
         chattext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -138,6 +138,47 @@ public class BarkDetailActivity extends AppCompatActivity {
                 performSend(chattext, listFragment);
             }
         });
+
+        if(!mPost.getImage_url().isEmpty())
+        {
+            ImageView backdrop = (ImageView) findViewById(R.id.image);
+            View overlay = (View) findViewById(R.id.overlay);
+
+            overlay.setVisibility(View.VISIBLE);
+
+            if(imageLoader == null)
+                imageLoader = ImageLoader.getInstance();
+
+            imageLoader.displayImage(mPost.getImage_url(), backdrop);
+
+            backdrop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), FullscreenPictureActivity.class);
+                    intent.putExtra(FullscreenPictureActivity.EXTRA_IMAGE_URL, mPost.getImage_url());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getApplicationContext().startActivity(intent);
+                }
+            });
+
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//
+//                if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+//                    int id = getResources().getIdentifier("config_enableTranslucentDecor", "bool", "android");
+//                    if (id == 0) {
+//                        // not on KitKat
+//                    } else {
+//                        boolean enabled = getResources().getBoolean(id);
+//                        if(!enabled) {
+//                            return;
+//                        }
+//                    }
+//                }
+//
+//                Window w = getWindow();
+//                w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            }
+        }
 
         invalidateOptionsMenu();
     }
@@ -237,47 +278,6 @@ public class BarkDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
             //actionBar.setTitle("BARK");
-        }
-
-        if(!mPost.getImage_url().isEmpty())
-        {
-            ImageView backdrop = (ImageView) findViewById(R.id.image);
-            View overlay = (View) findViewById(R.id.overlay);
-
-            overlay.setVisibility(View.VISIBLE);
-
-            if(imageLoader == null)
-                imageLoader = ImageLoader.getInstance();
-
-            imageLoader.displayImage(mPost.getImage_url(), backdrop);
-
-            backdrop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), FullscreenPictureActivity.class);
-                intent.putExtra(FullscreenPictureActivity.EXTRA_IMAGE_URL, mPost.getImage_url());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(intent);
-                }
-            });
-
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//
-//                if(Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-//                    int id = getResources().getIdentifier("config_enableTranslucentDecor", "bool", "android");
-//                    if (id == 0) {
-//                        // not on KitKat
-//                    } else {
-//                        boolean enabled = getResources().getBoolean(id);
-//                        if(!enabled) {
-//                            return;
-//                        }
-//                    }
-//                }
-//
-//                Window w = getWindow();
-//                w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            }
         }
     }
 

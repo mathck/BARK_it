@@ -106,7 +106,22 @@
                         android:textSize="20sp"
                         android:textColor="@android:color/white"
                         android:text="Loading ..."/>
-
+                    <!--
+                    <TextView
+                        android:id="@+id/vote_count"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_marginBottom="40dp"
+                        android:layout_above="@id/bark_info"
+                        android:lines="1"
+                        android:alpha="0.2"
+                        android:textSize="100sp"
+                        android:textColor="@android:color/white"
+                        android:text="7"/>
+-->
                 </RelativeLayout>
 
                 <android.support.v7.widget.Toolbar
@@ -123,7 +138,7 @@
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/fragment"
-            android:name="com.barkitapp.android.bark_detail.BarkReplyListFragment"
+            class="com.barkitapp.android.bark_detail.BarkReplyListFragment"
             tools:layout="@layout/fragment_reply_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

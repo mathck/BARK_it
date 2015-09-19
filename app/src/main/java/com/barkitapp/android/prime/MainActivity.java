@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import com.barkitapp.android.BuildConfig;
 import com.barkitapp.android.Messages.EventMessage;
+import com.barkitapp.android.Messages.ForceOnResume;
 import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.base.Setup;
@@ -129,6 +130,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    public void onEvent(ForceOnResume event) {
+        this.onResume();
     }
 
     @Override
@@ -351,14 +368,31 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (menuItem.getItemId()) {
                     case R.id.nav_home:
-                        menuItem.setChecked(true);
+                        //menuItem.setChecked(true);
+
+                        if(InternalAppData.getBoolean(mContext, SharedPrefKeys.HAS_SET_MANUAL_LOCATION)) {
+                            // todo resture UI + position + reload
+
+                            InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LATITUDE_MANUAL, "");
+                            InternalAppData.Store(mContext, SharedPrefKeys.LOCATION_LONGITUDE_MANUAL, "");
+                            InternalAppData.Store(mContext, SharedPrefKeys.HAS_SET_MANUAL_LOCATION, false);
+                            InternalAppData.Store(mContext, SharedPrefKeys.MANUAL_TITLE, "");
+                            InternalAppData.Store(mContext, SharedPrefKeys.RADIUS, 5000L);
+
+                            MasterList.clearMasterListAllSlow();
+
+                            EventBus.getDefault().post(new RequestUpdatePostsEvent());
+
+                            EventBus.getDefault().post(new ForceOnResume());
+                        }
+
                         return true;
 //                    case R.id.nav_mybarks:
 //                        Intent intentMy = new Intent(mContext, MyBarksActivity.class);
 //                        mContext.startActivity(intentMy);
 //                        return true;
                     case R.id.nav_places:
-                        //Toast.makeText(mContext, "will be available soon", Toast.LENGTH_LONG).show();
+
                         Intent intent = new Intent(mContext, PlacesActivity.class);
                         mContext.startActivity(intent);
                         return true;

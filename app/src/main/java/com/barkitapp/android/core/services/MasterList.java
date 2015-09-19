@@ -189,6 +189,10 @@ public class MasterList {
 
     public static Post GetPostPost(String objectId) {
         ParseObject post = GetPost(objectId);
+
+        if(post == null)
+            return null;
+
         return new Post(post);
     }
 

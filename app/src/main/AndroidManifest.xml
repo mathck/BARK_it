@@ -224,6 +224,7 @@
         <activity
             android:name=".prime.BarkitAppIntro"
             android:label="App Intro"
+            android:screenOrientation="portrait"
             android:parentActivityName=".prime.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -233,6 +234,7 @@
         <activity
             android:name=".prime.MyBarksActivity"
             android:label="@string/title_activity_my_barks"
+            android:screenOrientation="portrait"
             android:parentActivityName=".prime.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -242,6 +244,7 @@
             android:name=".pictures.FullscreenPictureActivity"
             android:label="@string/title_activity_fullscreen_picture"
             android:theme="@style/Theme.FullscreenTheme"
+            android:screenOrientation="portrait"
             android:parentActivityName=".bark_detail.BarkDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
