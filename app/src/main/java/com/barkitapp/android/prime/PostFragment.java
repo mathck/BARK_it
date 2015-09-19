@@ -19,6 +19,7 @@ import com.barkitapp.android.Messages.MasterListUpdatedEvent;
 import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.Messages.UpdateListItemEvent;
 import com.barkitapp.android.R;
+import com.barkitapp.android.core.custom_layout.EmptyRecyclerView;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
@@ -69,7 +70,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
         setRefreshing(true);
 
-        setupRecyclerView((RecyclerView) mSwipeLayout.findViewById(R.id.recyclerview));
+        setupRecyclerView((EmptyRecyclerView) mSwipeLayout.findViewById(R.id.recyclerview));
         return mSwipeLayout;
     }
 
@@ -77,7 +78,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     LinearLayoutManager mLayoutManager;
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
+    private void setupRecyclerView(EmptyRecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         PostRecyclerViewAdapter adapter = new PostRecyclerViewAdapter(getActivity(), getList(), getOrder());
         recyclerView.setAdapter(mAdapter = adapter);
@@ -103,6 +104,9 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 }
             }
         });
+
+        // set empty view
+        recyclerView.setEmptyView(getActivity().getLayoutInflater().inflate(R.layout.main_bark_list_no_barks, null));
     }
 
     private void LoadNewBarks() {
