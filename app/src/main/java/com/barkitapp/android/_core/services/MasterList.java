@@ -3,7 +3,7 @@ package com.barkitapp.android._core.services;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.barkitapp.android.events.MasterListUpdatedEvent;
+import com.barkitapp.android.events.MasterListUpdated;
 import com.barkitapp.android.parse_backend.enums.Order;
 import com.barkitapp.android.parse_backend.objects.Post;
 import com.parse.DeleteCallback;
@@ -21,15 +21,11 @@ import de.greenrobot.event.EventBus;
 
 public class MasterList {
 
-    public static void StoreMasterList(Context context, HashMap<String, ArrayList<ParseObject>> result, Order order) {
+    public static void StoreMasterList(Context context, HashMap<String, ArrayList<ParseObject>> result, final Order order) {
         try {
 
             ArrayList<ParseObject> posts = result.get("posts");
             ArrayList<ParseObject> votes = result.get("votes");
-
-            //String myUserId = UserId.get(context);
-
-            //ParseObject.pinAll(order.toString(), votes);
 
             for(ParseObject post : posts) {
                 ParseFile file = post.getParseFile("image_small");
@@ -52,12 +48,16 @@ public class MasterList {
                 }
             }
 
-            ParseObject.pinAllInBackground(order.toString(), posts, new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    EventBus.getDefault().post(new MasterListUpdatedEvent());
-                }
-            });
+            // store posts in database
+            if(!posts.isEmpty())
+            {
+                ParseObject.pinAllInBackground(order.toString(), posts, new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        EventBus.getDefault().post(new MasterListUpdated(order));
+                    }
+                });
+            }
 
         } catch (Exception e) {
             if(context != null)
@@ -78,7 +78,15 @@ public class MasterList {
     public static void clearMasterList(Order order) {
         try {
             ParseObject.unpinAllInBackground(order.toString(), GetMasterList(order));
-            //ParseObject.unpinAllInBackground(order.toString(), GetMasterListVotes(order));
+        }
+        catch(Exception ignored) {
+
+        }
+    }
+
+    public static void clearMasterListSlow(Order order) {
+        try {
+            ParseObject.unpinAll(order.toString(), GetMasterList(order));
         }
         catch(Exception ignored) {
 
@@ -87,11 +95,9 @@ public class MasterList {
 
     public static void clearMasterListAll() {
         try {
-            ParseObject.unpinAllInBackground(GetMasterList(), new DeleteCallback() {
-                @Override
-                public void done(ParseException e) {
-                }
-            });
+            for (Order order : Order.values()) {
+                clearMasterList(order);
+            }
         }
         catch(Exception ignored) {
 
@@ -100,28 +106,14 @@ public class MasterList {
 
     public static void clearMasterListAllSlow() {
         try {
-            ParseObject.unpinAll(GetMasterList());
+            for (Order order : Order.values()) {
+                clearMasterListSlow(order);
+            }
         }
         catch(Exception ignored) {
 
         }
     }
-
-//    public static HashMap<String, VoteType> GetVotes(Order order) {
-//        try {
-//            List<ParseObject> objects = GetMasterListVotes(order);
-//            HashMap<String, VoteType> votes = new HashMap<>();
-//
-//            for(ParseObject obj : objects) {
-//                votes.put(obj.getString("content_id"), VoteType.values()[obj.getInt("vote_type")]);
-//            }
-//
-//            return votes;
-//
-//        } catch (Exception e) {
-//            return new HashMap<>();
-//        }
-//    }
 
     public static List<Post> GetMasterListPost(Order order) {
         try {
@@ -152,25 +144,6 @@ public class MasterList {
         }
     }
 
-    public static List<ParseObject> GetMasterList() {
-        ArrayList<ParseObject> list = new ArrayList<>();
-        list.addAll(GetMasterList(Order.TIME));
-        list.addAll(GetMasterList(Order.UP_VOTES));
-
-        return list;
-    }
-
-//    public static List<ParseObject> GetMasterListVotes(Order order) {
-//        try {
-//            ParseQuery<ParseObject> query = ParseQuery.getQuery("Vote");
-//            query.fromLocalDatastore().fromPin(order.toString());
-//            return query.find();
-//        }
-//        catch (Exception e) {
-//            return new ArrayList<ParseObject>();
-//        }
-//    }
-
     public static ParseObject GetPost(String objectId) {
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
@@ -190,6 +163,4 @@ public class MasterList {
 
         return new Post(post);
     }
-
-
 }

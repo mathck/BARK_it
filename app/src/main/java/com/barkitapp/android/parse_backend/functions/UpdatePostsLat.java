@@ -20,10 +20,7 @@ public class UpdatePostsLat {
 
     private static UpdatePosts.OnUpdatePostsCompleted listener;
 
-    //private static final int times = 26;
-    //private static long[] starttime = new long[times];
-
-    public static void run(final Context context, UpdatePosts.OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int max_count, Order order, boolean resetUserCache) {
+    public static void run(final Context context, UpdatePosts.OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int max_count, final Order order, boolean resetUserCache) {
 
         LastRefresh.now(context);
 
@@ -39,17 +36,12 @@ public class UpdatePostsLat {
         params.put("order", order.ordinal());
         params.put("resetUserCache", resetUserCache);
 
-        //starttime[i] = System.currentTimeMillis();
-
-        //final int finalI = i;
         ParseCloud.callFunctionInBackground("UpdatePostsLat", params, new FunctionCallback<HashMap<String, ArrayList<ParseObject>>>() {
             public void done(HashMap<String, ArrayList<ParseObject>> result, ParseException e) {
-                //Log.e("TIME", "Request " + finalI + ": " + (System.currentTimeMillis() - starttime[finalI]));
                 if (e == null) {
                     UpdatePostsLat.listener.onUpdatePostsCompleted(result);
                 } else {
                     UpdatePostsLat.listener.onUpdatePostsFailed(e.getMessage());
-                    //Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });

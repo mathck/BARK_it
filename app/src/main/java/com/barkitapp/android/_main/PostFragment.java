@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.barkitapp.android.events.InitialPostsReceivedEvent;
-import com.barkitapp.android.events.MasterListUpdatedEvent;
+import com.barkitapp.android.events.MasterListUpdated;
 import com.barkitapp.android.events.RequestUpdatePostsEvent;
 import com.barkitapp.android.events.UpdateListItemEvent;
 import com.barkitapp.android.R;
@@ -229,29 +229,27 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
         }
     }
 
-    public void onEvent(InitialPostsReceivedEvent event) {
-        UpdateList();
+    public void onEvent(MasterListUpdated event) {
 
-        if(MasterList.GetMasterList(Order.UP_VOTES).isEmpty()) {
-            if(this instanceof HotFragment) {
-                onRefresh();
-            }
-        }
-    }
-
-    public void onEvent(MasterListUpdatedEvent event) {
-        UpdateList();
-
-        if(MasterList.GetMasterList(Order.UP_VOTES).isEmpty()) {
-            if(this instanceof HotFragment) {
-                onRefresh();
-            }
-        }
-
-        if(MasterList.GetMasterList(Order.TIME).isEmpty()) {
+        if(event.getOrder().equals(Order.TIME)) {
             if(this instanceof NewFragment) {
-                onRefresh();
+                UpdateList();
             }
+        }
+
+        if(event.getOrder().equals(Order.UP_VOTES)) {
+            if(this instanceof HotFragment) {
+                UpdateList();
+            }
+        }
+
+        List<Post> _hot = MasterList.GetMasterListPost(Order.UP_VOTES);
+        List<Post> _new = MasterList.GetMasterListPost(Order.TIME);
+
+        if(_hot.isEmpty() && this instanceof HotFragment) {
+            onRefresh();
+        } else if(_new.isEmpty() && this instanceof NewFragment) {
+            onRefresh();
         }
     }
 
@@ -297,10 +295,10 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
 
-        if(getList().isEmpty()) {
-            LoadNewBarks();
-            return;
-        }
+//        if(getList().isEmpty()) {
+//            LoadNewBarks();
+//            return;
+//        }
 
         Coordinates location = LocationService.getLocation(getActivity());
 

@@ -40,7 +40,6 @@ import io.nlopez.smartlocation.SmartLocation;
 
 public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsCompleted {
 
-    private ImageView mLogo;
     //private TextView mSpeech;
 
     @Override
@@ -48,7 +47,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        mLogo = ((ImageView) findViewById(R.id.imgLogo));
+        //ImageView logo = ((ImageView) findViewById(R.id.imgLogo));
         //mSpeech = (TextView) findViewById(R.id.speech);
 
         // random speech bubble for the dog
@@ -125,8 +124,6 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
             }
         }
 
-        //startTime = System.currentTimeMillis();
-
         // close spalsh screen after some time
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -176,12 +173,8 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         //}
     }
 
-    //long startTime;
-
     @Override
     public void onUpdatePostsCompleted(HashMap<String, ArrayList<ParseObject>> result) {
-        //long difference = System.currentTimeMillis() - startTime;
-        //Toast.makeText(this, difference + "ms", Toast.LENGTH_LONG).show();
         MasterList.StoreMasterList(this, result, Order.TIME);
     }
 

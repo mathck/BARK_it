@@ -5,7 +5,6 @@ import android.location.Location;
 import android.widget.Toast;
 
 import com.barkitapp.android._core.objects.Coordinates;
-import com.barkitapp.android.events.MasterListUpdatedEvent;
 import com.barkitapp.android.events.RequestUpdatePostsEvent;
 import com.barkitapp.android._core.services.InternalAppData;
 import com.barkitapp.android._core.services.LocationService;
@@ -92,7 +91,6 @@ public class Setup extends Application implements OnLocationUpdatedListener, Upd
     @Override
     public void onUpdatePostsCompleted(HashMap<String, ArrayList<ParseObject>> result) {
         MasterList.StoreMasterList(this, result, Order.TIME);
-        EventBus.getDefault().post(new MasterListUpdatedEvent());
     }
 
     @Override

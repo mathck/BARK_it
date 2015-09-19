@@ -28,6 +28,19 @@ public class LocationService {
         return new Coordinates(Double.parseDouble(latitude), Double.parseDouble(longitude), date);
     }
 
+    public static Coordinates getRealLocation(Context context) {
+
+        String latitude = InternalAppData.getString(context, SharedPrefKeys.LOCATION_LATITUDE);
+        String longitude = InternalAppData.getString(context, SharedPrefKeys.LOCATION_LONGITUDE);
+
+        if(latitude == null || longitude == null || latitude.isEmpty() || longitude.isEmpty())
+            return null;
+
+        Date date = new Date(InternalAppData.getLongTime(context, SharedPrefKeys.LOCATION_DATE));
+
+        return new Coordinates(Double.parseDouble(latitude), Double.parseDouble(longitude), date);
+    }
+
     public static void storeLocation(Context context, Location location) {
         InternalAppData.Store(context, SharedPrefKeys.LOCATION_LATITUDE, Double.valueOf(location.getLatitude()).toString());
         InternalAppData.Store(context, SharedPrefKeys.LOCATION_LONGITUDE, Double.valueOf(location.getLongitude()).toString());

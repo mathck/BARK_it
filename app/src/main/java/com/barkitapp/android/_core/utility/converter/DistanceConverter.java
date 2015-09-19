@@ -15,7 +15,7 @@ public class DistanceConverter {
      */
     public static String GetDistanceInKm(Context context, double latitude, double longitude) {
         try {
-            Coordinates current_location = LocationService.getLocation(context);
+            Coordinates current_location = LocationService.getRealLocation(context);
 
             if(current_location == null)
                 return "-";
