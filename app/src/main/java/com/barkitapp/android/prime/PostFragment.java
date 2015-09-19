@@ -70,7 +70,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
         setRefreshing(true);
 
-        setupRecyclerView((EmptyRecyclerView) mSwipeLayout.findViewById(R.id.recyclerview));
+        setupRecyclerView((RecyclerView) mSwipeLayout.findViewById(R.id.recyclerview));
         return mSwipeLayout;
     }
 
@@ -78,7 +78,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     LinearLayoutManager mLayoutManager;
 
-    private void setupRecyclerView(EmptyRecyclerView recyclerView) {
+    private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         PostRecyclerViewAdapter adapter = new PostRecyclerViewAdapter(getActivity(), getList(), getOrder());
         recyclerView.setAdapter(mAdapter = adapter);
@@ -106,7 +106,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
         });
 
         // set empty view
-        recyclerView.setEmptyView(getActivity().getLayoutInflater().inflate(R.layout.main_bark_list_no_barks, null));
+        //recyclerView.setEmptyView(getActivity().getLayoutInflater().inflate(R.layout.main_bark_list_no_barks, null));
     }
 
     private void LoadNewBarks() {

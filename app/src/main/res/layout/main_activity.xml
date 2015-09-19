@@ -74,11 +74,12 @@
                 </EditText>
                 <ImageView
                     android:id="@+id/picture"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:padding="10dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_photo_camera_black_48dp"
-                    android:layout_marginRight="14dp"
+                    android:layout_marginRight="10dp"
                     android:layout_centerVertical="true"
                     android:tint="@color/secondary_text"
                     android:layout_toLeftOf="@id/fab" />
