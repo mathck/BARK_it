@@ -9,7 +9,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barkitapp.android.Messages.UserIdRecievedEvent;
@@ -22,7 +21,6 @@ import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Connectivity;
 import com.barkitapp.android.core.utility.Constants;
-import com.barkitapp.android.core.utility.RandomBarkGenerator;
 import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.CreateUser;
@@ -30,8 +28,6 @@ import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.barkitapp.android.parse.functions.UpdatePostsLat;
 import com.barkitapp.android.prime.BarkitAppIntro;
 import com.barkitapp.android.prime.MainActivity;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseInstallation;
 
@@ -49,7 +45,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash_activity);
+        setContentView(R.layout.activity_splash);
 
         mLogo = ((ImageView) findViewById(R.id.imgLogo));
         //mSpeech = (TextView) findViewById(R.id.speech);

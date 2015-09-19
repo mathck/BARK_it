@@ -36,7 +36,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.places_change);
+        setContentView(R.layout.activity_places_change);
 
         //mClient = new GooglePlaces("AIzaSyCY9uZjMyBhr8ABjsy6NIurVoCu1A-nqbM");
 
@@ -76,7 +76,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //ArrayAdapterSearchView searchView = (ArrayAdapterSearchView) searchItem.getActionView();
         searchView = (ArrayAdapterSearchView) menu.findItem(R.id.action_search).getActionView();
 
-        searchView.setAdapter(new ArrayAdapter<String>(this, R.layout.places_auto_complete_list_item, new ArrayList<String>()));
+        searchView.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_places_auto_complete, new ArrayList<String>()));
 
         searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -12,7 +12,8 @@
         android:scaleType="fitXY"
         android:layout_centerVertical="true"
         android:tint="@color/orange_500"
-        android:src="@drawable/ic_star_black_48dp" />
+        android:src="@drawable/ic_star_black_48dp"
+        android:contentDescription="@string/star" />
 
     <TextView
         android:id="@+id/text1"

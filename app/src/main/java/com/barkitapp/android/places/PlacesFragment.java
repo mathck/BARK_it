@@ -2,7 +2,6 @@ package com.barkitapp.android.places;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.MasterList;
@@ -32,8 +30,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
-
 public class PlacesFragment extends Fragment {
 
     public PlacesFragment() {
@@ -44,7 +40,7 @@ public class PlacesFragment extends Fragment {
 
         mPlaces = new ArrayList<>();
 
-        View fragmentView = inflater.inflate(R.layout.places_fragment, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_places, container, false);
 
         final RecyclerView featuredList = (RecyclerView) fragmentView.findViewById(R.id.featuredList);
 
@@ -160,7 +156,7 @@ public class PlacesFragment extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.places_list_item, parent, false);
+                    .inflate(R.layout.list_item_places_featured, parent, false);
             view.setBackgroundResource(mBackground);
             return new ViewHolder(view);
         }

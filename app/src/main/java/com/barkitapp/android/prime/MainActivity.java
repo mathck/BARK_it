@@ -2,7 +2,6 @@ package com.barkitapp.android.prime;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -35,7 +34,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barkitapp.android.BuildConfig;
-import com.barkitapp.android.Messages.EventMessage;
 import com.barkitapp.android.Messages.ForceOnResume;
 import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.R;
@@ -151,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity_main);
 
         // Obtain the shared Tracker instance.
         Setup application = (Setup) getApplication();

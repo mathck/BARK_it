@@ -220,7 +220,7 @@
                             android:lines="1"
                             android:singleLine="true"
                             android:imeOptions="actionSend"
-                            android:inputType="text"
+                            android:inputType="textCapSentences"
                             android:textSize="18sp"
                             android:background="@null"
                             android:textCursorDrawable="@drawable/edit_text"

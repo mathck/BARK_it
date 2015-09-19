@@ -4,16 +4,10 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,13 +16,10 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +35,6 @@ import com.barkitapp.android.core.services.UserId;
 import com.barkitapp.android.core.utility.Constants;
 import com.barkitapp.android.core.utility.DistanceConverter;
 import com.barkitapp.android.core.utility.TimeConverter;
-import com.barkitapp.android.notification.MyPushBroadcastReciever;
 import com.barkitapp.android.parse.converter.NotificationConverter;
 import com.barkitapp.android.parse.enums.ContentType;
 import com.barkitapp.android.parse.functions.Flag;
@@ -56,7 +46,6 @@ import com.barkitapp.android.prime.MainActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.parse.ParseGeoPoint;
 
 import de.greenrobot.event.EventBus;
@@ -229,7 +218,7 @@ public class BarkDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mPostObjectId = intent.getStringExtra(EXTRA_POST);
-        setContentView(R.layout.bark_detail_activity);
+        setContentView(R.layout.activity_bark_detail);
         mPost = MasterList.GetPostPost(mPostObjectId);
 
         if(mPostObjectId == null || mPostObjectId.equals("") || mPost == null) {

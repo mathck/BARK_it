@@ -3,7 +3,6 @@ package com.barkitapp.android.prime;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.annotation.UiThread;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,7 +34,6 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.pnikosis.materialishprogress.ProgressWheel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -108,14 +105,14 @@ public class PostRecyclerViewAdapter
         switch (MediaType.values()[viewType]) {
             case WITHOUT:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.main_bark_list_item, parent, false);
+                        .inflate(R.layout.list_item_bark, parent, false);
                 view.setBackgroundResource(mBackground);
 
                 viewHolder = new PostRecyclerViewAdapter.ViewHolder(view);
                 break;
             case PICTURE:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.main_bark_list_item_picture, parent, false);
+                        .inflate(R.layout.list_item_bark_picture, parent, false);
                 view.setBackgroundResource(mBackground);
 
                 viewHolder = new PostRecyclerViewAdapter.ViewHolder(view);

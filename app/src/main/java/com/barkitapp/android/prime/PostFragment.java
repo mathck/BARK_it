@@ -12,31 +12,24 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.barkitapp.android.Messages.InitialPostsReceivedEvent;
 import com.barkitapp.android.Messages.MasterListUpdatedEvent;
 import com.barkitapp.android.Messages.RequestUpdatePostsEvent;
 import com.barkitapp.android.Messages.UpdateListItemEvent;
 import com.barkitapp.android.R;
-import com.barkitapp.android.core.custom_layout.EmptyRecyclerView;
 import com.barkitapp.android.core.objects.Coordinates;
 import com.barkitapp.android.core.services.InternalAppData;
 import com.barkitapp.android.core.services.LocationService;
 import com.barkitapp.android.core.services.MasterList;
 import com.barkitapp.android.core.services.UserId;
-import com.barkitapp.android.core.utility.Connectivity;
 import com.barkitapp.android.core.utility.Constants;
-import com.barkitapp.android.core.utility.LastRefresh;
 import com.barkitapp.android.core.utility.SharedPrefKeys;
 import com.barkitapp.android.parse.enums.Order;
 import com.barkitapp.android.parse.functions.UpdatePosts;
 import com.barkitapp.android.parse.functions.UpdatePostsLat;
 import com.barkitapp.android.parse.objects.Post;
-import com.parse.GetCallback;
-import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +45,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mSwipeLayout = (SwipeRefreshLayout) inflater.inflate(
-                R.layout.main_bark_list_fragment, container, false);
+                R.layout.fragment_list_bark, container, false);
 
         mSwipeLayout.setColorSchemeResources(
                 R.color.accent_dark,
@@ -106,7 +99,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
         });
 
         // set empty view
-        //recyclerView.setEmptyView(getActivity().getLayoutInflater().inflate(R.layout.main_bark_list_no_barks, null));
+        //recyclerView.setEmptyView(getActivity().getLayoutInflater().inflate(R.layout.empty_info, null));
     }
 
     private void LoadNewBarks() {

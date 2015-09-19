@@ -42,5 +42,6 @@
     <string name="title_activity_fullscreen_picture">FullscreenPictureActivity</string>
   <string name="restore_location">Restore Location</string>
   <string name="open_picture">Open Picture</string>
+  <string name="star">Star</string>
 
 </resources>

@@ -5,16 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
-import android.graphics.Matrix;
 import android.hardware.Camera;
-import android.media.ExifInterface;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -24,11 +19,7 @@ import com.barkitapp.android.core.services.MediaFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
@@ -93,7 +84,7 @@ public class BarkitCamera extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.camera);
+        setContentView(R.layout.activity_camera);
 
         //setUpCamera();
     }

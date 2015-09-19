@@ -65,7 +65,7 @@
                     android:lines="1"
                     android:singleLine="true"
                     android:imeOptions="actionSend"
-                    android:inputType="text"
+                    android:inputType="textCapSentences"
                     android:textSize="18sp"
                     android:background="@null"
                     android:textCursorDrawable="@drawable/edit_text"
@@ -123,7 +123,7 @@
         android:layout_width="wrap_content"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/main_nav_header"
+        app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/drawer_view"/>
 
 </android.support.v4.widget.DrawerLayout>

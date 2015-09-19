@@ -1,15 +1,10 @@
 package com.barkitapp.android.places;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.barkitapp.android.R;
 
@@ -23,7 +18,7 @@ public class PlacesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.places_activity);
+        setContentView(R.layout.activity_places);
 
         mContext = this;
 
