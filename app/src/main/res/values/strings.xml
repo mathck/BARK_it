@@ -43,5 +43,12 @@
   <string name="restore_location">Restore Location</string>
   <string name="open_picture">Open Picture</string>
   <string name="star">Star</string>
+  <string name="location_not_found">Your location could no be found. Please try again later.</string>
+  <string name="failed_to_load_replies">Failed to load replies, please try again later.</string>
+  <string name="please_wait_try_again">Please wait a few seconds to reply again</string>
+  <string name="inappropriate_bark">Inappropriate BARK</string>
+  <string name="are_you_sure_flag">Are you sure you want to flag this BARK?</string>
+  <string name="inappropriate_reply">Inappropriate Reply</string>
+  <string name="are_you_sure_flag_reply">Are you sure you want to flag this reply?</string>
 
 </resources>

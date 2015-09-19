@@ -34,7 +34,7 @@
     <uses-permission android:name="com.barkitapp.android.permission.C2D_MESSAGE" />
 
     <application
-        android:name=".base.Setup"
+        android:name=".startup.Setup"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -90,7 +90,7 @@
             android:resource="@drawable/ic_bark" />
 
         <activity
-            android:name=".base.SplashScreen"
+            android:name=".startup.SplashScreen"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SplashTheme" >
             <intent-filter>
@@ -101,7 +101,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".prime.MainActivity"
+            android:name="._main.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" >
             <intent-filter>
@@ -110,12 +110,12 @@
         </activity>
         <activity
             android:name=".bark_detail.BarkDetailActivity"
-            android:parentActivityName=".prime.MainActivity"
+            android:parentActivityName="._main.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".prime.MainActivity" />
+                android:value="._main.MainActivity" />
         </activity>
 
         <!--
@@ -138,62 +138,62 @@
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".prime.MainActivity" />
+                android:value="._main.MainActivity" />
         </activity>
         <activity
             android:name=".pictures.PictureActivity"
             android:label="Picture View"
-            android:parentActivityName=".prime.MainActivity"
+            android:parentActivityName="._main.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".prime.MainActivity" />
+                android:value="._main.MainActivity" />
         </activity>
         <activity
             android:name=".pictures.BarkitCamera"
             android:label="Camera View"
-            android:parentActivityName=".prime.MainActivity"
+            android:parentActivityName="._main.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".prime.MainActivity" />
+                android:value="._main.MainActivity" />
         </activity>
         <activity
             android:name=".places.PlacesActivity"
             android:label="@string/title_activity_places"
-            android:parentActivityName=".prime.MainActivity"
+            android:parentActivityName="._main.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".prime.MainActivity" />
+                android:value="._main.MainActivity" />
         </activity>
         <activity
-            android:name=".prime.ReportBugActivity"
+            android:name=".activities.ReportBugActivity"
             android:label="@string/report_error"
-            android:parentActivityName=".prime.MainActivity"
+            android:parentActivityName="._main.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".prime.MainActivity" />
+                android:value="._main.MainActivity" />
         </activity>
         <activity
-            android:name=".prime.FeedbackActivity"
+            android:name=".activities.FeedbackActivity"
             android:label="@string/your_opinion_counts"
-            android:parentActivityName=".prime.MainActivity" >
+            android:parentActivityName="._main.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".prime.MainActivity" />
+                android:value="._main.MainActivity" />
         </activity>
         <activity
-            android:name=".prime.ProfileActivity"
+            android:name=".activities.ProfileActivity"
             android:label="@string/profile"
-            android:parentActivityName=".prime.MainActivity"
+            android:parentActivityName="._main.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".prime.MainActivity" />
+                android:value="._main.MainActivity" />
         </activity>
 
         <service android:name="com.parse.PushService" />
@@ -205,7 +205,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".notification.MyPushBroadcastReciever"
+            android:name=".notification.BarkPushBroadcastReceiver"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
@@ -226,23 +226,23 @@
         </receiver>
 
         <activity
-            android:name=".prime.BarkitAppIntro"
+            android:name=".startup.BarkitAppIntro"
             android:label="App Intro"
             android:screenOrientation="portrait"
-            android:parentActivityName=".prime.MainActivity" >
+            android:parentActivityName="._main.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.barkitapp.android.prime.MainActivity" />
+                android:value="com.barkitapp.android._main.MainActivity" />
         </activity>
 
         <activity
-            android:name=".prime.MyBarksActivity"
+            android:name=".activities.MyBarksActivity"
             android:label="@string/title_activity_my_barks"
             android:screenOrientation="portrait"
-            android:parentActivityName=".prime.MainActivity" >
+            android:parentActivityName="._main.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.barkitapp.android.prime.MainActivity" />
+                android:value="com.barkitapp.android._main.MainActivity" />
         </activity>
         <activity
             android:name=".pictures.FullscreenPictureActivity"

@@ -11,20 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.barkitapp.android.R;
-import com.barkitapp.android.core.objects.Coordinates;
-import com.barkitapp.android.core.services.LocationService;
-import com.barkitapp.android.core.services.MasterList;
-import com.barkitapp.android.core.services.UserId;
-import com.barkitapp.android.core.utility.DistanceConverter;
-import com.barkitapp.android.core.utility.TimeConverter;
-import com.barkitapp.android.parse.enums.ContentType;
-import com.barkitapp.android.parse.enums.VoteType;
-import com.barkitapp.android.parse.functions.Flag;
-import com.barkitapp.android.parse.functions.PostVote;
-import com.barkitapp.android.parse.objects.Post;
-import com.barkitapp.android.parse.objects.Reply;
+import com.barkitapp.android._core.objects.Coordinates;
+import com.barkitapp.android._core.services.LocationService;
+import com.barkitapp.android._core.services.MasterList;
+import com.barkitapp.android._core.services.UserId;
+import com.barkitapp.android._core.utility.converter.DistanceConverter;
+import com.barkitapp.android._core.utility.converter.TimeConverter;
+import com.barkitapp.android.parse_backend.enums.ContentType;
+import com.barkitapp.android.parse_backend.enums.VoteType;
+import com.barkitapp.android.parse_backend.functions.Flag;
+import com.barkitapp.android.parse_backend.functions.PostVote;
+import com.barkitapp.android.parse_backend.objects.Post;
+import com.barkitapp.android.parse_backend.objects.Reply;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.parse.ParseGeoPoint;
@@ -178,9 +179,15 @@ public class ReplyRecyclerViewAdapter
             @Override
             public void onClick(View v) {
                 final Coordinates location = LocationService.getLocation(mContext);
+
+                if(location == null) {
+                    Toast.makeText(mContext, mContext.getString(R.string.please_wait_try_again), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 new AlertDialog.Builder(mContext)
-                        .setTitle("Inappropriate reply")
-                        .setMessage("Are you sure you want to flag this reply?")
+                        .setTitle(mContext.getString(R.string.inappropriate_reply))
+                        .setMessage(mContext.getString(R.string.are_you_sure_flag_reply))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Flag.run(mContext,

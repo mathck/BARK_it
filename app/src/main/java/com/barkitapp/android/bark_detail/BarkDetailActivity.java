@@ -23,26 +23,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.barkitapp.android.Messages.CollapseLayoutEvent;
-import com.barkitapp.android.Messages.RecievedPostForNotification;
-import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
+import com.barkitapp.android.events.CollapseLayoutEvent;
+import com.barkitapp.android.events.RecievedPostForNotification;
+import com.barkitapp.android.events.RequestUpdateRepliesEvent;
 import com.barkitapp.android.R;
-import com.barkitapp.android.base.Setup;
-import com.barkitapp.android.core.objects.Coordinates;
-import com.barkitapp.android.core.services.LocationService;
-import com.barkitapp.android.core.services.MasterList;
-import com.barkitapp.android.core.services.UserId;
-import com.barkitapp.android.core.utility.Constants;
-import com.barkitapp.android.core.utility.DistanceConverter;
-import com.barkitapp.android.core.utility.TimeConverter;
-import com.barkitapp.android.parse.converter.NotificationConverter;
-import com.barkitapp.android.parse.enums.ContentType;
-import com.barkitapp.android.parse.functions.Flag;
-import com.barkitapp.android.parse.functions.GetPostById;
-import com.barkitapp.android.parse.functions.PostReply;
-import com.barkitapp.android.parse.objects.Post;
+import com.barkitapp.android.startup.Setup;
+import com.barkitapp.android._core.objects.Coordinates;
+import com.barkitapp.android._core.services.LocationService;
+import com.barkitapp.android._core.services.MasterList;
+import com.barkitapp.android._core.services.UserId;
+import com.barkitapp.android._core.utility.Constants;
+import com.barkitapp.android._core.utility.converter.DistanceConverter;
+import com.barkitapp.android._core.utility.converter.TimeConverter;
+import com.barkitapp.android.parse_backend.converter.NotificationConverter;
+import com.barkitapp.android.parse_backend.enums.ContentType;
+import com.barkitapp.android.parse_backend.functions.Flag;
+import com.barkitapp.android.parse_backend.functions.GetPostById;
+import com.barkitapp.android.parse_backend.functions.PostReply;
+import com.barkitapp.android.parse_backend.objects.Post;
 import com.barkitapp.android.pictures.FullscreenPictureActivity;
-import com.barkitapp.android.prime.MainActivity;
+import com.barkitapp.android._main.MainActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -113,7 +113,7 @@ public class BarkDetailActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    performSend(chattext, listFragment);
+                    performSend(chattext);
                     return true;
                 }
                 return false;
@@ -124,14 +124,14 @@ public class BarkDetailActivity extends AppCompatActivity {
         answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                performSend(chattext, listFragment);
+                performSend(chattext);
             }
         });
 
         if(!mPost.getImage_url().isEmpty())
         {
             ImageView backdrop = (ImageView) findViewById(R.id.image);
-            View overlay = (View) findViewById(R.id.overlay);
+            View overlay = findViewById(R.id.overlay);
 
             overlay.setVisibility(View.VISIBLE);
 
@@ -270,7 +270,7 @@ public class BarkDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void performSend(EditText chattext, BarkReplyListFragment listFragment) {
+    private void performSend(EditText chattext) {
         String textToPost = chattext.getText().toString();
         if(textToPost.trim().isEmpty()) {
             return;
@@ -278,27 +278,30 @@ public class BarkDetailActivity extends AppCompatActivity {
 
         if(System.currentTimeMillis() - lastPostPerformed < Constants.REPLY_BLOCK)
         {
-            Toast.makeText(this, "Please wait a few seconds to reply again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.please_wait_try_again, Toast.LENGTH_SHORT).show();
             return;
         }
 
         Coordinates location = LocationService.getLocation(getApplicationContext());
 
-        PostReply.run(this, UserId.get(this),
-                mPost.getObjectId(),
-                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
-                textToPost,
-                0);
+        if(location != null) {
+            PostReply.run(this, UserId.get(this),
+                    mPost.getObjectId(),
+                    new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                    new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
+                    textToPost,
+                    0);
 
-        lastPostPerformed = System.currentTimeMillis();
+            lastPostPerformed = System.currentTimeMillis();
 
-        //listFragment.getRepliesFromParse();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(chattext.getWindowToken(), 0);
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(chattext.getWindowToken(), 0);
-
-        chattext.setText("");
+            chattext.setText("");
+        }
+        else {
+            Toast.makeText(this, R.string.location_not_found, Toast.LENGTH_LONG);
+        }
     }
 
     @Override
@@ -334,9 +337,15 @@ public class BarkDetailActivity extends AppCompatActivity {
 
             case R.id.action_flag:
                 final Coordinates location = LocationService.getLocation(this);
+
+                if(location == null) {
+                    Toast.makeText(this, R.string.please_wait_try_again, Toast.LENGTH_LONG).show();
+                    return true;
+                }
+
                 new AlertDialog.Builder(this)
-                        .setTitle("Inappropriate BARK")
-                        .setMessage("Are you sure you want to flag this BARK?")
+                        .setTitle(getString(R.string.inappropriate_bark))
+                        .setMessage(getString(R.string.are_you_sure_flag))
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Flag.run(getApplication(),

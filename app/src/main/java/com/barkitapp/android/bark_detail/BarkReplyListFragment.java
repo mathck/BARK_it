@@ -16,16 +16,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.barkitapp.android.Messages.CollapseLayoutEvent;
-import com.barkitapp.android.Messages.RequestUpdateRepliesEvent;
+import com.barkitapp.android.events.CollapseLayoutEvent;
+import com.barkitapp.android.events.RequestUpdateRepliesEvent;
 import com.barkitapp.android.R;
-import com.barkitapp.android.core.objects.Coordinates;
-import com.barkitapp.android.core.services.LocationService;
-import com.barkitapp.android.core.services.UserId;
-import com.barkitapp.android.parse.converter.ReplyConverter;
-import com.barkitapp.android.parse.functions.UpdateReplies;
-import com.barkitapp.android.parse.objects.Reply;
+import com.barkitapp.android._core.objects.Coordinates;
+import com.barkitapp.android._core.services.LocationService;
+import com.barkitapp.android._core.services.UserId;
+import com.barkitapp.android.parse_backend.converter.ReplyConverter;
+import com.barkitapp.android.parse_backend.functions.UpdateReplies;
+import com.barkitapp.android.parse_backend.objects.Reply;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,7 +92,8 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
 
         BarkDetailActivity activity = (BarkDetailActivity) getActivity();
 
-        if(activity == null || activity.mPostObjectId == null) {
+        if(activity == null || activity.mPostObjectId == null || loc == null) {
+            Toast.makeText(getActivity(), R.string.failed_to_load_replies, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -113,7 +115,7 @@ public class BarkReplyListFragment extends Fragment implements UpdateReplies.OnU
     }
 
     @Override
-    public void onUpdateRepliesCompleted(HashMap<String, Object> result) {
+    public void onUpdateRepliesCompleted(HashMap<String, ArrayList<ParseObject>> result) {
         mAdapter.getValues().clear();
         mAdapter.setValues(ReplyConverter.run(getActivity(), result));
 

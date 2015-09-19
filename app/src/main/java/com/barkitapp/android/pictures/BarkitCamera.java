@@ -14,8 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.barkitapp.android.R;
-import com.barkitapp.android.core.services.BitmapOperations;
-import com.barkitapp.android.core.services.MediaFile;
+import com.barkitapp.android._core.services.BitmapOperations;
+import com.barkitapp.android._core.services.MediaFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

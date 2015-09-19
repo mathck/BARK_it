@@ -5,15 +5,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.barkitapp.android.R;
-import com.barkitapp.android.core.objects.Coordinates;
-import com.barkitapp.android.core.services.LocationService;
-import com.barkitapp.android.core.utility.Constants;
+import com.barkitapp.android._core.objects.Coordinates;
+import com.barkitapp.android._core.services.LocationService;
+import com.barkitapp.android._core.utility.Constants;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -42,8 +44,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Change Place");
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Change Place");
+        }
 
         if(mMarker != null)
             mMarker.remove();
@@ -163,6 +170,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(mMap != null)
         {
             Coordinates location = LocationService.getLocation(this);
+
+            if(location == null) {
+                Toast.makeText(this, R.string.location_not_found, Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
 
             LatLng current_place = new LatLng(location.getLatitude(), location.getLongitude());
 

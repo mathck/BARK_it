@@ -16,10 +16,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.barkitapp.android.R;
-import com.barkitapp.android.core.services.InternalAppData;
-import com.barkitapp.android.core.services.MasterList;
-import com.barkitapp.android.core.utility.SharedPrefKeys;
-import com.barkitapp.android.parse.objects.FeaturedLocation;
+import com.barkitapp.android._core.services.InternalAppData;
+import com.barkitapp.android._core.services.MasterList;
+import com.barkitapp.android._core.utility.SharedPrefKeys;
+import com.barkitapp.android.parse_backend.objects.FeaturedLocation;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

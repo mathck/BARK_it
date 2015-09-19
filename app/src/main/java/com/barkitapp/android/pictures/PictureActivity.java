@@ -15,11 +15,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.barkitapp.android.R;
-import com.barkitapp.android.core.objects.Coordinates;
-import com.barkitapp.android.core.services.LocationService;
-import com.barkitapp.android.core.services.UserId;
-import com.barkitapp.android.parse.enums.MediaType;
-import com.barkitapp.android.parse.functions.PostPost;
+import com.barkitapp.android._core.objects.Coordinates;
+import com.barkitapp.android._core.services.LocationService;
+import com.barkitapp.android._core.services.UserId;
+import com.barkitapp.android.parse_backend.enums.MediaType;
+import com.barkitapp.android.parse_backend.functions.PostPost;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -90,7 +90,7 @@ public class PictureActivity extends Activity {
         @Override
         protected String doInBackground(final String... params) {
 
-            Bitmap bitmap = null;
+            Bitmap bitmap;
             //Bitmap thumbImage = null;
 
             try {
