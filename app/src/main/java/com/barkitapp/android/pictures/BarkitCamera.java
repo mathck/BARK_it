@@ -101,7 +101,7 @@ public class BarkitCamera extends Activity {
         try {
             camera = Camera.open();
         } catch (Exception e) {
-            Toast.makeText(this, "Sadly no camera was detected on your phone", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_camera_on_phone, Toast.LENGTH_LONG).show();
         }
         return camera;
     }
@@ -109,7 +109,7 @@ public class BarkitCamera extends Activity {
     Camera.PictureCallback mPicture = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-            File pictureFile = MediaFile.getOutputMediaFile();
+            File pictureFile = MediaFile.getOutputMediaFile(getApplicationContext());
             if (pictureFile == null) {
                 return;
             }
@@ -142,7 +142,7 @@ public class BarkitCamera extends Activity {
                 finish();
 
             } catch (Exception e) {
-                Toast.makeText(getApplication(), "Picture failed.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplication(), R.string.picture_failed, Toast.LENGTH_LONG).show();
                 finish();
             }
         }

@@ -79,10 +79,10 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
 
         // Notify about location info
         if(!SmartLocation.with(this).location().state().locationServicesEnabled())
-            Toast.makeText(this, "Please enable Location Services on your device.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.enable_location_services, Toast.LENGTH_LONG).show();
 
         if(!SmartLocation.with(this).location().state().isGpsAvailable())
-            Toast.makeText(this, "Please enable GPS on your device to improve your BARK it experience.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.enable_gps_better_barkit_experience, Toast.LENGTH_LONG).show();
 
         /*
         for EMULATOR
@@ -104,7 +104,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         }
 
         if(!Connectivity.isOnline(this)) {
-            Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_LONG).show();
         }
         else {
             if(lastKnownLocation != null)
@@ -119,7 +119,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
                         true);
             }
             else {
-                Toast.makeText(this, "Loading GPS data ...", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.loading_gps_data, Toast.LENGTH_LONG).show();
                 InternalAppData.Store(this, SharedPrefKeys.WAITING_FOR_GPS, true);
             }
         }

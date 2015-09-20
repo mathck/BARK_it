@@ -82,7 +82,7 @@
                 android:textSize="14sp"
                 android:layout_marginBottom="10dp"
                 android:lineSpacingExtra="3dp"
-                android:text="asdasd" />
+                android:text="@string/this_is_a_bark" />
 
             <RelativeLayout
                 android:layout_below="@id/text1"

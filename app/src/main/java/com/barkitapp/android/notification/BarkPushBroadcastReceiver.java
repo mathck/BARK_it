@@ -103,7 +103,7 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-            builder.setContentTitle("Bark Of The Day");
+            builder.setContentTitle(context.getString(R.string.bark_of_the_day));
             builder.setContentText(text);
             builder.setSmallIcon(R.drawable.ic_bark);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_hot_notification);
@@ -146,11 +146,11 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
             try {
                 if(ContentType.REPLY.ordinal() == Integer.parseInt(content_type)) {
                     post_id = data.getString("parent_id");
-                    text = "Your reply has " + vote_count + " points";
+                    text = context.getString(R.string.notification_your_reply_has) + " " + vote_count + " " + context.getString(R.string.points);
                 }
                 else if (ContentType.POST.ordinal() == Integer.parseInt(content_type)) {
                     post_id = data.getString("content_id");
-                    text = "Your bark has " + vote_count + " points";
+                    text = context.getString(R.string.notification_your_bark_has) + " " + vote_count + " " + context.getString(R.string.points);
                 }
                 else {
                     return;
@@ -170,7 +170,7 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
-            builder.setContentTitle(vote_count + " points");
+            builder.setContentTitle(vote_count + " " + context.getString(R.string.points));
             builder.setContentText(text);
             builder.setSmallIcon(R.drawable.ic_bark);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_up_notification);
@@ -236,10 +236,10 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
                 builder.setStyle(inboxStyle);
 
                 // Sets a title for the Inbox style big view
-                inboxStyle.setBigContentTitle(current.size() + " new replies");
+                inboxStyle.setBigContentTitle(current.size() + " " + context.getString(R.string.new_replies));
             }
 
-            builder.setContentTitle("Bark reply");
+            builder.setContentTitle(context.getString(R.string.bark_reply));
             builder.setContentText(text);
             builder.setSmallIcon(R.drawable.ic_bark);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_chat_notification);

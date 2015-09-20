@@ -43,7 +43,7 @@
         android:id="@+id/featuredTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Featured Locations"
+        android:text="@string/featured_locations"
         android:textSize="22sp"
         android:layout_marginTop="18dp"
         android:layout_marginLeft="18dp"

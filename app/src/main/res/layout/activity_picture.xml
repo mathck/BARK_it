@@ -8,7 +8,6 @@
 
     <ImageView
         android:id="@+id/image"
-        android:contentDescription="Your taken picture"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,7 +38,7 @@
             android:textSize="18sp"
             android:background="@null"
             android:textCursorDrawable="@drawable/edit_text"
-            android:hint="Text ..." >
+            android:hint="@string/text" >
             <requestFocus />
         </EditText>
     </RelativeLayout>

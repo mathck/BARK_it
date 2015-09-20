@@ -29,7 +29,7 @@ public class PlacesActivity extends AppCompatActivity {
 
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Places");
+            actionBar.setTitle(R.string.places);
         }
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

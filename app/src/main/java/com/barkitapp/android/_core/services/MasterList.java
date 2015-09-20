@@ -6,7 +6,6 @@ import android.widget.Toast;
 import com.barkitapp.android.events.MasterListUpdated;
 import com.barkitapp.android.parse_backend.enums.Order;
 import com.barkitapp.android.parse_backend.objects.Post;
-import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;

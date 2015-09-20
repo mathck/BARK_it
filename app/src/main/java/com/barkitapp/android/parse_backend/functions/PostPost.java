@@ -3,6 +3,7 @@ package com.barkitapp.android.parse_backend.functions;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.barkitapp.android.R;
 import com.barkitapp.android.events.RequestUpdatePostsEvent;
 import com.barkitapp.android.parse_backend.enums.MediaType;
 import com.parse.FunctionCallback;
@@ -52,7 +53,7 @@ public class PostPost {
         ParseCloud.callFunctionInBackground("PostPost", params, new FunctionCallback<JSONObject>() {
             public void done(JSONObject result, ParseException e) {
                 if (e == null) {
-                    Toast.makeText(context, "Successfully submitted picture, it will appear shortly", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, R.string.submitted_picture_awaiting_approval, Toast.LENGTH_LONG).show();
                 }
                 else {
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();

@@ -44,7 +44,7 @@
                         android:lines="1"
                         android:textSize="24sp"
                         android:textColor="@android:color/white"
-                        android:text="Loading Invited Friends..." />
+                        android:text="@string/loading_invited_friends" />
                     <TextView
                         android:id="@+id/friend_count"
                         android:layout_alignParentBottom="true"
@@ -85,7 +85,7 @@
                 android:layout_centerHorizontal="true"
                 android:textSize="24sp"
                 android:layout_margin="24dp"
-                android:text="Share your invite code" />
+                android:text="@string/share_your_invite_code" />
             <EditText
                 android:id="@+id/code"
                 android:layout_below="@id/share_code"
@@ -105,7 +105,7 @@
                 android:layout_centerHorizontal="true"
                 android:textSize="24sp"
                 android:layout_margin="24dp"
-                android:text="Invite Friends and win awesome gifts" />
+                android:text="@string/invite_friends_win_gifts" />
         </RelativeLayout>
     </RelativeLayout>
 

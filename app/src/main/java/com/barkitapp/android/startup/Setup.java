@@ -4,6 +4,7 @@ import android.app.Application;
 import android.location.Location;
 import android.widget.Toast;
 
+import com.barkitapp.android.R;
 import com.barkitapp.android._core.objects.Coordinates;
 import com.barkitapp.android.events.RequestUpdatePostsEvent;
 import com.barkitapp.android._core.services.InternalAppData;
@@ -80,7 +81,7 @@ public class Setup extends Application implements OnLocationUpdatedListener, Upd
 
                 if(minutes > 5)
                 {
-                    Toast.makeText(this, "Reloading posts for new position", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.reloading_posts_for_new_position, Toast.LENGTH_LONG).show();
                 }
             }
         }

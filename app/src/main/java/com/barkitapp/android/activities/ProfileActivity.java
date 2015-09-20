@@ -48,10 +48,10 @@ public class ProfileActivity extends AppCompatActivity {
         query.getInBackground(friend_invite_code, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-                    invitedFriendstext.setText("Invited Friends");
+                    invitedFriendstext.setText(R.string.invited_friends);
                     friend_counter.setText(object.getInt("referred_friend_counter") + "");
                 } else {
-                    invitedFriendstext.setText("Try again later");
+                    invitedFriendstext.setText(R.string.try_again_later);
                     friend_counter.setText(":(");
                 }
             }
@@ -63,8 +63,8 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "I am using Barkit, check it out"); // todo replace link
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Download and enter my invite code at the start: " + friend_invite_code + "\n\n" + "http://barkitapp.com/");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.using_barkit_check_it_out)); // todo replace link
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.download_and_enter_my_invite_code) + friend_invite_code + "\n\n" + "http://barkitapp.com/");
                 startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
             }
         });

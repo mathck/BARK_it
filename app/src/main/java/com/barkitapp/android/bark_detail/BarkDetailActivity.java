@@ -226,7 +226,7 @@ public class BarkDetailActivity extends AppCompatActivity {
             mPostObjectId = intent.getStringExtra(EXTRA_POST_ID);
             if(mPostObjectId == null || mPostObjectId.equals(""))
             {
-                Toast.makeText(this, "Failed to load BARK", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.failed_to_load_bark, Toast.LENGTH_LONG).show();
                 finish();
                 return;
             }
@@ -330,8 +330,8 @@ public class BarkDetailActivity extends AppCompatActivity {
             case R.id.action_share:
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Check out this BARK"); // todo replace link
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mPost.getText() + "\n\n" + "Start barking http://barkitapp.com/");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.check_out_bark)); // todo replace link
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, mPost.getText() + "\n\n" + getString(R.string.start_barking) + " http://barkitapp.com/");
                 startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
                 return true;
 

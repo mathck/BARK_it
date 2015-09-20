@@ -105,7 +105,7 @@
                         android:lines="5"
                         android:textSize="20sp"
                         android:textColor="@android:color/white"
-                        android:text="Loading ..."/>
+                        android:text="@string/loading"/>
                     <!--
                     <TextView
                         android:id="@+id/vote_count"
@@ -224,7 +224,7 @@
                             android:textSize="18sp"
                             android:background="@null"
                             android:textCursorDrawable="@drawable/edit_text"
-                            android:hint="Bark now ..." >
+                            android:hint="@string/bark_now" >
                             <requestFocus />
                         </EditText>
                         <!--

@@ -55,7 +55,7 @@ public class MyBarksActivity extends AppCompatActivity {
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
-            actionBar.setTitle("My Barks");
+            actionBar.setTitle(R.string.my_barks);
         }
     }
 }

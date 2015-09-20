@@ -5,6 +5,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 
+import com.barkitapp.android.R;
 import com.barkitapp.android._core.objects.Coordinates;
 import com.barkitapp.android._core.utility.SharedPrefKeys;
 
@@ -69,7 +70,7 @@ public class LocationService {
             cityName = addresses.get(0).getLocality();
         }
         catch (Exception e) {
-            return "BARK it";
+            return context.getString(R.string.app_name);
         }
 
         return cityName;

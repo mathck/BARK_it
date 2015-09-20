@@ -69,7 +69,7 @@
                     android:textSize="18sp"
                     android:background="@null"
                     android:textCursorDrawable="@drawable/edit_text"
-                    android:hint="Bark now ..." >
+                    android:hint="@string/bark_now" >
                     <requestFocus />
                 </EditText>
                 <ImageView

@@ -78,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
     private String getCityName(boolean force) {
 
         if(!force && mCityName != null && !mCityName.isEmpty() && !mCityName.equals("null")) {
-            return " in " + mCityName;
+            return " " + getString(R.string.in_for_barks_in_location) + " " + mCityName;
         }
 
         String city = LocationService.getLocationCity(this, LocationService.getLocation(this));
         if(city != null && !city.isEmpty() && !city.equals("null")) {
             mCityName = city;
-            return " in " + city;
+            return " " + getString(R.string.in_for_barks_in_location) + " " + city;
         }
         else {
             return mCityName = " Barks";
@@ -249,13 +249,13 @@ public class MainActivity extends AppCompatActivity {
 
         if(System.currentTimeMillis() - lastPostPerformed < Constants.POST_BLOCK)
         {
-            Toast.makeText(this, "Please wait a few seconds to bark again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.please_wait_few_seconds, Toast.LENGTH_SHORT).show();
             return;
         }
 
         Coordinates location = LocationService.getLocation(getApplicationContext());
         if(location == null) {
-            Toast.makeText(this, "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_gps_plaease_enable_gps, Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if(mActionBar != null && mActionBar.getTitle() != null) {
-                    mActionBar.setTitle((position == 0 ? "New " : "Hot") + getCityName(false));
+                    mActionBar.setTitle((position == 0 ? getString(R.string.new_) : getString(R.string.hot)) + getCityName(false));
                 }
             }
 
@@ -417,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_friends:
                         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                         sharingIntent.setType("text/plain");
-                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "I am testing Bark it, check it out");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.testing_barkit));
                         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "http://barkitapp.com/");
                         startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
                         //Intent in = new Intent(mContext, ProfileActivity.class);

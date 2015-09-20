@@ -106,7 +106,7 @@ public class PictureActivity extends Activity {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(mContext, "Image could not be read.", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, R.string.image_could_not_be_read, Toast.LENGTH_LONG).show();
                 finish();
                 return "Error";
             }
@@ -122,7 +122,7 @@ public class PictureActivity extends Activity {
                     if (null == e) {
                         Coordinates location = LocationService.getLocation(getApplicationContext());
                         if (location == null) {
-                            Toast.makeText(mContext, "No GPS data. Please enable GPS.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext, mContext.getString(R.string.no_gps_plaease_enable_gps), Toast.LENGTH_LONG).show();
                             return;
                         }
 

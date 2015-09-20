@@ -49,7 +49,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Change Place");
+            actionBar.setTitle(R.string.change_place);
         }
 
         if(mMarker != null)
@@ -71,7 +71,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
 
-        Snackbar.make(findViewById(R.id.main_content), "Click on any place", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+        Snackbar.make(findViewById(R.id.main_content), getString(R.string.click_on_any_place), Snackbar.LENGTH_SHORT).setAction("Action", null).show();
     }
 /*
     @Override
@@ -203,7 +203,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mCircle.remove();
 
                 mMarker = mMap.addMarker(new MarkerOptions()
-                        .title("Selected Place")
+                        .title(getString(R.string.selected_place))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_white_48dp))
                         .position(point));
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.barkitapp.android.R;
 import com.barkitapp.android.parse_backend.enums.ContentType;
 import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
@@ -30,9 +31,9 @@ public class Flag {
                 }
                 else {
                     if(result)
-                        Toast.makeText(context, "Content flagged", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.content_flagged, Toast.LENGTH_LONG).show();
                     else
-                        Toast.makeText(context, "Already flagged", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.already_flagged, Toast.LENGTH_LONG).show();
                 }
             }
         });
