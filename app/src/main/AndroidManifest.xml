@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -228,18 +229,17 @@
         <activity
             android:name=".startup.BarkitAppIntro"
             android:label="App Intro"
-            android:screenOrientation="portrait"
-            android:parentActivityName="._main.MainActivity" >
+            android:parentActivityName="._main.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.barkitapp.android._main.MainActivity" />
         </activity>
-
         <activity
             android:name=".activities.MyBarksActivity"
             android:label="@string/title_activity_my_barks"
-            android:screenOrientation="portrait"
-            android:parentActivityName="._main.MainActivity" >
+            android:parentActivityName="._main.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.barkitapp.android._main.MainActivity" />
@@ -247,12 +247,20 @@
         <activity
             android:name=".pictures.FullscreenPictureActivity"
             android:label="@string/title_activity_fullscreen_picture"
-            android:theme="@style/Theme.FullscreenTheme"
+            android:parentActivityName=".bark_detail.BarkDetailActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".bark_detail.BarkDetailActivity" >
+            android:theme="@style/Theme.FullscreenTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.barkitapp.android.bark_detail.BarkDetailActivity" />
+        </activity>
+        <activity
+            android:name=".startup.InviteCodeRestriction"
+            android:label="@string/title_activity_invite_code_restriction"
+            android:parentActivityName=".startup.SplashScreen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.barkitapp.android.startup.SplashScreen" />
         </activity>
     </application>
 

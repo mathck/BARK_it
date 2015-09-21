@@ -60,6 +60,9 @@ dependencies {
     // progress bar
     compile 'com.pnikosis:materialish-progress:1.5'
 
+    // process button
+    compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
+
     // Parse
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
     compile 'com.android.support:design:22.2.1'

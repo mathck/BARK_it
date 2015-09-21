@@ -104,5 +104,11 @@
   <string name="loading_image">loading image ...</string>
   <string name="this_is_a_bark">This is a BARK</string>
   <string name="featured_place">Featured Place</string>
+  <string name="invite_code_screen_title">BARK it is a tight-knit community</string>
+  <string name="invite_code_screen_title_2">Are you fame enough to own a code?</string>
+    <string name="title_activity_invite_code_restriction">InviteCodeRestriction</string>
+  <string name="how_to_join_pack">How to join the pack?</string>
+  <string name="how_to_get_code">How to get a code</string>
+  <string name="enter_invite_code">Enter invite code</string>
 
 </resources>
