@@ -31,7 +31,7 @@
             android:scrollHorizontally="false"
             android:paddingRight="12dp"
             android:maxLength="140"
-            android:inputType="textShortMessage|textMultiLine"
+            android:inputType="textCapSentences|textShortMessage|textMultiLine"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:singleLine="true"

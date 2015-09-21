@@ -128,7 +128,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(SplashScreen.this, firstStart ? BarkitAppIntro.class : InviteCodeRestriction.class);
+                Intent i = new Intent(SplashScreen.this, firstStart ? BarkitAppIntro.class : MainActivity.class);
                 startActivity(i);
                 finish();
             }
