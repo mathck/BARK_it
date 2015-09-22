@@ -28,7 +28,7 @@ public class UpdatePostsLat {
         }
 
         if(order.equals(Order.MY_REPLIES)) {
-            GetPostsByUserId.run(context, listener, user_id);
+            GetRepliesByUserId.run(context, listener, user_id);
             return;
         }
 

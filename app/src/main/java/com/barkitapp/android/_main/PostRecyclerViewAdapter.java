@@ -178,8 +178,8 @@ public class PostRecyclerViewAdapter
         String distanceString = DistanceConverter.GetDistanceInKm(mContext, holder.mBoundPost.getLatitude(), holder.mBoundPost.getLongitude());
         distance.setText(distanceString);
 
-        if(distanceString.startsWith("6"))
-            holder.mView.setVisibility(View.GONE);
+//        if(distanceString.startsWith("6"))
+//            holder.mView.setVisibility(View.GONE);
 
         // set ME
         //if(holder.mBoundPost.getUserId().equals(myId)) {
