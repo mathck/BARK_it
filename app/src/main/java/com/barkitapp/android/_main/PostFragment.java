@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.barkitapp.android.events.InitialPostsReceivedEvent;
 import com.barkitapp.android.events.MasterListUpdated;
@@ -25,6 +26,8 @@ import com.barkitapp.android._core.services.MasterList;
 import com.barkitapp.android._core.services.UserId;
 import com.barkitapp.android._core.utility.Constants;
 import com.barkitapp.android._core.utility.SharedPrefKeys;
+import com.barkitapp.android.my_stuff.MyBarksFragment;
+import com.barkitapp.android.my_stuff.MyRepliesFragment;
 import com.barkitapp.android.parse_backend.enums.Order;
 import com.barkitapp.android.parse_backend.functions.UpdatePosts;
 import com.barkitapp.android.parse_backend.functions.UpdatePostsLat;
@@ -63,7 +66,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                         24,
                         getResources().getDisplayMetrics()));
 
-        setRefreshing(true);
+        //setRefreshing(true);
 
         setupRecyclerView((RecyclerView) mSwipeLayout.findViewById(R.id.recyclerview));
         return mSwipeLayout;
@@ -147,6 +150,11 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     @Override
     public void onResume() {
         super.onResume();
+
+        if(this instanceof MyBarksFragment || this instanceof MyRepliesFragment) {
+            if(MasterList.GetMasterListPost(getOrder()).isEmpty())
+                onRefresh();
+        }
 
         if(InternalAppData.getBoolean(getActivity(), SharedPrefKeys.HAS_SET_MANUAL_LOCATION)) {
             Coordinates location = LocationService.getLocation(getActivity());
@@ -243,14 +251,20 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
             }
         }
 
-        List<Post> _hot = MasterList.GetMasterListPost(Order.UP_VOTES);
-        List<Post> _new = MasterList.GetMasterListPost(Order.TIME);
-
-        if(_hot.isEmpty() && this instanceof HotFragment) {
-            onRefresh();
-        } else if(_new.isEmpty() && this instanceof NewFragment) {
-            onRefresh();
+        if(event.getOrder().equals(Order.MY_BARKS)) {
+            if(this instanceof MyBarksFragment) {
+                UpdateList();
+            }
         }
+
+        if(event.getOrder().equals(Order.MY_REPLIES)) {
+            if(this instanceof MyRepliesFragment) {
+                UpdateList();
+            }
+        }
+
+        if(MasterList.GetMasterListPost(getOrder()).isEmpty())
+            onRefresh();
     }
 
     @UiThread
@@ -349,6 +363,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     }
 
     public void onUpdatePostsFailed(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
         setRefreshing(false);
     }
 }

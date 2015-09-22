@@ -150,7 +150,7 @@ public class PostRecyclerViewAdapter
 
                 // Open Detail View
                 Intent intent = new Intent(context, BarkDetailActivity.class);
-                intent.putExtra(BarkDetailActivity.EXTRA_POST, holder.mBoundPost.getObjectId());
+                intent.putExtra(BarkDetailActivity.EXTRA_POST_ID, holder.mBoundPost.getObjectId());
                 context.startActivity(intent);
             }
         });

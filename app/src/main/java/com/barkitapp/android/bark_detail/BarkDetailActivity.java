@@ -266,7 +266,7 @@ public class BarkDetailActivity extends AppCompatActivity {
         if(actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
-            //actionBar.setTitle("BARK");
+            actionBar.setTitle("");
         }
     }
 

@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.barkitapp.android.BuildConfig;
 import com.barkitapp.android.activities.FeedbackActivity;
+import com.barkitapp.android.activities.MyBarksActivity;
 import com.barkitapp.android.activities.ReportBugActivity;
 import com.barkitapp.android.events.ForceOnResume;
 import com.barkitapp.android.events.RequestUpdatePostsEvent;
@@ -392,18 +393,25 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         return true;
-//                    case R.id.nav_mybarks:
-//                        Intent intentMy = new Intent(mContext, MyBarksActivity.class);
-//                        mContext.startActivity(intentMy);
-//                        return true;
+                    case R.id.nav_mybarks:
+                        Intent intentMy = new Intent(mContext, MyBarksActivity.class);
+                        mContext.startActivity(intentMy);
+                        return true;
                     case R.id.nav_places:
-
                         Intent intent = new Intent(mContext, PlacesActivity.class);
                         mContext.startActivity(intent);
                         return true;
                     case R.id.nav_feedback:
                         Intent i = new Intent(mContext, FeedbackActivity.class);
                         mContext.startActivity(i);
+                        return true;
+                    case R.id.nav_rate:
+                        final String appPackageName = getPackageName();
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                        } catch (android.content.ActivityNotFoundException anfe) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appPackageName)));
+                        }
                         return true;
                     case R.id.nav_facebook:
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/groups/barkitEA/")));
@@ -432,7 +440,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    static class Adapter extends FragmentPagerAdapter {
+    public static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
 

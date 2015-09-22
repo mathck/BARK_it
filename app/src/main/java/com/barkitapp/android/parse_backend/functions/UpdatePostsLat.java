@@ -22,6 +22,16 @@ public class UpdatePostsLat {
 
     public static void run(final Context context, UpdatePosts.OnUpdatePostsCompleted listener, String user_id, ParseGeoPoint current_location, ParseGeoPoint chosen_location, int max_count, final Order order, boolean resetUserCache) {
 
+        if(order.equals(Order.MY_BARKS)) {
+            GetPostsByUserId.run(context, listener, user_id);
+            return;
+        }
+
+        if(order.equals(Order.MY_REPLIES)) {
+            GetPostsByUserId.run(context, listener, user_id);
+            return;
+        }
+
         LastRefresh.now(context);
 
         UpdatePostsLat.listener = listener;
