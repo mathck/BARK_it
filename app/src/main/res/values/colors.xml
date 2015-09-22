@@ -17,6 +17,8 @@
 
     <color name="window_background">#FFF5F5F5</color>
 
+    <!-- this is needed as preference_category_material layout is using this color as the text color -->
+    <color name="preference_fallback_accent_color">@color/accent</color>
 
     <!-- Material Colors -->
 

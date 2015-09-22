@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference android:title="Notifications"
+    <SwitchPreference android:title="@string/notification_sound"
         android:defaultValue="true"
-        android:summary="Turn notifications on or off"
-        android:key="notifications_on" />
+        android:summary="@string/notification_sound_description"
+        android:key="notification_sound" />
+    <SwitchPreference android:title="@string/bark_of_the_day"
+        android:defaultValue="true"
+        android:summary="@string/bark_of_the_day_description"
+        android:key="notification_bark_of_the_day" />
+    <SwitchPreference android:title="@string/notification_reply"
+        android:defaultValue="true"
+        android:summary="@string/notification_reply_description"
+        android:key="notification_reply" />
+    <SwitchPreference android:title="@string/notification_vote"
+        android:defaultValue="true"
+        android:summary="@string/notification_vote_description"
+        android:key="notification_vote" />
 </PreferenceScreen>

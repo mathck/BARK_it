@@ -408,10 +408,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_facebook:
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/groups/barkitEA/")));
                         return true;
-                    //case R.id.nav_settings:
-                    //    Intent intent3 = new Intent(mContext, SettingsActivity.class);
-                    //    mContext.startActivity(intent3);
-                    //    return true;
+                    case R.id.nav_settings:
+                        Intent intent3 = new Intent(mContext, SettingsActivity.class);
+                        mContext.startActivity(intent3);
+                        return true;
                     case R.id.nav_bug:
                         Intent intent2 = new Intent(mContext, ReportBugActivity.class);
                         mContext.startActivity(intent2);

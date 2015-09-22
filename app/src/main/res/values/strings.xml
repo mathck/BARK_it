@@ -110,5 +110,12 @@
   <string name="how_to_join_pack">How to join the pack?</string>
   <string name="how_to_get_code">How to get a code</string>
   <string name="enter_invite_code">Enter invite code</string>
+  <string name="notification_sound">Notification Sound</string>
+  <string name="notification_sound_description">Turn notification sound on or off</string>
+  <string name="bark_of_the_day_description">Turn bark of the day notification on or off</string>
+  <string name="notification_reply">Reply Notification</string>
+  <string name="notification_reply_description">Turn reply notification on or off</string>
+  <string name="notification_vote">Vote Notification</string>
+  <string name="notification_vote_description">Turn vote notification on or off</string>
 
 </resources>

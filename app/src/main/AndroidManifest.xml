@@ -197,6 +197,17 @@
                 android:value="._main.MainActivity" />
         </activity>
 
+        <activity
+            android:name="._main.SettingsActivity"
+            android:label="@string/settings"
+            android:theme="@style/PrefDesign"
+            android:parentActivityName="._main.MainActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="._main.MainActivity" />
+        </activity>
+
         <service android:name="com.parse.PushService" />
 
         <receiver android:name="com.parse.ParseBroadcastReceiver" >

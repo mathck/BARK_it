@@ -53,9 +53,6 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
     @Override
     protected void onPushReceive(Context context, Intent intent) {
 
-        if(!Settings.isNotificationEnabled(context))
-            return;
-
         if(replies == null)
             replies = new LinkedHashMap<>();
 
@@ -88,6 +85,9 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
 
     private void onBarkOfTheDayNotification(Context context, JSONObject data, Push type) {
         try {
+            if(!Settings.isBarkOfTheDayNotificationEnabled(context))
+                return;
+
             String post_id = data.getString("post_id");
             String text = data.getString("alert");
 
@@ -136,6 +136,9 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
 
     private void onVoteNotification(Context context, JSONObject data, Push type) {
         try {
+            if(!Settings.isVoteNotificationEnabled(context))
+                return;
+
             String content_type = data.getString("content_type");
             String post_id;
             String text;
@@ -203,6 +206,9 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
 
     private void onReplyNotification(Context context, JSONObject data, Push type) {
         try {
+            if(!Settings.isReplyNotificationEnabled(context))
+                return;
+
             String text = data.getString("alert");
             String post_id = data.getString("post_id");
 
