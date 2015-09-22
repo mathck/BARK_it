@@ -217,7 +217,7 @@ public class BarkDetailActivity extends AppCompatActivity {
         mTracker = application.getDefaultTracker();
 
         Intent intent = getIntent();
-        mPostObjectId = intent.getStringExtra(EXTRA_POST);
+        mPostObjectId = intent.getStringExtra(EXTRA_POST_ID);
         setContentView(R.layout.activity_bark_detail);
         mPost = MasterList.GetPostPost(mPostObjectId);
 

@@ -59,8 +59,6 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
         if(replies == null)
             replies = new LinkedHashMap<>();
 
-        String text = "";
-        String post_id = "";
         Push type = Push.Reply;
 
         JSONObject data = getDataFromIntent(intent);
