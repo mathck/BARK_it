@@ -103,4 +103,20 @@
     <string name="random_bark_5">\?</string>
     <string name="random_bark_undefined">\??</string>
     <string name="title_activity_my_barks" translatable="false">MyBarksActivity</string>
+    <string name="bark_of_the_day_description">Schalte Bark des Tages Benachrichtigungen ein oder aus</string>
+    <string name="enter_invite_code">Einladungscode eingeben</string>
+    <string name="how_to_get_code">Wie bekomme ich einen Code</string>
+    <string name="how_to_join_pack">Wie werde ich Mitglied des Rudels?</string>
+    <string name="invite_code_screen_title">BARK it ist eine private Community</string>
+    <string name="invite_code_screen_title_2">Bist du bekannt genug um einen Code zu besitzen?</string>
+    <string name="my_replies">Meine Antworten</string>
+    <string name="my_stuff">Mein Bereich</string>
+    <string name="notification_reply">Antwort Benachrichtigung</string>
+    <string name="notification_reply_description">Schalte Antwort Benachrichtigungen ein oder aus</string>
+    <string name="notification_sound">Benachrichtigungs Ton</string>
+    <string name="notification_sound_description">Schalte den Benachrichtigungston ein oder aus</string>
+    <string name="notification_vote">Vote Benachrichtigung</string>
+    <string name="notification_vote_description">Schalte Vote Benachrichtigungen ein oder aus</string>
+    <string name="rate_us">Bewerte uns</string>
+    <string name="title_activity_invite_code_restriction">InviteCodeRestriction</string>
 </resources>

@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView app_version = (TextView) navigationView.findViewById(R.id.app_version);
         try {
-            String appVersionText = BuildConfig.VERSION_NAME + " " + BuildConfig.VERSION_CODE;
+            String appVersionText = BuildConfig.VERSION_NAME;// + " " + BuildConfig.VERSION_CODE;
             if(app_version != null)
                 app_version.setText(appVersionText);
         }
