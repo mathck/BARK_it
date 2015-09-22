@@ -20,6 +20,9 @@ import com.barkitapp.android._core.services.LocationService;
 import com.barkitapp.android._core.services.UserId;
 import com.barkitapp.android.parse_backend.enums.MediaType;
 import com.barkitapp.android.parse_backend.functions.PostPost;
+import com.barkitapp.android.startup.Setup;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -28,10 +31,11 @@ import com.parse.SaveCallback;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
-public class PictureActivity extends Activity {
+public class PostPictureActivity extends Activity {
 
     private Context mContext;
     private String imagePath;
+    private Tracker mTracker;
 
     @Override
     public View onCreateView(String name, @NonNull Context context, @NonNull AttributeSet attrs) {
@@ -42,8 +46,8 @@ public class PictureActivity extends Activity {
     public void onResume() {
         super.onResume();
 
-        // FULLSCREEN VIEW
-
+        mTracker.setScreenName(PostPictureActivity.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -83,6 +87,9 @@ public class PictureActivity extends Activity {
         else {
             finish();
         }
+
+        Setup application = (Setup) getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     private class LongOperation extends AsyncTask<String, Void, String> {

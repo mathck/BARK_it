@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.barkitapp.android.R;
 import com.barkitapp.android._core.services.BitmapOperations;
 import com.barkitapp.android._core.services.MediaFile;
+import com.barkitapp.android.startup.Setup;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -26,6 +29,8 @@ import java.util.List;
 public class BarkitCamera extends Activity {
     private Camera mCamera;
     private CameraPreview mCameraPreview;
+
+    private Tracker mTracker;
 
     private void setUpCamera() {
         mCamera = getCameraInstance();
@@ -86,7 +91,18 @@ public class BarkitCamera extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+        Setup application = (Setup) getApplication();
+        mTracker = application.getDefaultTracker();
+
         //setUpCamera();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mTracker.setScreenName(BarkitCamera.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -135,7 +151,7 @@ public class BarkitCamera extends Activity {
                 original.recycle();
                 resized.recycle();
 
-                Intent intent = new Intent(getApplicationContext(), PictureActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PostPictureActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("path", pictureFile.getAbsolutePath());
                 getApplicationContext().startActivity(intent);

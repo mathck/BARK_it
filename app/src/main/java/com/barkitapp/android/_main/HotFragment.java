@@ -35,10 +35,12 @@ public class HotFragment extends PostFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        mTracker.setScreenName(HotFragment.class.getSimpleName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            mTracker.setScreenName(HotFragment.class.getSimpleName());
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        }
+        else {  }
     }
 }

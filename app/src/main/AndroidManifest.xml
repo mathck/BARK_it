@@ -142,7 +142,7 @@
                 android:value="._main.MainActivity" />
         </activity>
         <activity
-            android:name=".pictures.PictureActivity"
+            android:name=".pictures.PostPictureActivity"
             android:label="Picture View"
             android:parentActivityName="._main.MainActivity"
             android:screenOrientation="portrait"

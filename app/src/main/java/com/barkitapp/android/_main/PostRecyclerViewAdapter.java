@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.barkitapp.android._core.utility.GoogleAnalytics;
 import com.barkitapp.android.events.UpdateListItemEvent;
 import com.barkitapp.android.R;
 import com.barkitapp.android.bark_detail.BarkDetailActivity;
@@ -27,6 +28,7 @@ import com.barkitapp.android.parse_backend.enums.Order;
 import com.barkitapp.android.parse_backend.enums.VoteType;
 import com.barkitapp.android.parse_backend.functions.PostVote;
 import com.barkitapp.android.parse_backend.objects.Post;
+import com.barkitapp.android.startup.Setup;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -231,6 +233,10 @@ public class PostRecyclerViewAdapter
                 }
 
                 EventBus.getDefault().post(new UpdateListItemEvent(holder.mBoundPost, mOrder));
+
+//                GoogleAnalytics.sendEvent(((Setup) mContext.getApplicationContext()).getDefaultTracker(),
+//                        GoogleAnalytics.CATEGORY_VOTING_FREQUENCY,
+//                        GoogleAnalytics.CATEGORY_VOTING_ACTION_UP);
             }
         });
 
@@ -251,6 +257,10 @@ public class PostRecyclerViewAdapter
                 }
 
                 EventBus.getDefault().post(new UpdateListItemEvent(holder.mBoundPost, mOrder));
+
+//                GoogleAnalytics.sendEvent(((Setup) mContext.getApplicationContext()).getDefaultTracker(),
+//                        GoogleAnalytics.CATEGORY_VOTING_FREQUENCY,
+//                        GoogleAnalytics.CATEGORY_VOTING_ACTION_DOWN);
             }
         });
     }

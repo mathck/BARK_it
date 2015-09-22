@@ -7,11 +7,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.barkitapp.android.R;
+import com.barkitapp.android.startup.Setup;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class PlacesActivity extends AppCompatActivity {
 
     // List style
     // http://www.google.com/design/spec/components/lists.html#lists-specs
+
+    private Tracker mTracker;
 
     private Context mContext;
 
@@ -41,6 +46,17 @@ public class PlacesActivity extends AppCompatActivity {
 //            }
 //        });
 //        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primary)));
+
+        Setup application = (Setup) getApplication();
+        mTracker = application.getDefaultTracker();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mTracker.setScreenName(PlacesActivity.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

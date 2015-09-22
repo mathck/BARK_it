@@ -95,9 +95,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        mTracker.setScreenName(MainActivity.class.getSimpleName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         RelativeLayout chatbox_ui = (RelativeLayout) findViewById(R.id.chatbox_ui);
 
         //--------------------------------------------------------------------
@@ -108,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         if(mActionBar != null)
         {
             boolean is_manual_location = InternalAppData.getBoolean(this, SharedPrefKeys.HAS_SET_MANUAL_LOCATION);
+
+            if(is_manual_location) {
+                mTracker.setScreenName("ManualLocationScreen");
+                mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            }
 
             mActionBar.setBackgroundDrawable(is_manual_location ? new ColorDrawable(getResources().getColor(R.color.orange_500)) : new ColorDrawable(getResources().getColor(R.color.primary)));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

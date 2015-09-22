@@ -9,8 +9,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.barkitapp.android.R;
+import com.barkitapp.android.startup.Setup;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 public class FeedbackActivity extends AppCompatActivity {
+
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +39,21 @@ public class FeedbackActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if(actionBar != null)
+                if (actionBar != null)
                     actionBar.setTitle(R.string.your_opinion_counts);
             }
         });
+
+        Setup application = (Setup) getApplication();
+        mTracker = application.getDefaultTracker();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mTracker.setScreenName(FeedbackActivity.class.getSimpleName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
