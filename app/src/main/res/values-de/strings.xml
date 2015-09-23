@@ -18,7 +18,7 @@
     <string name="download_and_enter_my_invite_code">"Lade Bark it herunter und verwende meinen Einladungscode am Anfang "</string>
     <string name="enable_gps_better_barkit_experience">Bitte aktiviere GPS auf deinem Gerät um deine Bark it Erfahrung zu verbessern</string>
     <string name="enable_location_services">Bitte aktiviere Standortdienste auf deinem Gerät</string>
-    <string name="facebook">Facebook</string>
+    <string name="facebook">Like uns auf Facebook</string>
     <string name="failed_to_load_bark">Beim Laden des Barks ist ein Fehler aufgetreten</string>
     <string name="failed_to_load_replies">Beim Laden der Antworten ist ein Fehler aufgetreten, bitte versuche es später erneut.</string>
     <string name="first_to_reply">Schreibe die erste Antwort</string>
@@ -108,7 +108,7 @@
     <string name="notification_sound_description">Schalte den Benachrichtigungston ein oder aus</string>
     <string name="notification_vote">Vote Benachrichtigung</string>
     <string name="notification_vote_description">Schalte Vote Benachrichtigungen ein oder aus</string>
-    <string name="rate_us">Bewerte uns</string>
+    <string name="rate_us">Bewerte mit 5 Sternen</string>
     <string name="title_activity_invite_code_restriction">InviteCodeRestriction</string>
     <string name="ga_trackingId">UA-66486624-1</string>
     <string name="gcm_defaultSenderId">813639631031</string>

@@ -17,8 +17,6 @@ public class GetRepliesByUserId {
 
     public static void run(final Context context, UpdatePosts.OnUpdatePostsCompleted listener, String user_id) {
 
-        LastRefresh.now(context);
-
         GetRepliesByUserId.listener = listener;
 
         HashMap<String, Object> params = new HashMap<>();

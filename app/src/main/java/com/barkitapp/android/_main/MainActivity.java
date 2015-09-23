@@ -414,7 +414,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         return true;
                     case R.id.nav_facebook:
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/groups/barkitEA/")));
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/barkitapp")));
                         return true;
                     case R.id.nav_settings:
                         Intent intent3 = new Intent(mContext, SettingsActivity.class);

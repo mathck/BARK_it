@@ -363,7 +363,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     }
 
     public void onUpdatePostsFailed(String error) {
-        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
         setRefreshing(false);
     }
 }
