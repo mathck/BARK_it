@@ -15,13 +15,6 @@
   <string name="your_opinion">Your Opinion</string>
   <string name="invite_friends">Invite Friends</string>
   <string name="more">More</string>
-  <string name="random_bark_0">cool</string>
-  <string name="random_bark_1">oh hai!</string>
-  <string name="random_bark_2">♥</string>
-  <string name="random_bark_3">wow</string>
-  <string name="random_bark_4">BARK</string>
-  <string name="random_bark_5">\?</string>
-  <string name="random_bark_undefined">\??</string>
   <string name="share_using">share using …</string>
   <string name="your_opinion_counts">Your Opinion Counts</string>
   <string name="profile">Profile</string>
@@ -35,10 +28,8 @@
   <string name="facebook">Facebook</string>
   <string name="shadow">shadow</string>
   <string name="navigation_drawer_mybarks">My Barks</string>
-    <string name="title_activity_my_barks">MyBarksActivity</string>
   <string name="limited_edition">limited Edition</string>
   <string name="bark_it_logo">BARK it Logo</string>
-    <string name="title_activity_fullscreen_picture">FullscreenPictureActivity</string>
   <string name="restore_location">Restore Location</string>
   <string name="open_picture">Open Picture</string>
   <string name="star">Star</string>

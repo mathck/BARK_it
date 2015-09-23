@@ -128,7 +128,7 @@ public class BarkDetailActivity extends AppCompatActivity {
             }
         });
 
-        if(!mPost.getImage_url().isEmpty())
+        if(mPost != null && mPost.getImage_url() != null && !mPost.getImage_url().isEmpty())
         {
             ImageView backdrop = (ImageView) findViewById(R.id.image);
             View overlay = findViewById(R.id.overlay);

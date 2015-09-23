@@ -248,7 +248,7 @@
         </activity>
         <activity
             android:name=".activities.MyBarksActivity"
-            android:label="@string/title_activity_my_barks"
+            android:label="@string/my_barks"
             android:parentActivityName="._main.MainActivity"
             android:screenOrientation="portrait" >
             <meta-data
@@ -257,7 +257,7 @@
         </activity>
         <activity
             android:name=".pictures.FullscreenPictureActivity"
-            android:label="@string/title_activity_fullscreen_picture"
+            android:label="@string/open_picture"
             android:parentActivityName=".bark_detail.BarkDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.FullscreenTheme" >
