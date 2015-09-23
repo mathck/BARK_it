@@ -4,7 +4,7 @@
     <group>
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_chat_white_48dp"
+            android:icon="@drawable/ic_chat_black_48dp"
             android:title="@string/navigation_drawer_barks" />
 
         <item
@@ -18,15 +18,12 @@
             android:title="@string/my_stuff" />
     </group>
 
-    <group>
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings_black_48dp"
-            android:title="@string/settings" />
-    </group>
-
     <item android:title="@string/more">
         <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings_black_48dp"
+                android:title="@string/settings" />
             <item
                 android:id="@+id/nav_friends"
                 android:icon="@drawable/ic_favorite_black_48dp"
