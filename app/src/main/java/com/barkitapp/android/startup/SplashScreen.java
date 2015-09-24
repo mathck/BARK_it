@@ -66,12 +66,9 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         else {
             // todo invite screen
 
-
-
-            String deviceId = DeviceId.get(this);
-            if(deviceId != null && !deviceId.isEmpty()) {
-                CreateUser.run(this, deviceId);
-            }
+            Intent i = new Intent(SplashScreen.this, InviteCodeRestriction.class);
+            startActivity(i);
+            finish();
         }
     }
 
