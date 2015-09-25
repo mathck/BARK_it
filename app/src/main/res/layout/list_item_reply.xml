@@ -79,6 +79,7 @@
                 android:maxLength="300"
                 android:textColor="@color/primary_text"
                 android:ellipsize="end"
+                android:autoLink="web"
                 android:textSize="14sp"
                 android:layout_marginBottom="10dp"
                 android:lineSpacingExtra="3dp"

@@ -142,6 +142,7 @@
                                 android:layout_height="wrap_content"
                                 android:maxLines="3"
                                 android:lines="3"
+                                android:autoLink="web"
                                 android:textColor="@android:color/white"
                                 android:ellipsize="end"
                                 android:textSize="14sp"

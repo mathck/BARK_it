@@ -12,9 +12,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.barkitapp.android.events.InitialPostsReceivedEvent;
 import com.barkitapp.android.events.MasterListUpdated;
 import com.barkitapp.android.events.RequestUpdatePostsEvent;
 import com.barkitapp.android.events.UpdateListItemEvent;
@@ -97,7 +95,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                     if (dy > 0 && totalItemCount >= 20 && (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                         loading = true;
                         // todo show loading bark icon and start loading
-                        LoadNewBarks();
+                        LoadMoreBarks();
                     }
                 }
             }
@@ -107,7 +105,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
         //recyclerView.setEmptyView(getActivity().getLayoutInflater().inflate(R.layout.empty_info, null));
     }
 
-    private void LoadNewBarks() {
+    private void LoadMoreBarks() {
         Coordinates location = LocationService.getLocation(getActivity());
 
         if(location == null) {
@@ -125,7 +123,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 Constants.GET_POSTS_COUNT,
                 getOrder(),
-                MasterList.GetMasterList(getOrder()).isEmpty());
+                false);
     }
 
     public void addItem(Post item) {
@@ -310,7 +308,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
     public void onRefresh() {
 
 //        if(getList().isEmpty()) {
-//            LoadNewBarks();
+//            LoadMoreBarks();
 //            return;
 //        }
 
@@ -334,7 +332,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                 new ParseGeoPoint(location.getLatitude(), location.getLongitude()),
                 Constants.GET_POSTS_COUNT,
                 getOrder(),
-                MasterList.GetMasterList(getOrder()).isEmpty());
+                true);
     }
 
     @UiThread
@@ -359,7 +357,7 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
 
     public void onUpdatePostsCompleted(HashMap<String, ArrayList<ParseObject>> result) {
         MasterList.StoreMasterList(getActivity(), result, getOrder());
-        UpdateList();
+        //UpdateList();
     }
 
     public void onUpdatePostsFailed(String error) {
