@@ -144,6 +144,7 @@
                                 android:lines="3"
                                 android:autoLink="web"
                                 android:textColor="@android:color/white"
+                                android:textColorLink="@color/blue_500"
                                 android:ellipsize="end"
                                 android:textSize="14sp"
                                 android:lineSpacingExtra="3dp"

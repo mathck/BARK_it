@@ -83,6 +83,7 @@
                 android:textColor="@color/primary_text"
                 android:ellipsize="end"
                 android:autoLink="web"
+                android:textColorLink="@color/blue_500"
                 android:textSize="14sp"
                 android:lineSpacingExtra="3dp"
                 android:text="@string/this_is_a_bark" />
