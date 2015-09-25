@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@color/card_background">
                 <RelativeLayout
                     android:id="@+id/backdrop"
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
                     android:scaleType="centerCrop"
                     android:fitsSystemWindows="true"
-                    android:background="@color/blue_400"
+                    android:background="@color/blue_grey_700"
                     android:orientation="vertical">
                     <ImageView
                         android:id="@+id/profileBackground"
@@ -53,6 +53,33 @@
             android:layout_height="500dp"
             android:orientation="vertical"
             android:layout_margin="24dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="24dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="26sp"
+                    android:textColor="@color/text_color_dark"
+                    android:layout_alignParentLeft="true"
+                    android:text="Blauer Wolf" />
+                <TextView
+                    android:paddingTop="6dp"
+                    android:layout_below="@id/name"
+                    android:id="@+id/level_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="italic"
+                    android:textColor="@color/grey_700"
+                    android:layout_alignParentLeft="true"
+                    android:text="Level 10" />
+            </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/grey_700"
+                    android:textColor="@color/text_color_dark"
                     android:layout_alignParentLeft="true"
                     android:text="Creativity" />
                 <TextView
@@ -69,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/teal_800"
                     android:layout_alignParentRight="true"
                     android:text="2" />
             </RelativeLayout>
@@ -83,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/grey_700"
+                    android:textColor="@color/text_color_dark"
                     android:layout_alignParentLeft="true"
                     android:text="Social" />
                 <TextView
@@ -91,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/teal_800"
                     android:layout_alignParentRight="true"
                     android:text="0" />
             </RelativeLayout>
@@ -105,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/grey_700"
+                    android:textColor="@color/text_color_dark"
                     android:layout_alignParentLeft="true"
                     android:text="Friendliness" />
                 <TextView
@@ -113,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/teal_800"
                     android:layout_alignParentRight="true"
                     android:text="5" />
             </RelativeLayout>
@@ -127,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/grey_700"
+                    android:textColor="@color/text_color_dark"
                     android:layout_alignParentLeft="true"
                     android:text="Communicative" />
                 <TextView
@@ -135,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/teal_800"
                     android:layout_alignParentRight="true"
                     android:text="3" />
             </RelativeLayout>

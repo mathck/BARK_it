@@ -1,13 +1,18 @@
 package com.barkitapp.android.my_stuff;
 
+import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android._core.services.DeviceId;
@@ -55,25 +60,29 @@ public class FriendsFragment extends Fragment implements CreateUser.OnCreateUser
 
         invite_code = (EditText) layout.findViewById(R.id.code);
 
-
         friend_counter = (TextView) layout.findViewById(R.id.friend_count);
         invitedFriendstext = (TextView) layout.findViewById(R.id.invitedFriendstext);
 
         CreateUser.run(getActivity(), this, DeviceId.get(getActivity()));
         GetInviteCode.run(getActivity(), this, UserId.get(getActivity()));
 
-//        FloatingActionButton fab = (FloatingActionButton) layout.findViewById(R.id.share);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-//                sharingIntent.setType("text/plain");
-//                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.using_barkit_check_it_out)); // todo replace link
-//                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.download_and_enter_my_invite_code) + friend_invite_code + "\n\n" + "http://barkitapp.com/");
-//                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
-//            }
-//        });
-//        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.accent)));
+        Button fab = (Button) layout.findViewById(R.id.share);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(invite_code == null){
+                    Toast.makeText(getActivity(), getResources().getText(R.string.try_again_later), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.using_barkit_check_it_out)); // todo replace link
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.download_and_enter_my_invite_code) + invite_code.getText() + "\n\n" + "http://barkitapp.com/");
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+            }
+        });
 
         return layout;
     }
