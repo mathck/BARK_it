@@ -5,6 +5,15 @@
     android:background="@color/primary"
     android:layout_centerInParent="true">
 
+    <ImageView
+        android:id="@+id/imgTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:src="@mipmap/title"
+        android:contentDescription="@string/bark_it_logo"
+        android:layout_above="@+id/imgContainer"
+        android:layout_centerHorizontal="true"/>
+
     <RelativeLayout
         android:id="@+id/imgContainer"
         android:layout_width="match_parent"

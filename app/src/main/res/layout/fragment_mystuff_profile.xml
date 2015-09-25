@@ -1,0 +1,144 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+                <RelativeLayout
+                    android:id="@+id/backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
+                    android:background="@color/blue_400"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:id="@+id/profileBackground"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/circle_profile_pic"
+                        android:tint="@color/blue_200"
+                        android:layout_centerInParent="true" />
+                    <ImageView
+                        android:id="@+id/profileIcon"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/wolf3"
+                        android:layout_centerInParent="true" />
+                    <TextView
+                        android:id="@+id/level"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:text="10"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:layout_marginTop="-18dp"
+                        android:layout_marginLeft="-18dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:background="@drawable/circle"
+                        android:layout_below="@id/profileIcon"
+                        android:layout_toRightOf="@id/profileIcon" />
+                </RelativeLayout>
+
+<!--
+            <ImageView
+                android:layout_below="@id/backdrop"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:src="@drawable/black_gradient_top_down" />
+-->
+        <LinearLayout
+            android:layout_below="@id/backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:orientation="vertical"
+            android:layout_margin="24dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/grey_700"
+                    android:layout_alignParentLeft="true"
+                    android:text="Creativity" />
+                <TextView
+                    android:id="@+id/creativity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_alignParentRight="true"
+                    android:text="2" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/grey_700"
+                    android:layout_alignParentLeft="true"
+                    android:text="Social" />
+                <TextView
+                    android:id="@+id/social"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_alignParentRight="true"
+                    android:text="0" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/grey_700"
+                    android:layout_alignParentLeft="true"
+                    android:text="Friendliness" />
+                <TextView
+                    android:id="@+id/friendliness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_alignParentRight="true"
+                    android:text="5" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="12dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/grey_700"
+                    android:layout_alignParentLeft="true"
+                    android:text="Communicative" />
+                <TextView
+                    android:id="@+id/communicative"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_alignParentRight="true"
+                    android:text="3" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </RelativeLayout>

@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android._core.services.DeviceId;
-import com.barkitapp.android.parse_backend.functions.CreateUser;
+import com.barkitapp.android.parse_backend.functions.CreateUserFirstTime;
 import com.barkitapp.android.parse_backend.functions.ReferUser;
 import com.parse.ParseObject;
 
@@ -47,14 +47,14 @@ public class InviteCodeRestriction extends AppCompatActivity implements ReferUse
     private void registerUser() {
         String deviceId = DeviceId.get(this);
         if(deviceId != null && !deviceId.isEmpty()) {
-            CreateUser.run(this, deviceId);
+            CreateUserFirstTime.run(this, deviceId);
         }
     }
 
     private void referUser() {
         String deviceId = DeviceId.get(this);
         if(deviceId != null && !deviceId.isEmpty()) {
-            CreateUser.run(this, deviceId);
+            CreateUserFirstTime.run(this, deviceId);
         }
     }
 

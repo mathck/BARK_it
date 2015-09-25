@@ -1,0 +1,79 @@
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+                <RelativeLayout
+                    android:id="@+id/backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:fitsSystemWindows="true"
+                    android:background="@color/green_500"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/invitedFriendstext"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_centerVertical="true"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:textSize="24sp"
+                        android:textColor="@android:color/white"
+                        android:text="@string/loading_invited_friends" />
+                    <TextView
+                        android:id="@+id/friend_count"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="20dp"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:textSize="28sp"
+                        android:textColor="@android:color/white"
+                        android:text="" />
+                </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/backdrop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="16dp">
+            <TextView
+                android:id="@+id/share_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:layout_margin="24dp"
+                android:text="@string/share_your_invite_code" />
+            <EditText
+                android:id="@+id/code"
+                android:layout_below="@id/share_code"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:textSize="36sp"
+                android:textColor="@color/primary"
+                android:textIsSelectable="true"
+                android:inputType="none"
+                android:text="-" />
+            <TextView
+                android:layout_below="@id/code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:layout_margin="24dp"
+                android:text="@string/invite_friends_win_gifts" />
+        </RelativeLayout>
+    </RelativeLayout>

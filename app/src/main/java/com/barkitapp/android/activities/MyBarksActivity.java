@@ -13,8 +13,10 @@ import android.view.View;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android._main.MainActivity;
+import com.barkitapp.android.my_stuff.FriendsFragment;
 import com.barkitapp.android.my_stuff.MyBarksFragment;
 import com.barkitapp.android.my_stuff.MyRepliesFragment;
+import com.barkitapp.android.my_stuff.ProfileFragment;
 import com.barkitapp.android.startup.Setup;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -71,26 +73,32 @@ public class MyBarksActivity extends AppCompatActivity {
         if(viewPager != null) {
             tabLayout.setupWithViewPager(viewPager);
 
-            TabLayout.Tab tab_new =  tabLayout.getTabAt(0);
-            TabLayout.Tab tab_hot =  tabLayout.getTabAt(1);
+            TabLayout.Tab tab_profile =  tabLayout.getTabAt(0);
+            TabLayout.Tab tab_invite =  tabLayout.getTabAt(1);
+            TabLayout.Tab tab_new =  tabLayout.getTabAt(2);
+            TabLayout.Tab tab_hot =  tabLayout.getTabAt(3);
 
-            if(tab_new == null || tab_hot == null)
+            if(tab_profile == null || tab_invite == null | tab_new == null || tab_hot == null)
                 return;
 
+            tab_profile.setIcon(R.drawable.ic_account_circle_white_24dp);
+            tab_invite.setIcon(R.drawable.ic_person_add_white_24dp);
             tab_new.setIcon(R.drawable.ic_chat_white_24dp);
             tab_hot.setIcon(R.drawable.ic_forum_white_24dp);
         }
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        MainActivity.Adapter adapter = new MainActivity.Adapter(getSupportFragmentManager());
-        adapter.addFragment(new MyBarksFragment(), "");
-        adapter.addFragment(new MyRepliesFragment(), "");
+        final MainActivity.Adapter adapter = new MainActivity.Adapter(getSupportFragmentManager());
+        adapter.addFragment(new ProfileFragment(), getString(R.string.profile));
+        adapter.addFragment(new FriendsFragment(), getString(R.string.invite_friends));
+        adapter.addFragment(new MyBarksFragment(), getString(R.string.my_barks));
+        adapter.addFragment(new MyRepliesFragment(), getString(R.string.my_replies));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if(mActionBar != null && mActionBar.getTitle() != null) {
-                    mActionBar.setTitle((position == 0 ? getString(R.string.my_barks) : getString(R.string.my_replies)));
+                    mActionBar.setTitle(adapter.getTitle(position));
                 }
             }
 

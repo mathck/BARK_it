@@ -463,9 +463,13 @@ public class MainActivity extends AppCompatActivity {
             return mFragments.size();
         }
 
+        public CharSequence getTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
+
         @Override
         public CharSequence getPageTitle(int position) {
-            return mFragmentTitles.get(position);
+            return "";
         }
     }
 }

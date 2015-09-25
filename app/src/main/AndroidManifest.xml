@@ -188,7 +188,7 @@
                 android:value="._main.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.ProfileActivity"
+            android:name=".my_stuff.FriendsFragment"
             android:label="@string/profile"
             android:parentActivityName="._main.MainActivity"
             android:screenOrientation="portrait" >
