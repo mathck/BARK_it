@@ -384,7 +384,7 @@ public class BarkDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if(mPost != null && !mPost.getImage_url().isEmpty())
+        if(mPost != null && mPost.getImage_url() != null && !mPost.getImage_url().isEmpty())
         {
             getMenuInflater().inflate(R.menu.bark_withpic_actions, menu);
         }
