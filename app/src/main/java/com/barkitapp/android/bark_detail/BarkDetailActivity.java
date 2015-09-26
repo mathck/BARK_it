@@ -52,7 +52,7 @@ import de.greenrobot.event.EventBus;
 
 public class BarkDetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_POST = "Post";
+    public static final String EXTRA_POST_CAME_FROM_NOTIFICATION = "Post.Came.From.Notification";
     public static final String EXTRA_POST_ID = "Origin.Reply.Notification";
 
     private Post mPost;
@@ -221,8 +221,11 @@ public class BarkDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bark_detail);
         mPost = MasterList.GetPostPost(mPostObjectId);
 
+        // came from notification?
+        mCameFromNotification = intent.getBooleanExtra(EXTRA_POST_CAME_FROM_NOTIFICATION, false);
+
+        // if post not in db, load it
         if(mPostObjectId == null || mPostObjectId.equals("") || mPost == null) {
-            // coming from notification
             mPostObjectId = intent.getStringExtra(EXTRA_POST_ID);
             if(mPostObjectId == null || mPostObjectId.equals(""))
             {
@@ -231,14 +234,12 @@ public class BarkDetailActivity extends AppCompatActivity {
                 return;
             }
 
-            mCameFromNotification = true;
             GetPostById.run(this, UserId.get(this), mPostObjectId);
 
             removeNotificationsForPost(mPostObjectId);
         }
         else {
             initView(mPost);
-            mCameFromNotification = false;
         }
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

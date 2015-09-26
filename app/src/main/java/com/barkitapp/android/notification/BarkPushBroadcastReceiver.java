@@ -43,7 +43,6 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
     }
     */
 
-
     @Override
     protected void onPushOpen(Context context, Intent intent) {
 
@@ -110,16 +109,18 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
             if(Settings.isNotificationSoundEnabled(context))
                 builder.setSound(notifySound);
 
-            builder.setGroup(type.toString());
-            builder.setGroupSummary(true);
+//            builder.setGroup(type.toString());
+//            builder.setGroupSummary(true);
             builder.setAutoCancel(true);
 
             resultIntent = new Intent(context, BarkDetailActivity.class);
             resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             resultIntent.putExtra(BarkDetailActivity.EXTRA_POST_ID, post_id);
+            resultIntent.putExtra(BarkDetailActivity.EXTRA_POST_CAME_FROM_NOTIFICATION, true);
+            resultIntent.setAction(Long.toString(System.currentTimeMillis()));
 
             PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
-                    0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             builder.setContentIntent(resultPendingIntent);
             builder.setVibrate(new long[]{0, 500});
@@ -180,16 +181,18 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
             if(Settings.isNotificationSoundEnabled(context))
                 builder.setSound(notifySound);
 
-            builder.setGroup(type.toString());
-            builder.setGroupSummary(true);
+//            builder.setGroup(type.toString());
+//            builder.setGroupSummary(true);
             builder.setAutoCancel(true);
 
             resultIntent = new Intent(context, BarkDetailActivity.class);
             resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             resultIntent.putExtra(BarkDetailActivity.EXTRA_POST_ID, post_id);
+            resultIntent.putExtra(BarkDetailActivity.EXTRA_POST_CAME_FROM_NOTIFICATION, true);
+            resultIntent.setAction(Long.toString(System.currentTimeMillis()));
 
             PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
-                    0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             builder.setContentIntent(resultPendingIntent);
             builder.setVibrate(new long[]{0, 500});
@@ -252,16 +255,16 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
             if(Settings.isNotificationSoundEnabled(context))
                 builder.setSound(notifySound);
 
-            builder.setGroup(type.toString());
-            builder.setGroupSummary(true);
             builder.setAutoCancel(true);
 
             resultIntent = new Intent(context, BarkDetailActivity.class);
             resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             resultIntent.putExtra(BarkDetailActivity.EXTRA_POST_ID, post_id);
+            resultIntent.putExtra(BarkDetailActivity.EXTRA_POST_CAME_FROM_NOTIFICATION, true);
+            resultIntent.setAction(Long.toString(System.currentTimeMillis()));
 
             PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
-                    0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             builder.setContentIntent(resultPendingIntent);
             builder.setVibrate(new long[]{0, 500});
