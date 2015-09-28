@@ -26,9 +26,12 @@ public class CreateUser {
 
     private static List<OnCreateUserCompleted> listener;
 
-    public static void run(final Context context, final OnCreateUserCompleted listener, final String device_id) {
+    public static void run(final Context context, final OnCreateUserCompleted listener, final String device_id, String invite_code) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("device_id", device_id);
+
+        if(invite_code != null && !invite_code.isEmpty())
+            params.put("invite_code", invite_code);
 
         if(CreateUser.listener == null)
             CreateUser.listener = new ArrayList<>();

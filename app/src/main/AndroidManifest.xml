@@ -268,10 +268,20 @@
         <activity
             android:name=".startup.InviteCodeRestriction"
             android:label="@string/title_activity_invite_code_restriction"
+            android:screenOrientation="portrait"
             android:parentActivityName=".startup.SplashScreen" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.barkitapp.android.startup.SplashScreen" />
+        </activity>
+        <activity
+            android:name=".startup.InviteCodeHelp"
+            android:label="@string/title_activity_invite_code_restriction"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".startup.InviteCodeRestriction" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.barkitapp.android.startup.InviteCodeRestriction" />
         </activity>
     </application>
 

@@ -24,7 +24,6 @@ public class CreateUserFirstTime {
         ParseCloud.callFunctionInBackground("CreateUser", params, new FunctionCallback<ParseObject>() {
             public void done(ParseObject result, ParseException e) {
                 if (e == null) {
-
                     String userId = result.getObjectId();
 
                     UserId.store(context, userId);

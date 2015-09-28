@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public class BarkItUser {
 
+    String invite_code;
     String objectId;
     Date time_created;
     int downvote_counter;
@@ -53,6 +54,7 @@ public class BarkItUser {
         this.upvote_counter = parseObject.getInt("upvote_counter");
         this.recent_quarantine_counter = parseObject.getInt("recent_quarantine_counter");
         this.quarantine_counter = parseObject.getInt("quarantine_counter");
+        this.invite_code = parseObject.getString("invite_code");
     }
 
     @Override
@@ -210,6 +212,14 @@ public class BarkItUser {
 
     public void setRecent_quarantine_counter(int recent_quarantine_counter) {
         this.recent_quarantine_counter = recent_quarantine_counter;
+    }
+
+    public String getInvite_code() {
+        return invite_code;
+    }
+
+    public void setInvite_code(String invite_code) {
+        this.invite_code = invite_code;
     }
 
     public int getQuarantine_counter() {

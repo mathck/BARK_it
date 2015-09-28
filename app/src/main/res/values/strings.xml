@@ -111,5 +111,11 @@
   <string name="rate_us">Rate with 5 stars</string>
   <string name="my_stuff">My Stuff</string>
   <string name="my_replies">My Replies</string>
+  <string name="verify">Verify</string>
+  <string name="join_option_1">1. Ask a friend who is member of the BARK it community</string>
+  <string name="join_option_2">2. Write us from your university email address: getacode@barkitapp.com</string>
+  <string name="or">oder</string>
+  <string name="wrong">wrong</string>
+  <string name="welcome">welcome</string>
 
 </resources>

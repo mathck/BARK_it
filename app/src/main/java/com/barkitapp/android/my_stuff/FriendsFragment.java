@@ -19,13 +19,14 @@ import com.barkitapp.android._core.services.DeviceId;
 import com.barkitapp.android._core.services.UserId;
 import com.barkitapp.android.parse_backend.functions.CreateUser;
 import com.barkitapp.android.parse_backend.functions.GetInviteCode;
+import com.barkitapp.android.parse_backend.functions.GetUser;
 import com.barkitapp.android.parse_backend.objects.BarkItUser;
 import com.barkitapp.android.startup.Setup;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.parse.ParseObject;
 
-public class FriendsFragment extends Fragment implements CreateUser.OnCreateUserCompleted, GetInviteCode.OnInviteCodeCompleted {
+public class FriendsFragment extends Fragment implements GetUser.OnCreateUserCompleted, GetInviteCode.OnInviteCodeCompleted {
 
     private Tracker mTracker;
     private TextView friend_counter;
@@ -63,15 +64,14 @@ public class FriendsFragment extends Fragment implements CreateUser.OnCreateUser
         friend_counter = (TextView) layout.findViewById(R.id.friend_count);
         invitedFriendstext = (TextView) layout.findViewById(R.id.invitedFriendstext);
 
-        CreateUser.run(getActivity(), this, DeviceId.get(getActivity()));
-        GetInviteCode.run(getActivity(), this, UserId.get(getActivity()));
+        GetUser.run(getActivity(), this, UserId.get(getActivity()));
 
         Button fab = (Button) layout.findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(invite_code == null){
+                if (invite_code == null) {
                     Toast.makeText(getActivity(), getResources().getText(R.string.try_again_later), Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -93,12 +93,15 @@ public class FriendsFragment extends Fragment implements CreateUser.OnCreateUser
 
         invitedFriendstext.setText(R.string.invited_friends);
         friend_counter.setText(user.getReferred_friend_counter() + "");
+
     }
 
     @Override
     public void onCreateUserFailed(String error) {
         invitedFriendstext.setText(R.string.try_again_later);
         friend_counter.setText(":(");
+
+
     }
 
     @Override

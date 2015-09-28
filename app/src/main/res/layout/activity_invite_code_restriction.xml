@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
-        android:text="Verify"
+        android:text="@string/start_barking"
         android:textColor="@android:color/white"
         android:textSize="18sp"
         custom:pb_colorComplete="@color/accent"
@@ -108,6 +108,7 @@
         android:layout_centerVertical="true"/>
 -->
     <RelativeLayout
+        android:id="@+id/help"
         android:layout_below="@+id/btnVerify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

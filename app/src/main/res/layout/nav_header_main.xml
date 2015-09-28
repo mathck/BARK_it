@@ -2,12 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="192dp"
-    android:paddingTop="25dp"
-    android:background="@color/blue_400"
+    android:padding="25dp"
+    android:background="@color/red_500"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
     android:gravity="center">
-<!--
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
         android:layout_gravity="bottom"
         android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
--->
+<!--
     <RelativeLayout
         android:id="@+id/backdrop"
         android:layout_width="match_parent"
@@ -90,4 +90,5 @@
                 android:textColor="#AAFFFFFF" />
         </RelativeLayout>
     </RelativeLayout>
+    -->
 </FrameLayout>

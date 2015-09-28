@@ -61,9 +61,7 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
             AppStart(false);
         }
         else {
-            // todo invite screen
-
-            Intent i = new Intent(SplashScreen.this, InviteCodeRestriction.class);
+            Intent i = new Intent(SplashScreen.this, BarkitAppIntro.class);
             startActivity(i);
             finish();
         }

@@ -14,13 +14,14 @@ import com.barkitapp.android._core.services.DeviceId;
 import com.barkitapp.android._core.services.UserId;
 import com.barkitapp.android.parse_backend.functions.CreateUser;
 import com.barkitapp.android.parse_backend.functions.GetInviteCode;
+import com.barkitapp.android.parse_backend.functions.GetUser;
 import com.barkitapp.android.parse_backend.objects.BarkItUser;
 import com.barkitapp.android.startup.Setup;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.parse.ParseObject;
 
-public class ProfileFragment extends Fragment implements CreateUser.OnCreateUserCompleted {
+public class ProfileFragment extends Fragment implements GetUser.OnCreateUserCompleted {
 
     private Tracker mTracker;
     private BarkItUser user;
@@ -63,7 +64,7 @@ public class ProfileFragment extends Fragment implements CreateUser.OnCreateUser
         friendliness = (TextView) layout.findViewById(R.id.friendliness);
         communicative = (TextView) layout.findViewById(R.id.communicative);
 
-        CreateUser.run(getActivity(), this, DeviceId.get(getActivity()));
+        GetUser.run(getActivity(), this, DeviceId.get(getActivity()));
 
         return layout;
     }
