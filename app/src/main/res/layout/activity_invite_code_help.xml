@@ -6,7 +6,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_50"
+    android:background="@color/card_background"
     android:orientation="vertical"
     tools:context="com.barkitapp.android.startup.InviteCodeHelp">
 
@@ -24,7 +24,7 @@
         android:id="@+id/help"
         android:layout_below="@+id/how_to_get"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:src="@mipmap/friends"
         android:layout_marginTop="18dp"
         android:layout_gravity="center"
@@ -46,7 +46,7 @@
         android:id="@+id/or"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey_200">
+        android:background="@color/grey_300">
         <TextView
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
             android:textSize="16sp"
             android:layout_margin="10dp"
             android:textStyle="italic"
-            android:textColor="@color/grey_800"
+            android:textColor="@color/grey_600"
             android:text="@string/or" />
     </RelativeLayout>
 
