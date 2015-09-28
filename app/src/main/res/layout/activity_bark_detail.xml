@@ -104,6 +104,8 @@
                         android:maxLines="5"
                         android:lines="5"
                         android:textSize="20sp"
+                        android:autoLink="web"
+                        android:textColorLink="@color/blue_500"
                         android:textColor="@android:color/white"
                         android:text="@string/loading"/>
                     <!--

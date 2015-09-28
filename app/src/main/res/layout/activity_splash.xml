@@ -20,13 +20,13 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="180dp"
-        android:src="@mipmap/splash"
-        android:contentDescription="@string/bark_it_logo"
-        android:layout_centerInParent="true" />
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:src="@mipmap/splash"
+            android:contentDescription="@string/bark_it_logo"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 
     <TextView
@@ -40,20 +40,20 @@
         android:textStyle="italic"
         android:textColor="@android:color/white"
         android:text="@string/limited_edition" />
-<!--
-    <TextView
-        android:id="@+id/speech"
-        android:layout_width="114dp"
-        android:layout_height="67dp"
-        android:layout_marginRight="12dp"
-        android:layout_alignTop="@id/imgLogo"
-        android:layout_alignRight="@id/imgLogo"
-        android:text="cool"
-        android:textSize="20dp"
-        android:textColor="#222222"
-        android:gravity="center_horizontal|center_vertical"
-        android:background="@mipmap/speech"
-        android:src="@mipmap/speech" />
--->
+    <!--
+        <TextView
+            android:id="@+id/speech"
+            android:layout_width="114dp"
+            android:layout_height="67dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignTop="@id/imgLogo"
+            android:layout_alignRight="@id/imgLogo"
+            android:text="cool"
+            android:textSize="20dp"
+            android:textColor="#222222"
+            android:gravity="center_horizontal|center_vertical"
+            android:background="@mipmap/speech"
+            android:src="@mipmap/speech" />
+    -->
 
 </RelativeLayout>
