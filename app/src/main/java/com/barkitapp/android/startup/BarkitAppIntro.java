@@ -9,7 +9,6 @@ import com.barkitapp.android._core.services.DeviceId;
 import com.barkitapp.android._core.services.UserId;
 import com.barkitapp.android._main.MainActivity;
 import com.barkitapp.android.parse_backend.functions.CreateUser;
-import com.dd.processbutton.iml.ActionProcessButton;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.parse.ParseObject;
@@ -28,8 +27,8 @@ public class BarkitAppIntro extends AppIntro2 implements CreateUser.OnCreateUser
     }
 
     private void loadMainActivity() {
-        String deviceId = DeviceId.get(this);
-        Intent intent = new Intent(this, (deviceId != null && !deviceId.isEmpty()) ? InviteCodeRestriction.class : MainActivity.class);
+        String userId = UserId.get(this);
+        Intent intent = new Intent(this, (userId != null && !userId.isEmpty()) ? MainActivity.class : InviteCodeRestriction.class);
         startActivity(intent);
         finish();
     }

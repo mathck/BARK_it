@@ -14,64 +14,74 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue_500"
+        android:background="@color/red_500"
         android:title="@string/how_to_get_code"
         android:theme="@style/ToolBarStyle"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-
-    <ImageView
-        android:id="@+id/help"
-        android:layout_below="@+id/how_to_get"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:src="@mipmap/friends"
-        android:layout_marginTop="18dp"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"/>
-
-    <TextView
-        android:layout_below="@id/toolbar"
-        android:id="@+id/one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textSize="20sp"
-        android:layout_margin="24dp"
-        android:textColor="@color/grey_800"
-        android:text="@string/join_option_1" />
-
-    <RelativeLayout
-        android:layout_below="@id/one"
-        android:id="@+id/or"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/grey_300">
-        <TextView
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:textSize="16sp"
-            android:layout_margin="10dp"
-            android:textStyle="italic"
-            android:textColor="@color/grey_600"
-            android:text="@string/or" />
-    </RelativeLayout>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/help"
+                android:layout_below="@+id/how_to_get"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:src="@mipmap/friends"
+                android:layout_marginTop="18dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_below="@id/toolbar"
+                android:id="@+id/one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textSize="20sp"
+                android:layout_margin="24dp"
+                android:textColor="@color/grey_800"
+                android:text="@string/join_option_1" />
+
+            <RelativeLayout
+                android:layout_below="@id/one"
+                android:id="@+id/or"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey_300">
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textSize="16sp"
+                    android:layout_margin="6dp"
+                    android:textStyle="italic"
+                    android:textColor="@color/grey_600"
+                    android:text="@string/or" />
+            </RelativeLayout>
 
 
 
-    <TextView
-        android:layout_below="@id/or"
-        android:id="@+id/two"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:textSize="20sp"
-        android:layout_margin="24dp"
-        android:textColor="@color/grey_800"
-        android:autoLink="email"
-        android:textColorLink="@color/blue_500"
-        android:text="@string/join_option_2" />
+            <TextView
+                android:layout_below="@id/or"
+                android:id="@+id/two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textSize="20sp"
+                android:layout_margin="24dp"
+                android:textColor="@color/grey_800"
+                android:autoLink="email"
+                android:textColorLink="@color/blue_500"
+                android:text="@string/join_option_2" />
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

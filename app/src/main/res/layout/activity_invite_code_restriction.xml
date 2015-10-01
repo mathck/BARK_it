@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="30dp"
             android:paddingBottom="30dp"
-            android:background="@color/blue_500"
+            android:background="@color/red_500"
             android:id="@+id/title">
 <!--
             <ImageView

@@ -20,6 +20,7 @@ import com.barkitapp.android._core.services.DeviceId;
 import com.barkitapp.android._core.services.UserId;
 import com.barkitapp.android._core.utility.Constants;
 import com.barkitapp.android._main.MainActivity;
+import com.barkitapp.android.events.RequestUpdatePostsEvent;
 import com.barkitapp.android.parse_backend.functions.CreateUser;
 import com.barkitapp.android.parse_backend.functions.CreateUserFirstTime;
 import com.barkitapp.android.parse_backend.functions.GetUser;
@@ -28,6 +29,8 @@ import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import de.greenrobot.event.EventBus;
 
 public class InviteCodeRestriction extends AppCompatActivity implements CreateUser.OnCreateUserCompleted {
 
@@ -65,7 +68,7 @@ public class InviteCodeRestriction extends AppCompatActivity implements CreateUs
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.blue_700));
+            window.setStatusBarColor(getResources().getColor(R.color.red_700));
         }
 
         RelativeLayout help = (RelativeLayout) findViewById(R.id.help);

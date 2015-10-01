@@ -65,22 +65,23 @@ public class FriendsFragment extends Fragment implements GetUser.OnCreateUserCom
         invitedFriendstext = (TextView) layout.findViewById(R.id.invitedFriendstext);
 
         GetUser.run(getActivity(), this, UserId.get(getActivity()));
+        GetInviteCode.run(getActivity(), this, UserId.get(getActivity()));
 
         Button fab = (Button) layout.findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (invite_code == null) {
-                    Toast.makeText(getActivity(), getResources().getText(R.string.try_again_later), Toast.LENGTH_LONG).show();
-                    return;
+                if (invite_code != null && !invite_code.toString().isEmpty()) {
+                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.using_barkit_check_it_out)); // todo replace link
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.download_and_enter_my_invite_code) + invite_code.getText() + "\n\n" + "http://barkitapp.com/");
+                    startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
                 }
-
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.using_barkit_check_it_out)); // todo replace link
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.download_and_enter_my_invite_code) + invite_code.getText() + "\n\n" + "http://barkitapp.com/");
-                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.share_using)));
+                else {
+                    Toast.makeText(getActivity(), getResources().getText(R.string.try_again_later), Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -100,8 +101,6 @@ public class FriendsFragment extends Fragment implements GetUser.OnCreateUserCom
     public void onCreateUserFailed(String error) {
         invitedFriendstext.setText(R.string.try_again_later);
         friend_counter.setText(":(");
-
-
     }
 
     @Override

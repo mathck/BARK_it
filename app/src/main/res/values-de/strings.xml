@@ -112,7 +112,7 @@
     <string name="title_activity_invite_code_restriction">InviteCodeRestriction</string>
     <string name="ga_trackingId">UA-66486624-1</string>
     <string name="gcm_defaultSenderId">813639631031</string>
-    <string name="join_option_1">1. Frage einen Freund der Mitglied der BARK it Community ist</string>
+    <string name="join_option_1">1. Frage einen Freund der Mitglied der BARK it Community ist, unter Mein Bereich / Freunde einladen</string>
     <string name="join_option_2">2. Schreibe uns eine Email mit deiner Uni- oder Schul-Adresse: getacode@barkitapp.com</string>
     <string name="verify">Bestätige</string>
     <string name="welcome">Willkommen</string>

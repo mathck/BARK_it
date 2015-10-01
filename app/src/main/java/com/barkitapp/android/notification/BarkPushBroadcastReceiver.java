@@ -13,6 +13,7 @@ import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 import com.barkitapp.android.R;
+import com.barkitapp.android.activities.MyBarksActivity;
 import com.barkitapp.android.bark_detail.BarkDetailActivity;
 import com.barkitapp.android._core.utility.Constants;
 import com.barkitapp.android._core.utility.Settings;
@@ -80,6 +81,51 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
                     break;
             }
         }
+
+        if(type.equals(Push.FriendInvited)) {
+            onFriendInvitedNotification(context);
+        }
+    }
+
+    private void onFriendInvitedNotification(Context context) {
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        notificationManager.cancel(Constants.FRIEND_INVITED_NOTIFICATION_ID);
+
+        notifySound = RingtoneManager
+                .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+        builder.setContentTitle("Friend Invited");
+        builder.setContentText("You have successfully invited a friend");
+        builder.setSmallIcon(R.drawable.ic_bark);
+        Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_friend_notification);
+        builder.setLargeIcon(largeIcon);
+
+        if(Settings.isNotificationSoundEnabled(context))
+            builder.setSound(notifySound);
+
+//            builder.setGroup(type.toString());
+//            builder.setGroupSummary(true);
+        builder.setAutoCancel(true);
+
+        resultIntent = new Intent(context, MyBarksActivity.class);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        resultIntent.setAction(Long.toString(System.currentTimeMillis()));
+
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(context,
+                0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setContentIntent(resultPendingIntent);
+        builder.setVibrate(new long[]{0, 500});
+
+        //LED
+        builder.setLights(Color.RED, 2000, 500);
+
+        notificationManager.notify(Constants.FRIEND_INVITED_NOTIFICATION_ID, builder.build());
     }
 
     private void onBarkOfTheDayNotification(Context context, JSONObject data, Push type) {

@@ -51,7 +51,10 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:textSize="24sp"
-                android:layout_margin="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="24dp"
                 android:text="@string/share_your_invite_code" />
             <EditText
                 android:id="@+id/code"
@@ -65,25 +68,31 @@
                 android:textColor="@color/primary"
                 android:textIsSelectable="true"
                 android:inputType="none"
-                android:text="-" />
+                android:text="" />
+
+            <Button
+                android:layout_below="@id/code"
+                android:id="@+id/share"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red_500"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/invite_friends"/>
+
             <TextView
                 android:id="@+id/info"
-                android:layout_below="@id/code"
+                android:layout_below="@id/share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:textSize="24sp"
-                android:layout_margin="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="12dp"
                 android:text="@string/invite_friends_win_gifts" />
-            <Button
-                android:layout_below="@id/info"
-                android:id="@+id/share"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/green_500"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/invite_friends"/>
         </RelativeLayout>
 
     </RelativeLayout>
