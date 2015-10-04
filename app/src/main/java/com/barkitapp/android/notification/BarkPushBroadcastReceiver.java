@@ -106,7 +106,7 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
         builder.setLargeIcon(largeIcon);
 
         if(Settings.isNotificationSoundEnabled(context))
-            builder.setSound(notifySound);
+            builder.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.bark3));
 
 //            builder.setGroup(type.toString());
 //            builder.setGroupSummary(true);
@@ -153,7 +153,7 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
             builder.setLargeIcon(largeIcon);
 
             if(Settings.isNotificationSoundEnabled(context))
-                builder.setSound(notifySound);
+                builder.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.bark1));
 
 //            builder.setGroup(type.toString());
 //            builder.setGroupSummary(true);
@@ -225,7 +225,7 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
             builder.setLargeIcon(largeIcon);
 
             if(Settings.isNotificationSoundEnabled(context))
-                builder.setSound(notifySound);
+                builder.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.bark2));
 
 //            builder.setGroup(type.toString());
 //            builder.setGroupSummary(true);
@@ -299,7 +299,7 @@ public class BarkPushBroadcastReceiver extends ParsePushBroadcastReceiver {
             builder.setLargeIcon(largeIcon);
 
             if(Settings.isNotificationSoundEnabled(context))
-                builder.setSound(notifySound);
+                builder.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.bark3));
 
             builder.setAutoCancel(true);
 

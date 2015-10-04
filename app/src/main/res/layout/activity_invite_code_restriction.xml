@@ -65,13 +65,16 @@
         android:layout_marginRight="24dp"
         android:layout_height="wrap_content"
         android:textSize="26sp"
+        android:lines="1"
+        android:maxLines="1"
         android:textColorHint="@color/grey_500"
         android:gravity="center"
         android:textColor="@color/grey_900"
-        android:inputType="none"
+        android:singleLine="true"
         android:hint="@string/enter_invite_code"
         android:theme="@style/Theme.App.Custom.EditText.Underline"
         android:maxLength="5"
+        android:imeOptions="actionSend"
         android:text="" />
 
     <com.dd.processbutton.iml.ActionProcessButton

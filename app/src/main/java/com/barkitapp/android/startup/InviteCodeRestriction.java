@@ -1,41 +1,38 @@
 package com.barkitapp.android.startup;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.barkitapp.android.R;
 import com.barkitapp.android._core.services.DeviceId;
 import com.barkitapp.android._core.services.UserId;
-import com.barkitapp.android._core.utility.Constants;
 import com.barkitapp.android._main.MainActivity;
+import com.barkitapp.android.events.ForceOnResume;
 import com.barkitapp.android.events.RequestUpdatePostsEvent;
 import com.barkitapp.android.parse_backend.functions.CreateUser;
-import com.barkitapp.android.parse_backend.functions.CreateUserFirstTime;
-import com.barkitapp.android.parse_backend.functions.GetUser;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.parse.ParseObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import de.greenrobot.event.EventBus;
 
 public class InviteCodeRestriction extends AppCompatActivity implements CreateUser.OnCreateUserCompleted {
 
     private ActionProcessButton btnVerify;
-    private EditText title;
+    private EditText code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +41,13 @@ public class InviteCodeRestriction extends AppCompatActivity implements CreateUs
 
         final InviteCodeRestriction context = this;
 
-        title = (EditText) findViewById(R.id.code);
+        code = (EditText) findViewById(R.id.code);
         btnVerify = (ActionProcessButton) findViewById(R.id.btnVerify);
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(title.getText().toString().isEmpty()) {
+                if(code.getText().toString().isEmpty()) {
                     Toast.makeText(context, getResources().getText(R.string.enter_invite_code), Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -59,9 +56,20 @@ public class InviteCodeRestriction extends AppCompatActivity implements CreateUs
                 if(deviceId != null && !deviceId.isEmpty()) {
                     btnVerify.setMode(ActionProcessButton.Mode.ENDLESS);
                     btnVerify.setProgress(50);
-                    CreateUser.run(context, context, DeviceId.get(context), title.getText() + "");
+                    CreateUser.run(context, context, DeviceId.get(context), code.getText().toString());
                 }
                 btnVerify.setClickable(false);
+            }
+        });
+
+        code.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    if(btnVerify.isClickable())
+                        btnVerify.performClick();
+                    return true;
+                }
+                return false;
             }
         });
 

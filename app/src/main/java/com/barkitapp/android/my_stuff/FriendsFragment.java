@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,7 +57,7 @@ public class FriendsFragment extends Fragment implements GetUser.OnCreateUserCom
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RelativeLayout layout = (RelativeLayout) inflater.inflate(
+        ScrollView layout = (ScrollView) inflater.inflate(
                 R.layout.fragment_mystuff_friend_invite, container, false);
 
         invite_code = (EditText) layout.findViewById(R.id.code);
@@ -67,7 +68,7 @@ public class FriendsFragment extends Fragment implements GetUser.OnCreateUserCom
         GetUser.run(getActivity(), this, UserId.get(getActivity()));
         GetInviteCode.run(getActivity(), this, UserId.get(getActivity()));
 
-        Button fab = (Button) layout.findViewById(R.id.share);
+        TextView fab = (TextView) layout.findViewById(R.id.share);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +95,6 @@ public class FriendsFragment extends Fragment implements GetUser.OnCreateUserCom
 
         invitedFriendstext.setText(R.string.invited_friends);
         friend_counter.setText(user.getReferred_friend_counter() + "");
-
     }
 
     @Override

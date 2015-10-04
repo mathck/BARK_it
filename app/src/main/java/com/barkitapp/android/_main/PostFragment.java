@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.barkitapp.android._core.utility.LastRefresh;
 import com.barkitapp.android.events.MasterListUpdated;
 import com.barkitapp.android.events.RequestUpdatePostsEvent;
 import com.barkitapp.android.events.UpdateListItemEvent;
@@ -176,6 +177,10 @@ public abstract class PostFragment extends Fragment implements SwipeRefreshLayou
                     Constants.GET_POSTS_COUNT,
                     getOrder(),
                     true);
+        }
+        else {
+            if(MasterList.GetMasterListPost(getOrder()).isEmpty())
+                onRefresh();
         }
 
 //        loading = false;

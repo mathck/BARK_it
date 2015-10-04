@@ -30,7 +30,7 @@ public class CreateUser {
         HashMap<String, Object> params = new HashMap<>();
         params.put("device_id", device_id);
 
-        if(invite_code != null && !invite_code.isEmpty())
+        if(invite_code != null)
             params.put("invite_code", invite_code);
 
         if(CreateUser.listener == null)

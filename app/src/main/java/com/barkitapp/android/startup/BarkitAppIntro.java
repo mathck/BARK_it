@@ -8,10 +8,14 @@ import com.barkitapp.android.R;
 import com.barkitapp.android._core.services.DeviceId;
 import com.barkitapp.android._core.services.UserId;
 import com.barkitapp.android._main.MainActivity;
+import com.barkitapp.android.events.ForceOnResume;
+import com.barkitapp.android.events.RequestUpdatePostsEvent;
 import com.barkitapp.android.parse_backend.functions.CreateUser;
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.parse.ParseObject;
+
+import de.greenrobot.event.EventBus;
 
 public class BarkitAppIntro extends AppIntro2 implements CreateUser.OnCreateUserCompleted {
     @Override
@@ -23,7 +27,7 @@ public class BarkitAppIntro extends AppIntro2 implements CreateUser.OnCreateUser
 
         setFlowAnimation();
 
-        CreateUser.run(this, this, DeviceId.get(this), "");
+        CreateUser.run(this, this, DeviceId.get(this), " ");
     }
 
     private void loadMainActivity() {
