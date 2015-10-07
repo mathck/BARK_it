@@ -90,11 +90,17 @@ public class SplashScreen extends Activity implements UpdatePosts.OnUpdatePostsC
         Coordinates lastKnownLocation = LocationService.getLocation(this);
 
         if(lastKnownLocation == null) {
-            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
 
-            if (location != null)
-                lastKnownLocation = new Coordinates(location.getLatitude(), location.getLongitude(), new Date());
+            try {
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
+
+                if (location != null)
+                    lastKnownLocation = new Coordinates(location.getLatitude(), location.getLongitude(), new Date());
+            }
+            catch (Exception e) {
+                // failed to get location -> continue
+            }
         }
 
         if(!Connectivity.isOnline(this)) {
